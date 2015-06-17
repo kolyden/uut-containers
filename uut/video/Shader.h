@@ -3,7 +3,7 @@
 
 namespace uut
 {
-	class BufferLayout;
+	class VertexLayout;
 
 	class Shader : public VideoObject
 	{
@@ -14,7 +14,7 @@ namespace uut
 		void Clear();
 		bool IsEmpty() const;
 
-		SharedPtr<BufferLayout> CreateLayout(D3D11_INPUT_ELEMENT_DESC* desc, BYTE count);
+		SharedPtr<VertexLayout> CreateLayout(const VertexDeclare* decl, uint8_t count);
 
 	protected:
 		ID3D10Blob* _vsBlob;

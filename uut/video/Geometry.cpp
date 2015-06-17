@@ -1,8 +1,8 @@
 #include "Geometry.h"
 #include "Video.h"
-#include "VideoBuffer.h"
+#include "VertexBuffer.h"
 #include "Shader.h"
-#include "BufferLayout.h"
+#include "VertexLayout.h"
 #include "Color.h"
 
 namespace uut

@@ -1,27 +1,42 @@
-#pragma one
-#include "uutIDictionary.h"
+#pragma once
+#include "core/Defs.h"
+#include <map>
 
 namespace uut
 {
 	template<class TKey, class TValue>
-	class Dictionary : public IDictionary
+	class UUT_API Dictionary
 	{
 	public:
-		virtual void Add(const KeyValuePair<TKey, TValue>& item) override
+		void Add(const TKey& key, const TValue>& val)
 		{
-			_data.insert(item);
+			_data.insert(std::pair<TKey, TValue>(key, val));
 		}
 
-		virtual void Clear() override
+		void Clear()
 		{
 			_data.clear();
 		}
 
-		virtual int Count() const override { return (int)_data.size(); }
-		virtual KeyValuePair<TKey, TValue>& GetAt(unsigned index) override { return _data[index]; }
-		virtual const KeyValuePair<TKey, TValue>& GetAt(unsigned index) const override { return _data[index]; }
+		int Count() const { return (int)_data.size(); }
+
+		bool Contains(const TKey& key) const
+		{
+			auto it = _data.find(key);
+			return it != _data.end();
+		}
+
+		bool TryGet(const TKey& key, TValue* val)
+		{
+			auto it = _data.find(key);
+			if (it == _data.end())
+				return false;
+
+			*val = it->second;
+			return true;
+		}
 
 	protected:
-		std::vector<KeyValuePair<TKey, TValue>> _data;
+		std::vector<TKey, TValue> _data;
 	};
 }

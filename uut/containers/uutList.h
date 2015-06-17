@@ -1,19 +1,31 @@
 #pragma once
-#include "uutIList.h"
+#include "core/Defs.h"
 #include <vector>
 
 namespace uut
 {
 	template<class T>
-	class List : public IList<T>
+	class UUT_API List
 	{
 	public:
-		virtual void Add(const T& item) override { _data.push_back(item); }
-		virtual void Clear() override { _data.clear(); }
+		List() {}
+		List(const T* data, unsigned count) : _data(data, data + sizeof(data) / sizeof(T)) {}
+		List(std::initializer_list<T> data) : _data(data) {}
 
-		virtual int Count() const override { return (int)_data.size(); }
-		virtual T& GetAt(unsigned index) override { return _data[index]; }
-		virtual const T& GetAt(unsigned index) const override { return _data[index]; }
+		void Add(const T& item) { _data.push_back(item); }
+		void Clear() { _data.clear(); }
+
+		void SetSize(unsigned int size) { _data.resize(size); }
+
+		int Count() const { return (int)_data.size(); }
+		T& GetAt(unsigned index) { return _data[index]; }
+		const T& GetAt(unsigned index) const { return _data[index]; }
+
+		T& operator[] (int index) { return _data[index]; }
+		const T& operator[] (int index) const { return _data[index]; }
+
+		T* GetData() { return _data.data(); }
+		const T* GetData() const { return _data.data(); }
 
 	protected:
 		std::vector<T> _data;

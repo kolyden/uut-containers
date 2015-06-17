@@ -8,12 +8,6 @@
 
 namespace uut
 {
-	enum class VideoBufferType
-	{
-		Vertex,
-		Index,
-	};
-
 	enum class VertexTopology
 	{
 		PointList,
@@ -21,5 +15,30 @@ namespace uut
 		LineStrip,
 		TriangleList,
 		TriangleStrip,
+	};
+
+	enum class VertexUsage
+	{
+		Position,
+		TexCoords,
+		Color,
+	};
+
+	enum class VertexType
+	{
+		SByte,
+		UByte,
+		SShort,
+		UShort,
+		Float,
+	};
+
+	struct VertexDeclare
+	{
+		uint8_t _index;
+		VertexUsage _usage;
+		VertexType _type;
+		uint8_t _count;
+		uint16_t _offset;
 	};
 }

@@ -13,32 +13,33 @@
   <ItemGroup>
     <ClCompile Include="..\uut\core\Object.cpp" />
     <ClCompile Include="..\uut\core\RefCounted.cpp" />
-    <ClCompile Include="..\uut\video\BufferLayout.cpp" />
+    <ClCompile Include="..\uut\video\VertexLayout.cpp" />
     <ClCompile Include="..\uut\video\Color.cpp" />
     <ClCompile Include="..\uut\video\Color32.cpp" />
-    <ClCompile Include="..\uut\video\Geometry.cpp" />
     <ClCompile Include="..\uut\video\Shader.cpp" />
     <ClCompile Include="..\uut\video\Texture.cpp" />
     <ClCompile Include="..\uut\video\Video.cpp" />
-    <ClCompile Include="..\uut\video\VideoBuffer.cpp" />
+    <ClCompile Include="..\uut\video\VertexBuffer.cpp" />
     <ClCompile Include="..\uut\video\VideoObject.cpp" />
     <ClCompile Include="..\uut\video\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\uut\containers\uutArray.h" />
+    <ClInclude Include="..\uut\containers\uutDictionary.h" />
+    <ClInclude Include="..\uut\containers\uutList.h" />
     <ClInclude Include="..\uut\core\Defs.h" />
     <ClInclude Include="..\uut\core\Object.h" />
     <ClInclude Include="..\uut\core\Ptr.h" />
     <ClInclude Include="..\uut\core\RefCounted.h" />
-    <ClInclude Include="..\uut\video\BufferLayout.h" />
+    <ClInclude Include="..\uut\math\Vector2.h" />
+    <ClInclude Include="..\uut\math\Vector3.h" />
+    <ClInclude Include="..\uut\video\VertexBuffer.h" />
+    <ClInclude Include="..\uut\video\VertexLayout.h" />
     <ClInclude Include="..\uut\video\Color.h" />
     <ClInclude Include="..\uut\video\Color32.h" />
-    <ClInclude Include="..\uut\video\Geometry.h" />
     <ClInclude Include="..\uut\video\Shader.h" />
     <ClInclude Include="..\uut\video\Texture.h" />
-    <ClInclude Include="..\uut\video\Vector2.h" />
-    <ClInclude Include="..\uut\video\Vector3.h" />
     <ClInclude Include="..\uut\video\Video.h" />
-    <ClInclude Include="..\uut\video\VideoBuffer.h" />
     <ClInclude Include="..\uut\video\VideoDefs.h" />
     <ClInclude Include="..\uut\video\VideoObject.h" />
     <ClInclude Include="..\uut\video\Window.h" />
@@ -73,14 +74,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)$(Configuration)\$(ProjectName)</OutDir>
-    <IntDir>$(SolutionDir)$(Configuration)\$(ProjectName)</IntDir>
+    <OutDir>$(SolutionDir)$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)$(Configuration)\$(ProjectName)\</IntDir>
     <IncludePath>$(IncludePath)</IncludePath>
     <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)$(Configuration)\$(ProjectName)</OutDir>
-    <IntDir>$(SolutionDir)$(Configuration)\$(ProjectName)</IntDir>
+    <OutDir>$(SolutionDir)$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)$(Configuration)\$(ProjectName)\</IntDir>
     <IncludePath>$(IncludePath)</IncludePath>
     <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>

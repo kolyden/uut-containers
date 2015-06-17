@@ -1,14 +1,14 @@
-#include "BufferLayout.h"
+#include "VertexLayout.h"
 
 namespace uut
 {
-	BufferLayout::BufferLayout(Video* video)
+	VertexLayout::VertexLayout(Video* video)
 		: VideoObject(video)
 		, _layout(0)
 	{
 	}
 
-	BufferLayout::~BufferLayout()
+	VertexLayout::~VertexLayout()
 	{
 		if (_layout)
 			_layout->Release();

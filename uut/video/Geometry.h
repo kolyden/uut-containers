@@ -6,8 +6,8 @@
 
 namespace uut
 {
-	class VideoBuffer;
-	class BufferLayout;
+	class VertexBuffer;
+	class VertexLayout;
 	class Shader;
 
 	class Geometry : public VideoObject
@@ -22,14 +22,14 @@ namespace uut
 		const List<Color>& GetColors() const;
 
 		bool Generate();
-		SharedPtr<VideoBuffer> GetBuffer() { return _buffer; }
+		SharedPtr<VertexBuffer> GetBuffer() { return _buffer; }
 
 	protected:
 		List<Vector3> _vertices;
 		List<Color> _colors;
 		SharedPtr<Shader> _vshader;
 		SharedPtr<Shader> _pshader;
-		SharedPtr<VideoBuffer> _buffer;
-		SharedPtr<BufferLayout> _layout;
+		SharedPtr<VertexBuffer> _buffer;
+		SharedPtr<VertexLayout> _layout;
 	};
 }

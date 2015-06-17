@@ -1,26 +1,33 @@
 #include "video/Video.h"
 #include "video/Shader.h"
-#include "video/VideoBuffer.h"
-#include "video/BufferLayout.h"
+#include "video/VertexBuffer.h"
+#include "video/VertexLayout.h"
 #include "video/Color.h"
+#include "math/Vector3.h"
 
 struct VERTEX
 {
-	FLOAT x, y, z;      // position
-	float color[4];    // color
+	uut::Vector3 pos;      // position
+	uut::Color color;    // color
 };
 
-D3D11_INPUT_ELEMENT_DESC ied[] =
+// D3D11_INPUT_ELEMENT_DESC ied[] =
+// {
+// 	{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+// 	{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+// };
+
+uut::VertexDeclare g_decl[] =
 {
-	{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ 0, uut::VertexUsage::Position, uut::VertexType::Float, 3, 0 },
+	{ 0, uut::VertexUsage::Color, uut::VertexType::Float, 4, sizeof(float)* 3 },
 };
 
 static const VERTEX g_verts[] =
 {
-	{ 0.0f, 0.5f, 0.0f, { 1.0f, 0.0f, 0.0f, 1.0f } },
-	{ 0.45f, -0.5, 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
-	{ -0.45f, -0.5f, 0.0f, { 0.0f, 0.0f, 1.0f, 1.0f } }
+	{ uut::Vector3(0.00f, 0.5f, 0.0f), uut::Color(1.0f, 0.0f, 0.0f, 1.0f) },
+	{ uut::Vector3(0.45f, -0.5f, 0.0f), uut::Color(0.0f, 1.0f, 0.0f, 1.0f) },
+	{ uut::Vector3(-0.45f, -0.5f, 0.0f), uut::Color(0.0f, 0.0f, 1.0f, 1.0f) },
 };
 
 int WINAPI WinMain(HINSTANCE hInstance,
@@ -36,7 +43,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	auto shader = video->CreateShaderFromFile(L"Data/Shaders/simple.shader");
 	video->SetShader(shader);
 
-	auto layout = shader->CreateLayout(ied, 2);
+	auto layout = shader->CreateLayout(g_decl, 2);
 	video->SetLayout(layout);
 
 	auto buf = video->CreateBuffer(sizeof(VERTEX)* 3);
