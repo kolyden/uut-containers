@@ -1,21 +1,24 @@
 #pragma once
-#include "VideoDefs.h"
+#include "VideoObject.h"
 
 namespace uut
 {
+	class BufferLayout;
 
-	class Shader
+	class Shader : public VideoObject
 	{
 	public:
-		Shader();
+		Shader(Video* video);
 		virtual ~Shader();
 
 		void Clear();
 		bool IsEmpty() const;
 
+		SharedPtr<BufferLayout> CreateLayout(D3D11_INPUT_ELEMENT_DESC* desc, BYTE count);
+
 	protected:
-		ShaderType _type;
-		ID3D10Blob* _blob;
+		ID3D10Blob* _vsBlob;
+		ID3D10Blob* _psBlob;
 		ID3D11VertexShader* _vs;
 		ID3D11PixelShader* _ps;
 

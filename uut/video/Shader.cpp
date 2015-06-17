@@ -1,10 +1,31 @@
 #include "Shader.h"
-#include <D3DX11.h>
+#include "Video.h"
+#include "BufferLayout.h"
 
 namespace uut
 {
-	Shader::Shader()
-		: _blob(nullptr)
+	static const char* g_shader =
+		"struct VOut \
+		{ \
+			float4 position : SV_POSITION; \
+			float4 color : COLOR; \
+		}; \
+		VOut VShader(float4 position : POSITION, float4 color : COLOR) \
+		{ \
+			VOut output; \
+			output.position = position; \
+			output.color = color; \
+			return output; \
+		} \
+		float4 PShader(float4 position : SV_POSITION, float4 color : COLOR) : SV_TARGET \
+		{ \
+			return color; \
+		}";
+
+	Shader::Shader(Video* video)
+		: VideoObject(video)
+		, _vsBlob(nullptr)
+		, _psBlob(nullptr)
 		, _vs(nullptr)
 		, _ps(nullptr)
 	{
@@ -16,8 +37,10 @@ namespace uut
 			_vs->Release();
 		if (_ps)
 			_ps->Release();
-		if (_blob)
-			_blob->Release();
+		if (_vsBlob)
+			_vsBlob->Release();
+		if (_psBlob)
+			_psBlob->Release();
 	}
 
 	void Shader::Clear()
@@ -35,10 +58,15 @@ namespace uut
 			_ps->Release();
 			_ps = nullptr;
 		}
-		if (_blob)
+		if (_vsBlob)
 		{
-			_blob->Release();
-			_blob = nullptr;
+			_vsBlob->Release();
+			_vsBlob = nullptr;
+		}
+		if (_psBlob)
+		{
+			_psBlob->Release();
+			_psBlob = nullptr;
 		}
 	}
 
@@ -47,4 +75,18 @@ namespace uut
 		return _vs == nullptr && _ps == nullptr;
 	}
 
+	SharedPtr<BufferLayout> Shader::CreateLayout(D3D11_INPUT_ELEMENT_DESC* desc, BYTE count)
+	{
+		if (_vsBlob == nullptr || desc == nullptr)
+			return SharedPtr<BufferLayout>::EMPTY;
+
+		SharedPtr<BufferLayout> layout(new BufferLayout(_video));
+		auto ptr = _vsBlob->GetBufferPointer();
+		auto size = _vsBlob->GetBufferSize();
+		auto ret = _video->GetDevice()->CreateInputLayout(desc, count, ptr, size, &layout->_layout);
+		if (ret != S_OK)
+			return SharedPtr<BufferLayout>::EMPTY;
+
+		return layout;
+	}
 }

@@ -33,6 +33,21 @@
     <ClCompile Include="..\uut\video\Window.cpp">
       <Filter>video</Filter>
     </ClCompile>
+    <ClCompile Include="..\uut\video\Geometry.cpp">
+      <Filter>video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\video\Color32.cpp">
+      <Filter>video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\video\VideoObject.cpp">
+      <Filter>video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\core\RefCounted.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\core\Object.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\uut\video\Video.h">
@@ -61,6 +76,30 @@
     </ClInclude>
     <ClInclude Include="..\uut\video\Window.h">
       <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\video\Geometry.h">
+      <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\video\Vector2.h">
+      <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\video\Vector3.h">
+      <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\video\Color32.h">
+      <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\video\VideoObject.h">
+      <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\core\Ptr.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\core\RefCounted.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\core\Object.h">
+      <Filter>core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

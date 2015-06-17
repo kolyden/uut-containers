@@ -1,4 +1,5 @@
 #pragma once
+#include "core/Object.h"
 #include "VideoDefs.h"
 #include "Color.h"
 
@@ -10,7 +11,7 @@ namespace uut
 	class VideoBuffer;
 	class BufferLayout;
 
-	class Video
+	class Video : public Object
 	{
 	public:
 		Video();
@@ -19,19 +20,20 @@ namespace uut
 		bool SetMode(int width, int height, bool fullscreen);
 		bool MessagePool();
 
+		ID3D11Device* GetDevice() const { return _device; }
+		ID3D11DeviceContext* GetContext() const { return _context; }
+
 		void ClearTarget(const Color& color);
 		void Present();
 
-		std::shared_ptr<Shader> CreateShaderFromMemory(const char* code, ShaderType type);
-		std::shared_ptr<Shader> CreateShaderFromFile(const char* code, ShaderType type);
-		std::shared_ptr<VideoBuffer> CreateBuffer(unsigned int size);
-		std::shared_ptr<BufferLayout> CreateLayout(D3D11_INPUT_ELEMENT_DESC* desc, BYTE count, std::shared_ptr<Shader> shader);
+		SharedPtr<Shader> CreateShaderFromMemory(const char* code, int size = -1);
+		SharedPtr<Shader> CreateShaderFromFile(const wchar_t* filepath);
 
-		bool UpdateBuffer(std::shared_ptr<VideoBuffer> buffer, const void* ptr, unsigned int size);
+		SharedPtr<VideoBuffer> CreateBuffer(unsigned int size);
 
-		bool SetShader(ShaderType type, std::shared_ptr<Shader> shader);
-		bool SetLayout(std::shared_ptr<BufferLayout> layout);
-		bool SetBuffer(std::shared_ptr<VideoBuffer> buffer, unsigned int stride, unsigned int offset);
+		bool SetShader(Shader* shader);
+		bool SetLayout(BufferLayout* layout);
+		bool SetBuffer(VideoBuffer* buffer, unsigned int stride, unsigned int offset);
 		bool SetTopology(VertexTopology topology);
 
 		bool Draw(unsigned int count, unsigned int start);

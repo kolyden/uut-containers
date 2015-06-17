@@ -39,7 +39,7 @@ namespace uut
 		D3D11CreateDeviceAndSwapChain(NULL,
 			D3D_DRIVER_TYPE_HARDWARE,
 			NULL,
-			NULL,
+			D3D11_CREATE_DEVICE_DEBUG,
 			NULL,
 			NULL,
 			D3D11_SDK_VERSION,
@@ -117,85 +117,62 @@ namespace uut
 		auto ret = _swapChain->Present(0, 0);
 	}
 
-	std::shared_ptr<Shader> Video::CreateShaderFromMemory(const char* code, ShaderType type)
+	SharedPtr<Shader> Video::CreateShaderFromMemory(const char* code, int size /* = -1 */)
 	{
-		if (code == nullptr)
-			return nullptr;
+// 		if (code == nullptr)
+			return SharedPtr<Shader>::EMPTY;
 
-		ID3D10Blob* blob = nullptr;
-		std::shared_ptr<Shader> shader;
-		switch (type)
-		{
-		case ShaderType::Vertex:
-			if (D3DX11CompileFromMemory(code, strlen(code), "shader", 0, 0, "VShader", "vs_4_0", 0, 0, 0, &blob, 0, 0) == S_OK)
-			{
-				shader = std::make_shared<Shader>();
-				if (_device->CreateVertexShader(blob->GetBufferPointer(), blob->GetBufferSize(), NULL, &shader->_vs) == S_OK)
-				{
-					shader->_blob = blob;
-					shader->_type;
-					return shader;
-				}
-			}
-			break;
-
-		case ShaderType::Pixel:
-			if (D3DX11CompileFromMemory(code, strlen(code), "shader", 0, 0, "PShader", "ps_4_0", 0, 0, 0, &blob, 0, 0) == S_OK)
-			{
-				shader = std::make_shared<Shader>();
-				if (_device->CreatePixelShader(blob->GetBufferPointer(), blob->GetBufferSize(), NULL, &shader->_ps) == S_OK)
-				{
-					shader->_blob = blob;
-					shader->_type;
-					return shader;
-				}
-			}
-			break;
-		}
-
-		return nullptr;
+// 		if (size < 0)
+// 			size = strlen(code);
+// 		if (size == 0)
+// 			return SharedPtr<Shader>::EMPTY;
+// 
+// 		SharedPtr<Shader> shader(new Shader(this));
+// 		auto ret = D3DX11CompileFromMemory(code, size, "shader", 0, 0, "VShader", "vs_4_0", 0, 0, 0, &shader->_blob, 0, 0);
+// 		if (ParseReturn(ret))
+// 			return SharedPtr<Shader>::EMPTY;
+// 
+// 		ret = _device->CreateVertexShader(shader->_blob->GetBufferPointer(), shader->_blob->GetBufferSize(), NULL, &shader->_vs);
+// 		if (ParseReturn(ret))
+// 			return SharedPtr<Shader>::EMPTY;
+// 
+// 		ret = D3DX11CompileFromMemory(code, size, "shader", 0, 0, "PShader", "ps_4_0", 0, 0, 0, &shader->_blob, 0, 0);
+// 		if (ParseReturn(ret))
+// 			return SharedPtr<Shader>::EMPTY;
+// 
+// 		ret = _device->CreatePixelShader(shader->_blob->GetBufferPointer(), shader->_blob->GetBufferSize(), NULL, &shader->_ps);
+// 		if (ParseReturn(ret))
+// 			return SharedPtr<Shader>::EMPTY;
+// 
+// 		return shader;
 	}
 
-	std::shared_ptr<Shader> Video::CreateShaderFromFile(const char* code, ShaderType type)
+	SharedPtr<Shader> Video::CreateShaderFromFile(const wchar_t* filepath)
 	{
-		if (code == nullptr)
-			return nullptr;
+		if (filepath == nullptr)
+			return SharedPtr<Shader>::EMPTY;
 
-		ID3D10Blob* blob = nullptr;
-		std::shared_ptr<Shader> shader;
-		switch (type)
-		{
-		case ShaderType::Vertex:
-			if (D3DX11CompileFromFile(code, 0, 0, "VShader", "vs_4_0", 0, 0, 0, &blob, 0, 0) == S_OK)
-			{
-				shader = std::make_shared<Shader>();
-				if (_device->CreateVertexShader(blob->GetBufferPointer(), blob->GetBufferSize(), NULL, &shader->_vs) == S_OK)
-				{
-					shader->_blob = blob;
-					shader->_type;
-					return shader;
-				}
-			}
-			break;
+		SharedPtr<Shader> shader(new Shader(this));
+		auto ret = D3DCompileFromFile(filepath, 0, 0, "VShader", "vs_4_0", 0, 0, &shader->_vsBlob, 0);
+		if (ParseReturn(ret))
+			return SharedPtr<Shader>::EMPTY;
 
-		case ShaderType::Pixel:
-			if (D3DX11CompileFromFile(code, 0, 0, "PShader", "ps_4_0", 0, 0, 0, &blob, 0, 0) == S_OK)
-			{
-				shader = std::make_shared<Shader>();
-				if (_device->CreatePixelShader(blob->GetBufferPointer(), blob->GetBufferSize(), NULL, &shader->_ps) == S_OK)
-				{
-					shader->_blob = blob;
-					shader->_type;
-					return shader;
-				}
-			}
-			break;
-		}
+		ret = _device->CreateVertexShader(shader->_vsBlob->GetBufferPointer(), shader->_vsBlob->GetBufferSize(), NULL, &shader->_vs);
+		if (ParseReturn(ret))
+			return SharedPtr<Shader>::EMPTY;
 
-		return nullptr;
+		ret = D3DCompileFromFile(filepath, 0, 0, "PShader", "ps_4_0", 0, 0, &shader->_psBlob, 0);
+		if (ParseReturn(ret))
+			return SharedPtr<Shader>::EMPTY;
+
+		ret = _device->CreatePixelShader(shader->_psBlob->GetBufferPointer(), shader->_psBlob->GetBufferSize(), NULL, &shader->_ps);
+		if (ParseReturn(ret))
+			return SharedPtr<Shader>::EMPTY;
+
+		return shader;
 	}
 
-	std::shared_ptr<VideoBuffer> Video::CreateBuffer(unsigned int size)
+	SharedPtr<VideoBuffer> Video::CreateBuffer(unsigned int size)
 	{
 		D3D11_BUFFER_DESC bd;
 		ZeroMemory(&bd, sizeof(bd));
@@ -205,64 +182,38 @@ namespace uut
 		bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 		bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 
-		auto buffer = std::make_shared<VideoBuffer>();
+		SharedPtr<VideoBuffer> buffer(new VideoBuffer(this));
 		auto ret = _device->CreateBuffer(&bd, NULL, &buffer->_data);
 		if (ParseReturn(ret))
-			return nullptr;
+			return SharedPtr<VideoBuffer>::EMPTY;
 
 		return buffer;
 	}
 
-	std::shared_ptr<BufferLayout> Video::CreateLayout(D3D11_INPUT_ELEMENT_DESC* desc, BYTE count, std::shared_ptr<Shader> shader)
+	bool Video::SetShader(Shader* shader)
 	{
-		auto layout = std::make_shared<BufferLayout>();
-		auto ret = _device->CreateInputLayout(desc, count, shader->_blob->GetBufferPointer(), shader->_blob->GetBufferSize(), &layout->_layout);
-		if (ParseReturn(ret))
-			return nullptr;
-
-		return layout;
-	}
-
-	bool Video::UpdateBuffer(std::shared_ptr<VideoBuffer> buffer, const void* ptr, unsigned int size)
-	{
-		if (!buffer)
+		if (shader == nullptr)
 			return false;
 
-		D3D11_MAPPED_SUBRESOURCE ms;
-		auto ret = _context->Map(buffer->_data, NULL, D3D11_MAP_WRITE_DISCARD, NULL, &ms);
-		if (ParseReturn(ret))
-			return false;
-
-		memcpy(ms.pData, ptr, size);
-		_context->Unmap(buffer->_data, NULL);
-
+		_context->VSSetShader(shader ? shader->_vs : nullptr, 0, 0);
+		_context->PSSetShader(shader ? shader->_ps : nullptr, 0, 0);
 		return true;
 	}
 
-	bool Video::SetShader(ShaderType type, std::shared_ptr<Shader> shader)
+	bool Video::SetLayout(BufferLayout* layout)
 	{
-		switch (type)
-		{
-		case ShaderType::Vertex:
-			_context->VSSetShader(shader ? shader->_vs : nullptr, 0, 0);
-			break;
+		if (layout == nullptr)
+			return false;
 
-		case ShaderType::Pixel:
-			_context->PSSetShader(shader ? shader->_ps : nullptr, 0, 0);
-			break;
-		}
-
-		return true;
-	}
-
-	bool Video::SetLayout(std::shared_ptr<BufferLayout> layout)
-	{
 		_context->IASetInputLayout(layout->_layout);
 		return true;
 	}
 
-	bool Video::SetBuffer(std::shared_ptr<VideoBuffer> buffer, unsigned int stride, unsigned int offset)
+	bool Video::SetBuffer(VideoBuffer* buffer, unsigned int stride, unsigned int offset)
 	{
+		if (buffer == nullptr)
+			return false;
+
 		UINT _stride = stride;
 		UINT _offset = offset;
 		_context->IASetVertexBuffers(0, 1, &buffer->_data, &_stride, &_offset);

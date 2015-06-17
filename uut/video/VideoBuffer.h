@@ -1,16 +1,23 @@
 #pragma once
-#include "VideoDefs.h"
+#include "VideoObject.h"
 
 namespace uut
 {
-	class VideoBuffer
+	class VideoBuffer : public VideoObject
 	{
 	public:
-		VideoBuffer();
+		VideoBuffer(Video* video);
 		virtual ~VideoBuffer();
+
+		bool Update(const void* ptr, unsigned int size);
+		void* Map();
+		void Unmap();
+
+		bool IsMapped() const { return _mapped; }
 
 	protected:
 		ID3D11Buffer* _data;
+		bool _mapped;
 
 		friend class Video;
 	};

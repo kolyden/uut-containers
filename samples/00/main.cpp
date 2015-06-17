@@ -2,29 +2,12 @@
 #include "video/Shader.h"
 #include "video/VideoBuffer.h"
 #include "video/BufferLayout.h"
-
-static const char* g_shader = 
-	"struct VOut"
-	"{"
-	"	float4 position : SV_POSITION;"
-	"	float4 color : COLOR;"
-	"};"
-	"VOut VShader(float4 position : POSITION, float4 color : COLOR)"
-	"{"
-	"	VOut output;"
-	"	output.position = position;"
-	"	output.color = color;"
-	"	return output;"
-	"}"
-	"float4 PShader(float4 position : SV_POSITION, float4 color : COLOR) : SV_TARGET"
-	"{"
-	"	return color;"
-	"}";
+#include "video/Color.h"
 
 struct VERTEX
 {
-	FLOAT X, Y, Z;      // position
-	D3DXCOLOR Color;    // color
+	FLOAT x, y, z;      // position
+	float color[4];    // color
 };
 
 D3D11_INPUT_ELEMENT_DESC ied[] =
@@ -35,9 +18,9 @@ D3D11_INPUT_ELEMENT_DESC ied[] =
 
 static const VERTEX g_verts[] =
 {
-	{ 0.0f, 0.5f, 0.0f, D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f) },
-	{ 0.45f, -0.5, 0.0f, D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f) },
-	{ -0.45f, -0.5f, 0.0f, D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f) }
+	{ 0.0f, 0.5f, 0.0f, { 1.0f, 0.0f, 0.0f, 1.0f } },
+	{ 0.45f, -0.5, 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
+	{ -0.45f, -0.5f, 0.0f, { 0.0f, 0.0f, 1.0f, 1.0f } }
 };
 
 int WINAPI WinMain(HINSTANCE hInstance,
@@ -45,29 +28,28 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	LPSTR lpCmdLine,
 	int nCmdShow)
 {
-	auto video = uut::Video();
-	video.SetMode(800, 600, false);
+	auto video = std::make_shared<uut::Video>();
+	video->SetMode(800, 600, false);
 
 	auto color = uut::Color(0.0f, 0.2f, 0.4f);
 
-	auto vs = video.CreateShaderFromFile("shaders.shader", uut::ShaderType::Vertex);
-	auto ps = video.CreateShaderFromFile("shaders.shader", uut::ShaderType::Pixel);
-	video.SetShader(uut::ShaderType::Vertex, vs);
-	video.SetShader(uut::ShaderType::Pixel, ps);
+	auto shader = video->CreateShaderFromFile(L"Data/Shaders/simple.shader");
+	video->SetShader(shader);
 
-	auto layout = video.CreateLayout(ied, 2, vs);
-	video.SetLayout(layout);
+	auto layout = shader->CreateLayout(ied, 2);
+	video->SetLayout(layout);
 
-	auto buf = video.CreateBuffer(sizeof(VERTEX)* 3);
-	video.UpdateBuffer(buf, g_verts, sizeof(VERTEX)* 3);
+	auto buf = video->CreateBuffer(sizeof(VERTEX)* 3);
+	buf->Update(g_verts, sizeof(VERTEX)* 3);
 
-	while (video.MessagePool())
+	while (video->MessagePool())
 	{
-		video.ClearTarget(color);
-		video.SetBuffer(buf, sizeof(VERTEX), 0);
-		video.SetTopology(uut::VertexTopology::TriangleList);
-		video.Draw(3, 0);
-		video.Present();
+		video->ClearTarget(color);
+		video->SetBuffer(buf, sizeof(VERTEX), 0);
+		video->SetTopology(uut::VertexTopology::TriangleList);
+		video->Draw(3, 0);
+
+		video->Present();
 	}
 
 	return 0;

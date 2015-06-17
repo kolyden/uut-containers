@@ -2,8 +2,9 @@
 
 namespace uut
 {
-	BufferLayout::BufferLayout()
-		: _layout(0)
+	BufferLayout::BufferLayout(Video* video)
+		: VideoObject(video)
+		, _layout(0)
 	{
 	}
 

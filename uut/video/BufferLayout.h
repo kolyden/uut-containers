@@ -1,17 +1,18 @@
 #pragma once
-#include "VideoDefs.h"
+#include "VideoObject.h"
 
 namespace uut
 {
-	class BufferLayout
+	class BufferLayout : public VideoObject
 	{
 	public:
-		BufferLayout();
+		BufferLayout(Video* video);
 		virtual ~BufferLayout();
 
 	protected:
 		ID3D11InputLayout* _layout;
 
 		friend class Video;
+		friend class Shader;
 	};
 }
