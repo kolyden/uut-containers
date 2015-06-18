@@ -26,13 +26,11 @@ namespace uut
 		void ClearTarget(const Color& color);
 		void Present();
 
-		SharedPtr<Shader> CreateShaderFromMemory(const char* code, int size = -1);
-		SharedPtr<Shader> CreateShaderFromFile(const wchar_t* filepath);
+		SharedPtr<Shader> CreateShaderFromMemory(const VertexDeclare* decl, uint8_t count, const char* code, int size = -1);
 
 		SharedPtr<VertexBuffer> CreateBuffer(unsigned int size);
 
 		bool SetShader(Shader* shader);
-		bool SetLayout(VertexLayout* layout);
 		bool SetBuffer(VertexBuffer* buffer, unsigned int stride, unsigned int offset);
 		bool SetTopology(VertexTopology topology);
 

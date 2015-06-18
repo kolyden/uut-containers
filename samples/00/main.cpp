@@ -1,9 +1,26 @@
 #include "video/Video.h"
 #include "video/Shader.h"
 #include "video/VertexBuffer.h"
-#include "video/VertexLayout.h"
 #include "video/Color.h"
 #include "math/Vector3.h"
+
+static const char* g_shader =
+	"struct VOut \
+	{ \
+		float4 position : SV_POSITION; \
+		float4 color : COLOR; \
+	}; \
+	VOut VShader(float4 position : POSITION, float4 color : COLOR) \
+	{ \
+		VOut output; \
+		output.position = position; \
+		output.color = color; \
+		return output; \
+	} \
+	float4 PShader(float4 position : SV_POSITION, float4 color : COLOR) : SV_TARGET \
+	{ \
+		return color; \
+	}";
 
 struct VERTEX
 {
@@ -40,11 +57,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	auto color = uut::Color(0.0f, 0.2f, 0.4f);
 
-	auto shader = video->CreateShaderFromFile(L"Data/Shaders/simple.shader");
+	auto shader = video->CreateShaderFromMemory(g_decl, 2, g_shader);
 	video->SetShader(shader);
-
-	auto layout = shader->CreateLayout(g_decl, 2);
-	video->SetLayout(layout);
 
 	auto buf = video->CreateBuffer(sizeof(VERTEX)* 3);
 	buf->Update(g_verts, sizeof(VERTEX)* 3);

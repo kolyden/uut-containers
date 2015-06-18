@@ -3,7 +3,6 @@
 #include "Texture.h"
 #include "Shader.h"
 #include "VertexBuffer.h"
-#include "VertexLayout.h"
 
 namespace uut
 {
@@ -117,43 +116,46 @@ namespace uut
 		auto ret = _swapChain->Present(0, 0);
 	}
 
-	SharedPtr<Shader> Video::CreateShaderFromMemory(const char* code, int size /* = -1 */)
+	static DXGI_FORMAT SelectFormat(VertexType type, uint8_t count)
 	{
-// 		if (code == nullptr)
-			return SharedPtr<Shader>::EMPTY;
+		switch (type)
+		{
+		case uut::VertexType::SByte:
+			break;
 
-// 		if (size < 0)
-// 			size = strlen(code);
-// 		if (size == 0)
-// 			return SharedPtr<Shader>::EMPTY;
-// 
-// 		SharedPtr<Shader> shader(new Shader(this));
-// 		auto ret = D3DX11CompileFromMemory(code, size, "shader", 0, 0, "VShader", "vs_4_0", 0, 0, 0, &shader->_blob, 0, 0);
-// 		if (ParseReturn(ret))
-// 			return SharedPtr<Shader>::EMPTY;
-// 
-// 		ret = _device->CreateVertexShader(shader->_blob->GetBufferPointer(), shader->_blob->GetBufferSize(), NULL, &shader->_vs);
-// 		if (ParseReturn(ret))
-// 			return SharedPtr<Shader>::EMPTY;
-// 
-// 		ret = D3DX11CompileFromMemory(code, size, "shader", 0, 0, "PShader", "ps_4_0", 0, 0, 0, &shader->_blob, 0, 0);
-// 		if (ParseReturn(ret))
-// 			return SharedPtr<Shader>::EMPTY;
-// 
-// 		ret = _device->CreatePixelShader(shader->_blob->GetBufferPointer(), shader->_blob->GetBufferSize(), NULL, &shader->_ps);
-// 		if (ParseReturn(ret))
-// 			return SharedPtr<Shader>::EMPTY;
-// 
-// 		return shader;
+		case uut::VertexType::UByte:
+			break;
+
+		case uut::VertexType::SShort:
+			break;
+
+		case uut::VertexType::UShort:
+			break;
+
+		case uut::VertexType::Float:
+			switch (count)
+			{
+			case 3:return DXGI_FORMAT_R32G32B32_FLOAT;
+			case 4:return DXGI_FORMAT_R32G32B32A32_FLOAT;
+			}
+			break;
+		}
+
+		return DXGI_FORMAT_UNKNOWN;
 	}
 
-	SharedPtr<Shader> Video::CreateShaderFromFile(const wchar_t* filepath)
+	SharedPtr<Shader> Video::CreateShaderFromMemory(const VertexDeclare* decl, uint8_t count, const char* code, int size /* = -1 */)
 	{
-		if (filepath == nullptr)
+		if (code == nullptr)
+			return SharedPtr<Shader>::EMPTY;
+
+		if (size < 0)
+			size = strlen(code);
+		if (code == 0)
 			return SharedPtr<Shader>::EMPTY;
 
 		SharedPtr<Shader> shader(new Shader(this));
-		auto ret = D3DCompileFromFile(filepath, 0, 0, "VShader", "vs_4_0", 0, 0, &shader->_vsBlob, 0);
+		auto ret = D3DCompile(code, size, "memory", 0, 0, "VShader", "vs_4_0", 0, 0, &shader->_vsBlob, 0);
 		if (ParseReturn(ret))
 			return SharedPtr<Shader>::EMPTY;
 
@@ -161,12 +163,37 @@ namespace uut
 		if (ParseReturn(ret))
 			return SharedPtr<Shader>::EMPTY;
 
-		ret = D3DCompileFromFile(filepath, 0, 0, "PShader", "ps_4_0", 0, 0, &shader->_psBlob, 0);
+		ret = D3DCompile(code, size, "memory", 0, 0, "PShader", "ps_4_0", 0, 0, &shader->_psBlob, 0);
 		if (ParseReturn(ret))
 			return SharedPtr<Shader>::EMPTY;
 
 		ret = _device->CreatePixelShader(shader->_psBlob->GetBufferPointer(), shader->_psBlob->GetBufferSize(), NULL, &shader->_ps);
 		if (ParseReturn(ret))
+			return SharedPtr<Shader>::EMPTY;
+
+		//////////////////////////////////////////////////////////////////////////
+		static const char* semanticName[3] = { "POSITION", "TEXCOORDS", "COLOR" };
+
+		shader->_declare = List<VertexDeclare>(decl, count);
+
+		List<D3D11_INPUT_ELEMENT_DESC> desc;
+		desc.SetSize(count);
+
+		for (int i = 0; i < count; i++)
+		{
+			desc[i].SemanticName = semanticName[(int)decl[i]._usage];
+			desc[i].SemanticIndex = 0;
+			desc[i].Format = SelectFormat(decl[i]._type, decl[i]._count);
+			desc[i].InputSlot = 0;
+			desc[i].AlignedByteOffset = decl[i]._offset;
+			desc[i].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+			desc[i].InstanceDataStepRate = 0;
+		}
+
+		ret = _device->CreateInputLayout(desc.GetData(), count,
+			shader->_vsBlob->GetBufferPointer(),
+			shader->_vsBlob->GetBufferSize(), &shader->_layout);
+		if (ret != S_OK)
 			return SharedPtr<Shader>::EMPTY;
 
 		return shader;
@@ -197,15 +224,8 @@ namespace uut
 
 		_context->VSSetShader(shader ? shader->_vs : nullptr, 0, 0);
 		_context->PSSetShader(shader ? shader->_ps : nullptr, 0, 0);
-		return true;
-	}
+		_context->IASetInputLayout(shader->_layout);
 
-	bool Video::SetLayout(VertexLayout* layout)
-	{
-		if (layout == nullptr)
-			return false;
-
-		_context->IASetInputLayout(layout->_layout);
 		return true;
 	}
 

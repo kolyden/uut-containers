@@ -1,6 +1,5 @@
 #include "Shader.h"
 #include "Video.h"
-#include "VertexLayout.h"
 
 namespace uut
 {
@@ -28,6 +27,7 @@ namespace uut
 		, _psBlob(nullptr)
 		, _vs(nullptr)
 		, _ps(nullptr)
+		, _layout(0)
 	{
 	}
 
@@ -74,7 +74,7 @@ namespace uut
 	{
 		return _vs == nullptr && _ps == nullptr;
 	}
-
+/*
 	static DXGI_FORMAT SelectFormat(VertexType type, uint8_t count)
 	{
 		switch (type)
@@ -102,7 +102,7 @@ namespace uut
 
 		return DXGI_FORMAT_UNKNOWN;
 	}
-
+	
 	SharedPtr<VertexLayout> Shader::CreateLayout(const VertexDeclare* decl, uint8_t count)
 	{
 		static const char* semanticName[3] = { "POSITION", "TEXCOORDS", "COLOR" };
@@ -134,5 +134,5 @@ namespace uut
 			return SharedPtr<VertexLayout>::EMPTY;
 
 		return layout;
-	}
+	}*/
 }

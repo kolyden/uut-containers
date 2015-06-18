@@ -1,5 +1,6 @@
 #pragma once
 #include "VideoObject.h"
+#include "containers/uutList.h"
 
 namespace uut
 {
@@ -14,13 +15,13 @@ namespace uut
 		void Clear();
 		bool IsEmpty() const;
 
-		SharedPtr<VertexLayout> CreateLayout(const VertexDeclare* decl, uint8_t count);
-
 	protected:
 		ID3D10Blob* _vsBlob;
 		ID3D10Blob* _psBlob;
 		ID3D11VertexShader* _vs;
 		ID3D11PixelShader* _ps;
+		ID3D11InputLayout* _layout;
+		List<VertexDeclare> _declare;
 
 		friend class Video;
 	};

@@ -13,7 +13,6 @@
   <ItemGroup>
     <ClCompile Include="..\uut\core\Object.cpp" />
     <ClCompile Include="..\uut\core\RefCounted.cpp" />
-    <ClCompile Include="..\uut\video\VertexLayout.cpp" />
     <ClCompile Include="..\uut\video\Color.cpp" />
     <ClCompile Include="..\uut\video\Color32.cpp" />
     <ClCompile Include="..\uut\video\Shader.cpp" />
@@ -34,7 +33,6 @@
     <ClInclude Include="..\uut\math\Vector2.h" />
     <ClInclude Include="..\uut\math\Vector3.h" />
     <ClInclude Include="..\uut\video\VertexBuffer.h" />
-    <ClInclude Include="..\uut\video\VertexLayout.h" />
     <ClInclude Include="..\uut\video\Color.h" />
     <ClInclude Include="..\uut\video\Color32.h" />
     <ClInclude Include="..\uut\video\Shader.h" />

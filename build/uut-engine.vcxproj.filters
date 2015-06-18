@@ -45,9 +45,6 @@
     <ClCompile Include="..\uut\video\VertexBuffer.cpp">
       <Filter>video</Filter>
     </ClCompile>
-    <ClCompile Include="..\uut\video\VertexLayout.cpp">
-      <Filter>video</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\uut\video\Video.h">
@@ -85,9 +82,6 @@
     </ClInclude>
     <ClInclude Include="..\uut\core\Object.h">
       <Filter>core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\uut\video\VertexLayout.h">
-      <Filter>video</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\containers\uutList.h">
       <Filter>containers</Filter>
