@@ -1,5 +1,5 @@
-#include "Shader.h"
-#include "Video.h"
+#include "uutShader.h"
+#include "uutVideo.h"
 
 namespace uut
 {

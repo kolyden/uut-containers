@@ -1,6 +1,6 @@
 #pragma once
-#include "core/Object.h"
-#include "VideoDefs.h"
+#include "core/uutObject.h"
+#include "uutVideoDefs.h"
 
 namespace uut
 {

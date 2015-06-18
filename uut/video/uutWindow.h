@@ -1,5 +1,5 @@
 #pragma once
-#include "core/Defs.h"
+#include "core/uutDefs.h"
 
 namespace uut
 {

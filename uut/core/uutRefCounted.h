@@ -20,7 +20,7 @@
 // THE SOFTWARE.
 //
 #pragma once
-#include "Defs.h"
+#include "uutDefs.h"
 
 namespace uut
 {

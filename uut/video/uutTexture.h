@@ -1,7 +1,7 @@
 #pragma once
-#include "core/Defs.h"
+#include "core/uutDefs.h"
 #include <d3d11.h>
-\
+
 namespace uut
 {
 	class Texture

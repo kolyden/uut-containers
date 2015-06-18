@@ -1,14 +1,14 @@
 #pragma once
-#include "core/Object.h"
-#include "VideoDefs.h"
-#include "Color.h"
+#include "core/uutObject.h"
+#include "uutVideoDefs.h"
+#include "uutColor.h"
 
 namespace uut
 {
 	class Window;
 	class Texture;
 	class Shader;
-	class VertexBuffer;
+	class RenderBuffer;
 	class VertexLayout;
 
 	class Video : public Object
@@ -28,10 +28,10 @@ namespace uut
 
 		SharedPtr<Shader> CreateShaderFromMemory(const VertexDeclare* decl, uint8_t count, const char* code, int size = -1);
 
-		SharedPtr<VertexBuffer> CreateBuffer(unsigned int size);
+		SharedPtr<RenderBuffer> CreateBuffer(unsigned int size);
 
 		bool SetShader(Shader* shader);
-		bool SetBuffer(VertexBuffer* buffer, unsigned int stride, unsigned int offset);
+		bool SetBuffer(RenderBuffer* buffer, unsigned int stride, unsigned int offset);
 		bool SetTopology(VertexTopology topology);
 
 		bool Draw(unsigned int count, unsigned int start);

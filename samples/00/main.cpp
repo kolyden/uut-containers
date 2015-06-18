@@ -1,8 +1,8 @@
-#include "video/Video.h"
-#include "video/Shader.h"
-#include "video/VertexBuffer.h"
-#include "video/Color.h"
-#include "math/Vector3.h"
+#include "video/uutVideo.h"
+#include "video/uutShader.h"
+#include "video/uutRenderBuffer.h"
+#include "video/uutColor.h"
+#include "math/uutVector3.h"
 
 static const char* g_shader =
 	"struct VOut \
@@ -22,17 +22,11 @@ static const char* g_shader =
 		return color; \
 	}";
 
-struct VERTEX
+struct MyVertex
 {
-	uut::Vector3 pos;      // position
-	uut::Color color;    // color
+	uut::Vector3 pos;
+	uut::Color color;
 };
-
-// D3D11_INPUT_ELEMENT_DESC ied[] =
-// {
-// 	{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-// 	{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-// };
 
 uut::VertexDeclare g_decl[] =
 {
@@ -40,7 +34,7 @@ uut::VertexDeclare g_decl[] =
 	{ 0, uut::VertexUsage::Color, uut::VertexType::Float, 4, sizeof(float)* 3 },
 };
 
-static const VERTEX g_verts[] =
+static const MyVertex g_verts[] =
 {
 	{ uut::Vector3(0.00f, 0.5f, 0.0f), uut::Color(1.0f, 0.0f, 0.0f, 1.0f) },
 	{ uut::Vector3(0.45f, -0.5f, 0.0f), uut::Color(0.0f, 1.0f, 0.0f, 1.0f) },
@@ -60,13 +54,13 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	auto shader = video->CreateShaderFromMemory(g_decl, 2, g_shader);
 	video->SetShader(shader);
 
-	auto buf = video->CreateBuffer(sizeof(VERTEX)* 3);
-	buf->Update(g_verts, sizeof(VERTEX)* 3);
+	auto buf = video->CreateBuffer(sizeof(MyVertex)* 3);
+	buf->Update(g_verts, sizeof(MyVertex)* 3);
 
 	while (video->MessagePool())
 	{
 		video->ClearTarget(color);
-		video->SetBuffer(buf, sizeof(VERTEX), 0);
+		video->SetBuffer(buf, sizeof(MyVertex), 0);
 		video->SetTopology(uut::VertexTopology::TriangleList);
 		video->Draw(3, 0);
 

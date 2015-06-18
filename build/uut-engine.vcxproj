@@ -11,36 +11,36 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\uut\core\Object.cpp" />
-    <ClCompile Include="..\uut\core\RefCounted.cpp" />
-    <ClCompile Include="..\uut\video\Color.cpp" />
-    <ClCompile Include="..\uut\video\Color32.cpp" />
-    <ClCompile Include="..\uut\video\Shader.cpp" />
-    <ClCompile Include="..\uut\video\Texture.cpp" />
-    <ClCompile Include="..\uut\video\Video.cpp" />
-    <ClCompile Include="..\uut\video\VertexBuffer.cpp" />
-    <ClCompile Include="..\uut\video\VideoObject.cpp" />
-    <ClCompile Include="..\uut\video\Window.cpp" />
+    <ClCompile Include="..\uut\core\uutObject.cpp" />
+    <ClCompile Include="..\uut\core\uutRefCounted.cpp" />
+    <ClCompile Include="..\uut\video\uutColor.cpp" />
+    <ClCompile Include="..\uut\video\uutColor32.cpp" />
+    <ClCompile Include="..\uut\video\uutShader.cpp" />
+    <ClCompile Include="..\uut\video\uutTexture.cpp" />
+    <ClCompile Include="..\uut\video\uutVideo.cpp" />
+    <ClCompile Include="..\uut\video\uutRenderBuffer.cpp" />
+    <ClCompile Include="..\uut\video\uutVideoObject.cpp" />
+    <ClCompile Include="..\uut\video\uutWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\uut\containers\uutArray.h" />
     <ClInclude Include="..\uut\containers\uutDictionary.h" />
     <ClInclude Include="..\uut\containers\uutList.h" />
-    <ClInclude Include="..\uut\core\Defs.h" />
-    <ClInclude Include="..\uut\core\Object.h" />
-    <ClInclude Include="..\uut\core\Ptr.h" />
-    <ClInclude Include="..\uut\core\RefCounted.h" />
-    <ClInclude Include="..\uut\math\Vector2.h" />
-    <ClInclude Include="..\uut\math\Vector3.h" />
-    <ClInclude Include="..\uut\video\VertexBuffer.h" />
-    <ClInclude Include="..\uut\video\Color.h" />
-    <ClInclude Include="..\uut\video\Color32.h" />
-    <ClInclude Include="..\uut\video\Shader.h" />
-    <ClInclude Include="..\uut\video\Texture.h" />
-    <ClInclude Include="..\uut\video\Video.h" />
-    <ClInclude Include="..\uut\video\VideoDefs.h" />
-    <ClInclude Include="..\uut\video\VideoObject.h" />
-    <ClInclude Include="..\uut\video\Window.h" />
+    <ClInclude Include="..\uut\core\uutDefs.h" />
+    <ClInclude Include="..\uut\core\uutObject.h" />
+    <ClInclude Include="..\uut\core\uutPtr.h" />
+    <ClInclude Include="..\uut\core\uutRefCounted.h" />
+    <ClInclude Include="..\uut\math\uutVector2.h" />
+    <ClInclude Include="..\uut\math\uutVector3.h" />
+    <ClInclude Include="..\uut\video\uutRenderBuffer.h" />
+    <ClInclude Include="..\uut\video\uutColor.h" />
+    <ClInclude Include="..\uut\video\uutColor32.h" />
+    <ClInclude Include="..\uut\video\uutShader.h" />
+    <ClInclude Include="..\uut\video\uutTexture.h" />
+    <ClInclude Include="..\uut\video\uutVideo.h" />
+    <ClInclude Include="..\uut\video\uutVideoDefs.h" />
+    <ClInclude Include="..\uut\video\uutVideoObject.h" />
+    <ClInclude Include="..\uut\video\uutWindow.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DACB1596-24F1-4DDD-B842-CA03959AF88B}</ProjectGuid>

@@ -1,8 +1,8 @@
-#include "Video.h"
-#include "Window.h"
-#include "Texture.h"
-#include "Shader.h"
-#include "VertexBuffer.h"
+#include "uutVideo.h"
+#include "uutWindow.h"
+#include "uutTexture.h"
+#include "uutShader.h"
+#include "uutRenderBuffer.h"
 
 namespace uut
 {
@@ -199,7 +199,7 @@ namespace uut
 		return shader;
 	}
 
-	SharedPtr<VertexBuffer> Video::CreateBuffer(unsigned int size)
+	SharedPtr<RenderBuffer> Video::CreateBuffer(unsigned int size)
 	{
 		D3D11_BUFFER_DESC bd;
 		ZeroMemory(&bd, sizeof(bd));
@@ -209,10 +209,10 @@ namespace uut
 		bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 		bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 
-		SharedPtr<VertexBuffer> buffer(new VertexBuffer(this));
+		SharedPtr<RenderBuffer> buffer(new RenderBuffer(this));
 		auto ret = _device->CreateBuffer(&bd, NULL, &buffer->_data);
 		if (ParseReturn(ret))
-			return SharedPtr<VertexBuffer>::EMPTY;
+			return SharedPtr<RenderBuffer>::EMPTY;
 
 		return buffer;
 	}
@@ -229,7 +229,7 @@ namespace uut
 		return true;
 	}
 
-	bool Video::SetBuffer(VertexBuffer* buffer, unsigned int stride, unsigned int offset)
+	bool Video::SetBuffer(RenderBuffer* buffer, unsigned int stride, unsigned int offset)
 	{
 		if (buffer == nullptr)
 			return false;

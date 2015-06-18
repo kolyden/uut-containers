@@ -15,74 +15,38 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\uut\video\Video.cpp">
-      <Filter>video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\uut\video\Texture.cpp">
-      <Filter>video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\uut\video\Shader.cpp">
-      <Filter>video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\uut\video\Color.cpp">
-      <Filter>video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\uut\video\Window.cpp">
-      <Filter>video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\uut\video\Color32.cpp">
-      <Filter>video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\uut\video\VideoObject.cpp">
-      <Filter>video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\uut\core\RefCounted.cpp">
+    <ClCompile Include="..\uut\core\uutObject.cpp">
       <Filter>core</Filter>
     </ClCompile>
-    <ClCompile Include="..\uut\core\Object.cpp">
+    <ClCompile Include="..\uut\core\uutRefCounted.cpp">
       <Filter>core</Filter>
     </ClCompile>
-    <ClCompile Include="..\uut\video\VertexBuffer.cpp">
+    <ClCompile Include="..\uut\video\uutColor.cpp">
+      <Filter>video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\video\uutColor32.cpp">
+      <Filter>video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\video\uutShader.cpp">
+      <Filter>video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\video\uutTexture.cpp">
+      <Filter>video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\video\uutVideo.cpp">
+      <Filter>video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\video\uutVideoObject.cpp">
+      <Filter>video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\video\uutWindow.cpp">
+      <Filter>video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\video\uutRenderBuffer.cpp">
       <Filter>video</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\uut\video\Video.h">
-      <Filter>video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\uut\core\Defs.h">
-      <Filter>core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\uut\video\Texture.h">
-      <Filter>video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\uut\video\Shader.h">
-      <Filter>video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\uut\video\Color.h">
-      <Filter>video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\uut\video\VideoDefs.h">
-      <Filter>video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\uut\video\Window.h">
-      <Filter>video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\uut\video\Color32.h">
-      <Filter>video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\uut\video\VideoObject.h">
-      <Filter>video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\uut\core\Ptr.h">
-      <Filter>core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\uut\core\RefCounted.h">
-      <Filter>core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\uut\core\Object.h">
-      <Filter>core</Filter>
-    </ClInclude>
     <ClInclude Include="..\uut\containers\uutList.h">
       <Filter>containers</Filter>
     </ClInclude>
@@ -92,13 +56,49 @@
     <ClInclude Include="..\uut\containers\uutDictionary.h">
       <Filter>containers</Filter>
     </ClInclude>
-    <ClInclude Include="..\uut\math\Vector2.h">
+    <ClInclude Include="..\uut\core\uutDefs.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\core\uutObject.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\core\uutPtr.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\core\uutRefCounted.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\math\uutVector2.h">
       <Filter>math</Filter>
     </ClInclude>
-    <ClInclude Include="..\uut\math\Vector3.h">
+    <ClInclude Include="..\uut\math\uutVector3.h">
       <Filter>math</Filter>
     </ClInclude>
-    <ClInclude Include="..\uut\video\VertexBuffer.h">
+    <ClInclude Include="..\uut\video\uutColor.h">
+      <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\video\uutColor32.h">
+      <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\video\uutShader.h">
+      <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\video\uutTexture.h">
+      <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\video\uutVideo.h">
+      <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\video\uutVideoDefs.h">
+      <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\video\uutVideoObject.h">
+      <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\video\uutWindow.h">
+      <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\video\uutRenderBuffer.h">
       <Filter>video</Filter>
     </ClInclude>
   </ItemGroup>

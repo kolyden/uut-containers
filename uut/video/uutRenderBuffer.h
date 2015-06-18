@@ -1,13 +1,13 @@
 #pragma once
-#include "VideoObject.h"
+#include "uutVideoObject.h"
 
 namespace uut
 {
-	class VertexBuffer : public VideoObject
+	class RenderBuffer : public VideoObject
 	{
 	public:
-		VertexBuffer(Video* video);
-		virtual ~VertexBuffer();
+		RenderBuffer(Video* video);
+		virtual ~RenderBuffer();
 
 		bool Update(const void* ptr, unsigned int size);
 		void* Map();

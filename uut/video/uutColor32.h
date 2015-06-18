@@ -1,5 +1,5 @@
 #pragma once
-#include "VideoDefs.h"
+#include "uutVideoDefs.h"
 
 namespace uut
 {

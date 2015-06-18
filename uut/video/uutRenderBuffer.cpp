@@ -1,22 +1,22 @@
-#include "VertexBuffer.h"
-#include "Video.h"
+#include "uutRenderBuffer.h"
+#include "uutVideo.h"
 
 namespace uut
 {
-	VertexBuffer::VertexBuffer(Video* video)
+	RenderBuffer::RenderBuffer(Video* video)
 		: VideoObject(video)
 		, _data(nullptr)
 		, _mapped(false)
 	{
 	}
 
-	VertexBuffer::~VertexBuffer()
+	RenderBuffer::~RenderBuffer()
 	{
 		if (_data)
 			_data->Release();
 	}
 
-	bool VertexBuffer::Update(const void* ptr, unsigned int size)
+	bool RenderBuffer::Update(const void* ptr, unsigned int size)
 	{
 		if (_data == nullptr)
 			return false;
@@ -32,7 +32,7 @@ namespace uut
 		return true;
 	}
 
-	void* VertexBuffer::Map()
+	void* RenderBuffer::Map()
 	{
 		if (_data == nullptr)
 			return nullptr;
@@ -46,7 +46,7 @@ namespace uut
 		return ms.pData;
 	}
 
-	void VertexBuffer::Unmap()
+	void RenderBuffer::Unmap()
 	{
 		if (!_mapped)
 			return;
