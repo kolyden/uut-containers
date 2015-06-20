@@ -1,13 +1,13 @@
 #pragma once
-#include "VideoObject.h"
-#include "Vector3.h"
-#include "Vector2.h"
-#include "Color.h"
+#include "uutVideoObject.h"
+#include "uutColor.h"
+#include "math/uutVector3.h"
+#include "math/uutVector2.h"
+#include "containers/uutList.h"
 
 namespace uut
 {
-	class VertexBuffer;
-	class VertexLayout;
+	class RenderBuffer;
 	class Shader;
 
 	class Geometry : public VideoObject
@@ -22,14 +22,15 @@ namespace uut
 		const List<Color>& GetColors() const;
 
 		bool Generate();
-		SharedPtr<VertexBuffer> GetBuffer() { return _buffer; }
+		void Draw();
+
+		Shader* GetShader() const { return _shader; }
+		RenderBuffer* GetBuffer() const { return _buffer; }
 
 	protected:
 		List<Vector3> _vertices;
 		List<Color> _colors;
-		SharedPtr<Shader> _vshader;
-		SharedPtr<Shader> _pshader;
-		SharedPtr<VertexBuffer> _buffer;
-		SharedPtr<VertexLayout> _layout;
+		SharedPtr<Shader> _shader;
+		SharedPtr<RenderBuffer> _buffer;
 	};
 }

@@ -45,6 +45,9 @@
     <ClCompile Include="..\uut\video\uutRenderBuffer.cpp">
       <Filter>video</Filter>
     </ClCompile>
+    <ClCompile Include="..\uut\video\uutGeometry.cpp">
+      <Filter>video</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\uut\containers\uutList.h">
@@ -99,6 +102,9 @@
       <Filter>video</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\video\uutRenderBuffer.h">
+      <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\video\uutGeometry.h">
       <Filter>video</Filter>
     </ClInclude>
   </ItemGroup>
