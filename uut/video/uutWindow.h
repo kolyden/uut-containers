@@ -1,9 +1,12 @@
 #pragma once
-#include "core/uutDefs.h"
+#include "core/uutObject.h"
+#include "core/uutPtr.h"
 
 namespace uut
 {
-	class Window
+	class Input;
+
+	class Window : public Object
 	{
 	public:
 		Window();
@@ -12,9 +15,12 @@ namespace uut
 
 		HWND GetHWND() const { return _hwnd; }
 
+		Input* GetInput() const;
+
 	protected:
 		HWND _hwnd;
 		WNDCLASSEX _wc;
+		SharedPtr<Input> _input;
 
 		static LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 	};

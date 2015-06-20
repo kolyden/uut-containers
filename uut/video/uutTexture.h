@@ -1,13 +1,12 @@
 #pragma once
-#include "core/uutDefs.h"
-#include <d3d11.h>
+#include "uutVideoObject.h"
 
 namespace uut
 {
-	class Texture
+	class Texture : public VideoObject
 	{
 	public:
-		Texture();
+		Texture(Video* video);
 		virtual ~Texture();
 
 	protected:

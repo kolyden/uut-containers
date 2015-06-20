@@ -2,8 +2,9 @@
 
 namespace uut
 {
-	Texture::Texture()
-		: _data(nullptr)
+	Texture::Texture(Video* video)
+		: VideoObject(video)
+		, _data(nullptr)
 	{
 
 	}
@@ -13,5 +14,4 @@ namespace uut
 		if (_data)
 			_data->Release();
 	}
-
 }

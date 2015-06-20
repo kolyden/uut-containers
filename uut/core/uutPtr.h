@@ -28,7 +28,8 @@ namespace uut
 {
 
 	/// Shared pointer template class with intrusive reference counting.
-	template <class T> class SharedPtr
+	template <class T>
+	class UUT_API SharedPtr
 	{
 	public:
 		/// Construct a null shared pointer.
@@ -190,7 +191,8 @@ namespace uut
 	}
 
 	/// Weak pointer template class with intrusive reference counting. Does not keep the object pointed to alive.
-	template <class T> class WeakPtr
+	template <class T>
+	class UUT_API WeakPtr
 	{
 	public:
 		/// Construct a null weak pointer.
@@ -416,7 +418,7 @@ namespace uut
 	template<class T> const WeakPtr<T> WeakPtr<T>::EMPTY;
 
 	/// Perform a static cast from one weak pointer type to another.
-	template <class T, class U> WeakPtr<T> StaticCast(const WeakPtr<U>& ptr)
+	template <class T, class U> WeakPtr<T> UUT_API StaticCast(const WeakPtr<U>& ptr)
 	{
 		WeakPtr<T> ret;
 		ret.StaticCast(ptr);
@@ -424,7 +426,7 @@ namespace uut
 	}
 
 	/// Perform a dynamic cast from one weak pointer type to another.
-	template <class T, class U> WeakPtr<T> DynamicCast(const WeakPtr<U>& ptr)
+	template <class T, class U> WeakPtr<T> UUT_API DynamicCast(const WeakPtr<U>& ptr)
 	{
 		WeakPtr<T> ret;
 		ret.DynamicCast(ptr);

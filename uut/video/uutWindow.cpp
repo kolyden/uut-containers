@@ -1,10 +1,12 @@
 #include "uutWindow.h"
+#include "input/uutInput.h"
 
 namespace uut
 {
 	Window::Window()
 		: _hwnd(0)
 		, _wc({ 0 })
+		, _input(new Input())
 	{
 	}
 
@@ -48,14 +50,27 @@ namespace uut
 		return true;
 	}
 
+	Input* Window::GetInput() const
+	{
+		return _input;
+	}
+
 	LRESULT CALLBACK Window::WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
-// 		auto video = (Video*)GetWindowLongPtr(hWnd, GWL_USERDATA);
+		auto window = (Window*)GetWindowLongPtr(hWnd, GWL_USERDATA);
 		switch (message)
 		{
 		case WM_DESTROY:
 			PostQuitMessage(0);
 			return 0;
+
+		case WM_KEYDOWN:
+			window->_input->_keys[wParam] = true;
+			break;
+
+		case WM_KEYUP:
+			window->_input->_keys[wParam] = false;
+			break;
 		}
 
 		return DefWindowProc(hWnd, message, wParam, lParam);

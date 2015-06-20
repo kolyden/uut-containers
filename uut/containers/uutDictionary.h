@@ -1,5 +1,5 @@
 #pragma once
-#include "core/Defs.h"
+#include "core/uutDefs.h"
 #include <map>
 
 namespace uut
@@ -8,7 +8,7 @@ namespace uut
 	class UUT_API Dictionary
 	{
 	public:
-		void Add(const TKey& key, const TValue>& val)
+		void Add(const TKey& key, const TValue& val)
 		{
 			_data.insert(std::pair<TKey, TValue>(key, val));
 		}
@@ -37,6 +37,6 @@ namespace uut
 		}
 
 	protected:
-		std::vector<TKey, TValue> _data;
+		std::map<TKey, TValue> _data;
 	};
 }

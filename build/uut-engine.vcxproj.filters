@@ -13,6 +13,9 @@
     <Filter Include="math">
       <UniqueIdentifier>{031138db-71c6-40ed-9422-9ba877b48e87}</UniqueIdentifier>
     </Filter>
+    <Filter Include="input">
+      <UniqueIdentifier>{7616c88e-2946-46a2-84c8-be75fb07e7ca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\uut\core\uutObject.cpp">
@@ -47,6 +50,12 @@
     </ClCompile>
     <ClCompile Include="..\uut\video\uutGeometry.cpp">
       <Filter>video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\video\uutCamera.cpp">
+      <Filter>video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\input\uutInput.cpp">
+      <Filter>input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +115,15 @@
     </ClInclude>
     <ClInclude Include="..\uut\video\uutGeometry.h">
       <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\video\uutCamera.h">
+      <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\input\uutKeycodes.h">
+      <Filter>input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\input\uutInput.h">
+      <Filter>input</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

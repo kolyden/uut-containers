@@ -36,14 +36,16 @@ namespace uut
 
 		bool Draw(unsigned int count, unsigned int start);
 
+		Window* GetWindow() const;
+
 	protected:
 		IDXGISwapChain* _swapChain;
 		ID3D11Device* _device;
 		ID3D11DeviceContext* _context;
 		ID3D11RenderTargetView* _renderTarget;
 
-		std::unique_ptr<Window> _window;
-		std::shared_ptr<Texture> _backBuffer;
+		SharedPtr<Window> _window;
+		SharedPtr<Texture> _backBuffer;
 
 		bool ParseReturn(HRESULT hret);
 

@@ -18,7 +18,7 @@ namespace uut
 	{
 		if (_window == nullptr)
 		{
-			_window = std::make_unique<Window>();
+			_window = new Window();
 			_window->Create(width, height);
 		}
 
@@ -48,7 +48,7 @@ namespace uut
 			NULL,
 			&_context);
 
-		_backBuffer = std::make_shared<Texture>();
+		_backBuffer = new Texture(this);
 		_swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&_backBuffer->_data);
 
 		_device->CreateRenderTargetView(_backBuffer->_data, NULL, &_renderTarget);
@@ -272,6 +272,11 @@ namespace uut
 	{
 		_context->Draw(count, start);
 		return true;
+	}
+
+	Window* Video::GetWindow() const
+	{
+		return _window;
 	}
 
 	//////////////////////////////////////////////////////////////////////////
