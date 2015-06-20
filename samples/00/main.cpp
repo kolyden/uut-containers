@@ -6,6 +6,7 @@
 #include "input/uutInput.h"
 #include "math/uutVector3.h"
 #include "video/uutGeometry.h"
+#include "video/uutCamera.h"
 
 int WINAPI WinMain(HINSTANCE hInstance,
 	HINSTANCE hPrevInstance,
@@ -18,6 +19,9 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	auto input = window->GetInput();
 
 	auto color = uut::Color(0.0f, 0.2f, 0.4f);
+
+	uut::Camera camera;
+	camera.InitProjMatrix(60, 800, 600, 0.1f, 1000.0f);
 
 	uut::SharedPtr<uut::Geometry> geom(new uut::Geometry(video));
 	geom->SetVertices({ uut::Vector3(0.00f, 0.5f, 0.0f), uut::Vector3(0.45f, -0.5f, 0.0f), uut::Vector3(-0.45f, -0.5f, 0.0f) });
