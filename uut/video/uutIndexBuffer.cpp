@@ -3,7 +3,7 @@
 namespace uut
 {
 	IndexBuffer::IndexBuffer(Video* video)
-		: Super(video)
+		: Super(BufferType::Pixel, video)
 	{
 	}
 }

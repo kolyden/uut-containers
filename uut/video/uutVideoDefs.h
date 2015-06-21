@@ -11,6 +11,12 @@ namespace uut
 {
 	using namespace DirectX;
 
+	enum class BufferType
+	{
+		Vertex,
+		Pixel,
+	};
+
 	enum class BufferUsage
 	{
 		Default,

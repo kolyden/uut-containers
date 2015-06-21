@@ -7,8 +7,8 @@
 
 namespace uut
 {
-	class VertexBuffer;
 	class Shader;
+	class VideoBuffer;
 
 	class Geometry : public VideoObject
 	{
@@ -28,14 +28,13 @@ namespace uut
 		void Draw();
 
 		Shader* GetShader() const { return _shader; }
-		VertexBuffer* GetBuffer() const { return _vbuffer; }
 
 	protected:
 		List<Vector3> _vertices;
 		List<Color> _colors;
 		List<uint16_t> _indexes;
 		SharedPtr<Shader> _shader;
-		SharedPtr<VertexBuffer> _vbuffer;
-		SharedPtr<VertexBuffer> _ibuffer;
+		SharedPtr<VideoBuffer> _vbuffer;
+		SharedPtr<VideoBuffer> _ibuffer;
 	};
 }

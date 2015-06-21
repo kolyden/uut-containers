@@ -202,22 +202,37 @@ namespace uut
 		return shader;
 	}
 
-	SharedPtr<VertexBuffer> Video::CreateVertexBuffer(BufferUsage usage, unsigned int size)
+	SharedPtr<VideoBuffer> Video::CreateBuffer(BufferType type, BufferUsage usage, unsigned int size)
 	{
 		D3D11_USAGE convertUsage[2] = { D3D11_USAGE_DEFAULT, D3D11_USAGE_DYNAMIC };
 
+		SharedPtr<VideoBuffer> buffer;
 		D3D11_BUFFER_DESC bd;
 		ZeroMemory(&bd, sizeof(bd));
 
+		switch (type)
+		{
+		case BufferType::Vertex:
+			buffer = new VertexBuffer(this);
+			bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+			break;
+
+		case BufferType::Pixel:
+			buffer = new IndexBuffer(this);
+			bd.BindFlags = D3D11_BIND_INDEX_BUFFER;
+			break;
+
+		default:
+			return SharedPtr<VideoBuffer>::EMPTY;
+		}
+
 		bd.Usage = convertUsage[(int)usage];
 		bd.ByteWidth = size;
-		bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 		bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 
-		SharedPtr<VertexBuffer> buffer(new VertexBuffer(this));
 		auto ret = _device->CreateBuffer(&bd, NULL, &buffer->_data);
 		if (ParseReturn(ret))
-			return SharedPtr<VertexBuffer>::EMPTY;
+			return SharedPtr<VideoBuffer>::EMPTY;
 
 		return buffer;
 	}
@@ -234,14 +249,23 @@ namespace uut
 		return true;
 	}
 
-	bool Video::SetBuffer(VertexBuffer* buffer, unsigned int stride, unsigned int offset)
+	bool Video::SetBuffer(VideoBuffer* buffer, unsigned int stride, unsigned int offset)
 	{
 		if (buffer == nullptr)
 			return false;
 
 		UINT _stride = stride;
 		UINT _offset = offset;
-		_context->IASetVertexBuffers(0, 1, &buffer->_data, &_stride, &_offset);
+		switch (buffer->GetType())
+		{
+		case BufferType::Vertex:
+			_context->IASetVertexBuffers(0, 1, &buffer->_data, &_stride, &_offset);
+			break;
+
+// 		case BufferType::Pixel:
+// 			_context->IASetIndexBuffer(0, 1, &buffer->_data, &_stride, &_offset);
+// 			break;
+		}
 		return true;
 	}
 

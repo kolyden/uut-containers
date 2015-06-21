@@ -3,8 +3,9 @@
 
 namespace uut
 {
-	VideoBuffer::VideoBuffer(Video* video)
+	VideoBuffer::VideoBuffer(BufferType type, Video* video)
 		: Super(video)
+		, _type(type)
 		, _data(nullptr)
 		, _mapped(false)
 	{

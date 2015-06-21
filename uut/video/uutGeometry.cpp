@@ -1,7 +1,7 @@
 #include "uutGeometry.h"
 #include "uutVideo.h"
-#include "uutVertexBuffer.h"
 #include "uutShader.h"
+#include "uutVideoBuffer.h"
 
 namespace uut
 {
@@ -78,7 +78,7 @@ namespace uut
 			_shader = _video->CreateShaderFromMemory(g_decl, 2, g_shader);
 
 		if (!_vbuffer)
-			_vbuffer = _video->CreateVertexBuffer(BufferUsage::Dynamic, 2048);
+			_vbuffer = _video->CreateBuffer(BufferType::Vertex, BufferUsage::Dynamic, 2048);
 
 		if (!_shader || !_vbuffer)// || !_ibuffer)
 			return false;

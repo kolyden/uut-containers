@@ -4,7 +4,7 @@
 namespace uut
 {
 	VertexBuffer::VertexBuffer(Video* video)
-		: Super(video)
+		: Super(BufferType::Vertex, video)
 	{
 	}
 }

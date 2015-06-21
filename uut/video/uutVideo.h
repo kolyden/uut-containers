@@ -8,6 +8,7 @@ namespace uut
 	class Window;
 	class Texture;
 	class Shader;
+	class VideoBuffer;
 	class VertexBuffer;
 	class IndexBuffer;
 
@@ -29,10 +30,10 @@ namespace uut
 
 		SharedPtr<Shader> CreateShaderFromMemory(const VertexDeclare* decl, uint8_t count, const char* code, int size = -1);
 
-		SharedPtr<VertexBuffer> CreateVertexBuffer(BufferUsage usage, unsigned int size);
+		SharedPtr<VideoBuffer> CreateBuffer(BufferType type, BufferUsage usage, unsigned int size);
 
 		bool SetShader(Shader* shader);
-		bool SetBuffer(VertexBuffer* buffer, unsigned int stride, unsigned int offset);
+		bool SetBuffer(VideoBuffer* buffer, unsigned int stride, unsigned int offset);
 		bool SetTopology(VertexTopology topology);
 
 		bool Draw(unsigned int count, unsigned int start);
