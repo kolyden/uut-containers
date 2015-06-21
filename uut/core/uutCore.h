@@ -12,6 +12,8 @@ namespace uut
 	class Core
 	{
 	public:
+		void Init();
+
 		void AddModule(Module* module);
 		Module* GetModule(const HashString& type) const;
 		template<class T>T* GetModule() const { return (T*)GetModule(T::GetTypeNameStatic()); }
@@ -24,6 +26,8 @@ namespace uut
 		static Core* GetMain();
 
 	protected:
+		bool _inited;
+
 		Core();
 
 		Dictionary<HashString, SharedPtr<Module>> _modules;

@@ -19,6 +19,9 @@
     <Filter Include="io">
       <UniqueIdentifier>{3730fcd3-702c-4621-a72c-7c70f838f312}</UniqueIdentifier>
     </Filter>
+    <Filter Include="application">
+      <UniqueIdentifier>{875330f8-70eb-4c32-887a-98fa0d2c4fb2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\uut\core\uutObject.cpp">
@@ -43,9 +46,6 @@
       <Filter>video</Filter>
     </ClCompile>
     <ClCompile Include="..\uut\video\uutVideoObject.cpp">
-      <Filter>video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\uut\video\uutWindow.cpp">
       <Filter>video</Filter>
     </ClCompile>
     <ClCompile Include="..\uut\video\uutGeometry.cpp">
@@ -81,9 +81,6 @@
     <ClCompile Include="..\uut\core\uutCore.cpp">
       <Filter>core</Filter>
     </ClCompile>
-    <ClCompile Include="..\uut\core\uutApplication.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
     <ClCompile Include="..\uut\io\Asset.cpp">
       <Filter>io</Filter>
     </ClCompile>
@@ -95,6 +92,12 @@
     </ClCompile>
     <ClCompile Include="..\uut\video\uutRenderTarget.cpp">
       <Filter>video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\application\uutApplication.cpp">
+      <Filter>application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\application\uutWindow.cpp">
+      <Filter>application</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -146,9 +149,6 @@
     <ClInclude Include="..\uut\video\uutVideoObject.h">
       <Filter>video</Filter>
     </ClInclude>
-    <ClInclude Include="..\uut\video\uutWindow.h">
-      <Filter>video</Filter>
-    </ClInclude>
     <ClInclude Include="..\uut\video\uutGeometry.h">
       <Filter>video</Filter>
     </ClInclude>
@@ -186,9 +186,6 @@
     <ClInclude Include="..\uut\core\uutCore.h">
       <Filter>core</Filter>
     </ClInclude>
-    <ClInclude Include="..\uut\core\uutApplication.h">
-      <Filter>core</Filter>
-    </ClInclude>
     <ClInclude Include="..\uut\io\Asset.h">
       <Filter>io</Filter>
     </ClInclude>
@@ -200,6 +197,15 @@
     </ClInclude>
     <ClInclude Include="..\uut\video\uutRenderTarget.h">
       <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\application\uutApplication.h">
+      <Filter>application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\application\uutWindow.h">
+      <Filter>application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\application\uutEventListener.h">
+      <Filter>application</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

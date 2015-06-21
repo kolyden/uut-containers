@@ -1,5 +1,5 @@
 #include "uutVideo.h"
-#include "uutWindow.h"
+#include "application/uutWindow.h"
 #include "uutTexture.h"
 #include "uutShader.h"
 #include "core/uutCore.h"

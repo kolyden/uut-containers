@@ -4,7 +4,21 @@
 namespace uut
 {
 	Core::Core()
+		: _inited(false)
 	{
+	}
+
+	void Core::Init()
+	{
+		if (_inited)
+			return;
+
+		_inited = true;
+		for (auto& it : _modules)
+			it.second->OnRegister();
+
+		for (auto& it : _modules)
+			it.second->OnInit();
 	}
 
 	void Core::AddModule(Module* module)
@@ -13,6 +27,12 @@ namespace uut
 			return;
 
 		_modules[module->GetTypeName()] = module;
+
+		if (_inited)
+		{
+			module->OnRegister();
+			module->OnInit();
+		}
 	}
 
 	Module* Core::GetModule(const HashString& type) const

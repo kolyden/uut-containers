@@ -28,6 +28,7 @@ namespace uut
 
 		static Core* GetCore();
 		static Module* GetModule(const HashString& type);
+		template<class T>static T* GetModule() { return (T*)GetModule(T::GetTypeNameStatic()); }
 
 	private:
 		friend class Core;

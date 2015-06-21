@@ -1,7 +1,7 @@
 #include "uutApplication.h"
-#include "uutCore.h"
+#include "core/uutCore.h"
+#include "application/uutWindow.h"
 #include "video/uutVideo.h"
-#include "video/uutWindow.h"
 #include "video/uutRenderTarget.h"
 #include "input/uutInput.h"
 
@@ -10,8 +10,10 @@ namespace uut
 	Application::Application()
 	{
 		auto video = new Video();
+		auto input = new Input();
 		auto core = Core::GetMain();
 		core->AddModule(video);
+		core->AddModule(input);
 
 		video->SetMode(800, 600, false);
 		_target = video->CreateRenderTarget();
@@ -21,6 +23,8 @@ namespace uut
 	void Application::Run()
 	{
 		auto core = Core::GetMain();
+		core->Init();
+
 		_window = core->GetModule<Window>();
 		_video = core->GetModule<Video>();
 		_input = core->GetModule<Input>();

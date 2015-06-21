@@ -7,5 +7,15 @@ namespace uut
 	{
 		OBJECT(Module, Object)
 	public:
+
+	protected:
+
+		virtual void OnRegister() {}
+		virtual void OnUnregister() {}
+
+		virtual void OnInit() {}
+		virtual void OnDone() {}
+
+		friend class Core;
 	};
 }

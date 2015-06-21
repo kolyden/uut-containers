@@ -11,9 +11,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\uut\application\uutApplication.cpp" />
+    <ClCompile Include="..\uut\application\uutWindow.cpp" />
     <ClCompile Include="..\uut\containers\uutHashString.cpp" />
     <ClCompile Include="..\uut\containers\uutString.cpp" />
-    <ClCompile Include="..\uut\core\uutApplication.cpp" />
     <ClCompile Include="..\uut\core\uutCore.cpp" />
     <ClCompile Include="..\uut\core\uutModule.cpp" />
     <ClCompile Include="..\uut\core\uutObject.cpp" />
@@ -35,15 +36,16 @@
     <ClCompile Include="..\uut\video\uutVertexBuffer.cpp" />
     <ClCompile Include="..\uut\video\uutVideoBuffer.cpp" />
     <ClCompile Include="..\uut\video\uutVideoObject.cpp" />
-    <ClCompile Include="..\uut\video\uutWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\uut\application\uutApplication.h" />
+    <ClInclude Include="..\uut\application\uutEventListener.h" />
+    <ClInclude Include="..\uut\application\uutWindow.h" />
     <ClInclude Include="..\uut\containers\uutArray.h" />
     <ClInclude Include="..\uut\containers\uutDictionary.h" />
     <ClInclude Include="..\uut\containers\uutHashString.h" />
     <ClInclude Include="..\uut\containers\uutList.h" />
     <ClInclude Include="..\uut\containers\uutString.h" />
-    <ClInclude Include="..\uut\core\uutApplication.h" />
     <ClInclude Include="..\uut\core\uutCore.h" />
     <ClInclude Include="..\uut\core\uutDefs.h" />
     <ClInclude Include="..\uut\core\uutModule.h" />
@@ -72,7 +74,6 @@
     <ClInclude Include="..\uut\video\uutVideoBuffer.h" />
     <ClInclude Include="..\uut\video\uutVideoDefs.h" />
     <ClInclude Include="..\uut\video\uutVideoObject.h" />
-    <ClInclude Include="..\uut\video\uutWindow.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DACB1596-24F1-4DDD-B842-CA03959AF88B}</ProjectGuid>

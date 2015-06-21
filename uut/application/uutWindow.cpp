@@ -1,15 +1,14 @@
 #include "uutWindow.h"
 #include "core/uutCore.h"
 #include "input/uutInput.h"
+#include "application/uutEventListener.h"
 
 namespace uut
 {
 	Window::Window()
 		: _hwnd(0)
 		, _wc({ 0 })
-		, _input(new Input())
 	{
-		GetCore()->AddModule(_input);
 	}
 
 	bool Window::Create(int width, int height)
@@ -72,9 +71,27 @@ namespace uut
 		return true;
 	}
 
-	Input* Window::GetInput() const
+	void Window::AddEventListener(EventListener* listener)
 	{
-		return _input;
+		if (listener == nullptr)
+			return;
+
+		_listeners << listener;
+	}
+
+	void Window::RemoveEventListener(EventListener* listener)
+	{
+		if (listener == nullptr)
+			return;
+
+		for (auto it = _listeners.Begin(); it != _listeners.End(); ++it)
+		{
+			if (*it != listener)
+				continue;
+
+			_listeners.Remove(it);
+			return;
+		}
 	}
 
 	//////////////////////////////////////////////////////////////////////////
@@ -88,11 +105,13 @@ namespace uut
 			return 0;
 
 		case WM_KEYDOWN:
-			window->_input->_keys[wParam] = true;
+			for (int i = 0; i < window->_listeners.Count(); i++)
+				window->_listeners[i]->OnKeyDown((EKeycode)wParam);
 			break;
 
 		case WM_KEYUP:
-			window->_input->_keys[wParam] = false;
+			for (int i = 0; i < window->_listeners.Count(); i++)
+				window->_listeners[i]->OnKeyUp((EKeycode)wParam);
 			break;
 		}
 
