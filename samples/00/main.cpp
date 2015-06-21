@@ -28,7 +28,7 @@ namespace uut
 
 		virtual void OnRender() override
 		{
-			_video->ClearTarget(_color);
+			_target->Clear(_color);
 			_geom->Draw();
 			_video->Present();
 		}

@@ -14,6 +14,8 @@ namespace uut
 
 		bool Create(int width, int height);
 
+		bool MessagePool();
+
 		HWND GetHWND() const { return _hwnd; }
 
 		Input* GetInput() const;

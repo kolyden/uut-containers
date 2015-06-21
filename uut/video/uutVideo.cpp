@@ -5,6 +5,7 @@
 #include "core/uutCore.h"
 #include "uutVertexBuffer.h"
 #include "uutIndexBuffer.h"
+#include "uutRenderTarget.h"
 
 namespace uut
 {
@@ -12,7 +13,6 @@ namespace uut
 		: _swapChain(0)
 		, _device(0)
 		, _context(0)
-		, _renderTarget(0)
 	{
 	}
 
@@ -51,11 +51,11 @@ namespace uut
 			NULL,
 			&_context);
 
-		_backBuffer = new Texture(this);
-		_swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&_backBuffer->_data);
-
-		_device->CreateRenderTargetView(_backBuffer->_data, NULL, &_renderTarget);
-		_context->OMSetRenderTargets(1, &_renderTarget, NULL);
+// 		_renderTarget = new RenderTarget(this);
+// 		_swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&_renderTarget->_data);
+// 
+// 		_device->CreateRenderTargetView(_renderTarget->_data, NULL, &_renderTarget->_view);
+// 		_context->OMSetRenderTargets(1, &_renderTarget->_view, NULL);
 
 		D3D11_VIEWPORT viewport;
 		ZeroMemory(&viewport, sizeof(D3D11_VIEWPORT));
@@ -81,37 +81,10 @@ namespace uut
 			_swapChain->Release();
 		}
 
-		if (_renderTarget)
-			_renderTarget->Release();
 		if (_device)
 			_device->Release();
 		if (_context)
 			_context->Release();
-	}
-
-	bool Video::MessagePool()
-	{
-		MSG msg;
-
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-		{
-			// translate keystroke messages into the right format
-			TranslateMessage(&msg);
-
-			// send the message to the WindowProc function
-			DispatchMessage(&msg);
-
-			// check to see if it's time to quit
-			if (msg.message == WM_QUIT)
-				return false;
-		}
-
-		return true;
-	}
-
-	void Video::ClearTarget(const Color& color)
-	{
-		_context->ClearRenderTargetView(_renderTarget, color.m);
 	}
 
 	void Video::Present()
@@ -145,6 +118,16 @@ namespace uut
 		}
 
 		return DXGI_FORMAT_UNKNOWN;
+	}
+
+	SharedPtr<RenderTarget> Video::CreateRenderTarget()
+	{
+		SharedPtr<RenderTarget> target(new RenderTarget(this));
+
+		_swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&target->_data);
+		_device->CreateRenderTargetView(target->_data, NULL, &target->_view);
+
+		return target;
 	}
 
 	SharedPtr<Shader> Video::CreateShaderFromMemory(const VertexDeclare* decl, uint8_t count, const char* code, int size /* = -1 */)
@@ -237,6 +220,15 @@ namespace uut
 		return buffer;
 	}
 
+	bool Video::SetTarget(RenderTarget* target)
+	{
+		if (target == nullptr)
+			return false;
+
+		_context->OMSetRenderTargets(1, &target->_view, NULL);
+		return true;
+	}
+
 	bool Video::SetShader(Shader* shader)
 	{
 		if (shader == nullptr)
@@ -271,29 +263,15 @@ namespace uut
 
 	bool Video::SetTopology(VertexTopology topology)
 	{
-		switch (topology)
-		{
-		case VertexTopology::PointList:
-			_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_POINTLIST);
-			break;
+		static const D3D_PRIMITIVE_TOPOLOGY convert[] = {
+			D3D11_PRIMITIVE_TOPOLOGY_POINTLIST,
+			D3D11_PRIMITIVE_TOPOLOGY_LINELIST,
+			D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP,
+			D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
+			D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP,
+		};
 
-		case VertexTopology::LineList:
-			_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
-			break;
-
-		case VertexTopology::LineStrip:
-			_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
-			break;
-
-		case VertexTopology::TriangleList:
-			_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-			break;
-
-		case VertexTopology::TriangleStrip:
-			_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-			break;
-		}
-
+		_context->IASetPrimitiveTopology(convert[(int)topology]);
 		return true;
 	}
 
@@ -315,18 +293,5 @@ namespace uut
 			return false;
 
 		return true;
-	}
-
-	LRESULT CALLBACK Video::WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
-	{
-		auto video = (Video*)GetWindowLongPtr(hWnd, GWL_USERDATA);
-		switch (message)
-		{
-			case WM_DESTROY:
-				PostQuitMessage(0);
-				return 0;
-		}
-
-		return DefWindowProc(hWnd, message, wParam, lParam);
 	}
 }

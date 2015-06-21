@@ -2,6 +2,7 @@
 #include "uutCore.h"
 #include "video/uutVideo.h"
 #include "video/uutWindow.h"
+#include "video/uutRenderTarget.h"
 #include "input/uutInput.h"
 
 namespace uut
@@ -13,6 +14,8 @@ namespace uut
 		core->AddModule(video);
 
 		video->SetMode(800, 600, false);
+		_target = video->CreateRenderTarget();
+		video->SetTarget(_target);
 	}
 
 	void Application::Run()
@@ -24,7 +27,7 @@ namespace uut
 
 		OnInit();
 
-		while (_video->MessagePool())
+		while (_window->MessagePool())
 		{
 			OnUpdate();
 			OnRender();

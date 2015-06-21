@@ -52,11 +52,32 @@ namespace uut
 		return true;
 	}
 
+	bool Window::MessagePool()
+	{
+		MSG msg;
+
+		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		{
+			// translate keystroke messages into the right format
+			TranslateMessage(&msg);
+
+			// send the message to the WindowProc function
+			DispatchMessage(&msg);
+
+			// check to see if it's time to quit
+			if (msg.message == WM_QUIT)
+				return false;
+		}
+
+		return true;
+	}
+
 	Input* Window::GetInput() const
 	{
 		return _input;
 	}
 
+	//////////////////////////////////////////////////////////////////////////
 	LRESULT CALLBACK Window::WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		auto window = (Window*)GetWindowLongPtr(hWnd, GWL_USERDATA);

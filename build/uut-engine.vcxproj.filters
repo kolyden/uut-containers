@@ -16,6 +16,9 @@
     <Filter Include="input">
       <UniqueIdentifier>{7616c88e-2946-46a2-84c8-be75fb07e7ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="io">
+      <UniqueIdentifier>{3730fcd3-702c-4621-a72c-7c70f838f312}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\uut\core\uutObject.cpp">
@@ -80,6 +83,18 @@
     </ClCompile>
     <ClCompile Include="..\uut\core\uutApplication.cpp">
       <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\io\Asset.cpp">
+      <Filter>io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\io\AssetCache.cpp">
+      <Filter>io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\video\uutTexture2D.cpp">
+      <Filter>video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\video\uutRenderTarget.cpp">
+      <Filter>video</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -173,6 +188,18 @@
     </ClInclude>
     <ClInclude Include="..\uut\core\uutApplication.h">
       <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\io\Asset.h">
+      <Filter>io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\io\AssetCache.h">
+      <Filter>io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\video\uutTexture2D.h">
+      <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\video\uutRenderTarget.h">
+      <Filter>video</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

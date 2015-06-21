@@ -7,6 +7,7 @@ namespace uut
 {
 	class Window;
 	class Texture;
+	class RenderTarget;
 	class Shader;
 	class VideoBuffer;
 	class VertexBuffer;
@@ -20,18 +21,18 @@ namespace uut
 		virtual ~Video();
 
 		bool SetMode(int width, int height, bool fullscreen);
-		bool MessagePool();
 
 		ID3D11Device* GetDevice() const { return _device; }
 		ID3D11DeviceContext* GetContext() const { return _context; }
 
-		void ClearTarget(const Color& color);
 		void Present();
 
+		SharedPtr<RenderTarget> CreateRenderTarget();
 		SharedPtr<Shader> CreateShaderFromMemory(const VertexDeclare* decl, uint8_t count, const char* code, int size = -1);
 
 		SharedPtr<VideoBuffer> CreateBuffer(BufferType type, BufferUsage usage, unsigned int size);
 
+		bool SetTarget(RenderTarget* target);
 		bool SetShader(Shader* shader);
 		bool SetBuffer(VideoBuffer* buffer, unsigned int stride, unsigned int offset);
 		bool SetTopology(VertexTopology topology);
@@ -44,13 +45,10 @@ namespace uut
 		IDXGISwapChain* _swapChain;
 		ID3D11Device* _device;
 		ID3D11DeviceContext* _context;
-		ID3D11RenderTargetView* _renderTarget;
 
 		SharedPtr<Window> _window;
-		SharedPtr<Texture> _backBuffer;
+// 		SharedPtr<RenderTarget> _renderTarget;
 
 		bool ParseReturn(HRESULT hret);
-
-		static LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 	};
 }

@@ -5,6 +5,7 @@ namespace uut
 {
 	class Texture : public VideoObject
 	{
+		OBJECT(Texture, VideoObject)
 	public:
 		Texture(Video* video);
 		virtual ~Texture();
