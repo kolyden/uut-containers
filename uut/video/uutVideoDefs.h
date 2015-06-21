@@ -14,7 +14,7 @@ namespace uut
 	enum class BufferType
 	{
 		Vertex,
-		Pixel,
+		Index,
 	};
 
 	enum class BufferUsage
@@ -46,6 +46,12 @@ namespace uut
 		SShort,
 		UShort,
 		Float,
+	};
+
+	enum class IndexType
+	{
+		Uint16,
+		Uint32,
 	};
 
 	struct VertexDeclare

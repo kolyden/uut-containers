@@ -13,8 +13,13 @@ namespace uut
 		virtual void OnInit() override
 		{
 			_geom = new Geometry(_video);
-			_geom->SetVertices({ uut::Vector3(0.00f, 0.5f, 0.0f), uut::Vector3(0.45f, -0.5f, 0.0f), uut::Vector3(-0.45f, -0.5f, 0.0f) });
-			_geom->SetColors({ uut::Color(1.0f, 0.0f, 0.0f, 1.0f), uut::Color(0.0f, 1.0f, 0.0f, 1.0f), uut::Color(0.0f, 0.0f, 1.0f, 1.0f) });
+// 			_geom->SetVertices({ uut::Vector3(0.0f, 0.5f, 0.0f), uut::Vector3(0.45f, -0.5f, 0.0f), uut::Vector3(-0.45f, -0.5f, 0.0f) });
+// 			_geom->SetColors({ uut::Color(1.0f, 0.0f, 0.0f, 1.0f), uut::Color(0.0f, 1.0f, 0.0f, 1.0f), uut::Color(0.0f, 0.0f, 1.0f, 1.0f) });
+// 			_geom->SetIndexes({ 0, 1, 2 });
+
+			_geom->SetVertices({ Vector3(-0.5f, -0.5f, 0.5f), Vector3(-0.5f, 0.5f, 0.5f), Vector3(0.5f, 0.5f, 0.5f), Vector3(0.5f, -0.5f, 0.5f) });
+			_geom->SetColors({ Color(1.0f, 0.0f, 0.0f), Color(0.0f, 1.0f, 0.0f), Color(0.0f, 0.0f, 1.0f), Color(0.0f, 1.0f, 0.0f) });
+			_geom->SetIndexes({ 0, 1, 2, 0, 2, 3 });
 			_geom->Generate();
 		}
 

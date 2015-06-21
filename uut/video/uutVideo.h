@@ -34,10 +34,12 @@ namespace uut
 
 		bool SetTarget(RenderTarget* target);
 		bool SetShader(Shader* shader);
-		bool SetBuffer(VideoBuffer* buffer, unsigned int stride, unsigned int offset);
+		bool SetVertexBuffer(VideoBuffer* buffer, unsigned int stride, unsigned int offset);
+		bool SetIndexBuffer(VideoBuffer* buffer, IndexType type, unsigned int offset);
 		bool SetTopology(VertexTopology topology);
 
 		bool Draw(unsigned int count, unsigned int start);
+		bool DrawIndexed(unsigned int count, unsigned int start, unsigned int baseVertex);
 
 		Window* GetWindow() const;
 
@@ -47,7 +49,6 @@ namespace uut
 		ID3D11DeviceContext* _context;
 
 		SharedPtr<Window> _window;
-// 		SharedPtr<RenderTarget> _renderTarget;
 
 		bool ParseReturn(HRESULT hret);
 	};

@@ -37,7 +37,6 @@ namespace uut
 		scd.Windowed = fullscreen ? FALSE : TRUE;
 		scd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
-		// create a device, device context and swap chain using the information in the scd struct
 		D3D11CreateDeviceAndSwapChain(NULL,
 			D3D_DRIVER_TYPE_HARDWARE,
 			NULL,
@@ -50,12 +49,6 @@ namespace uut
 			&_device,
 			NULL,
 			&_context);
-
-// 		_renderTarget = new RenderTarget(this);
-// 		_swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&_renderTarget->_data);
-// 
-// 		_device->CreateRenderTargetView(_renderTarget->_data, NULL, &_renderTarget->_view);
-// 		_context->OMSetRenderTargets(1, &_renderTarget->_view, NULL);
 
 		D3D11_VIEWPORT viewport;
 		ZeroMemory(&viewport, sizeof(D3D11_VIEWPORT));
@@ -200,7 +193,7 @@ namespace uut
 			bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 			break;
 
-		case BufferType::Pixel:
+		case BufferType::Index:
 			buffer = new IndexBuffer(this);
 			bd.BindFlags = D3D11_BIND_INDEX_BUFFER;
 			break;
@@ -241,23 +234,25 @@ namespace uut
 		return true;
 	}
 
-	bool Video::SetBuffer(VideoBuffer* buffer, unsigned int stride, unsigned int offset)
+	bool Video::SetVertexBuffer(VideoBuffer* buffer, unsigned int stride, unsigned int offset)
 	{
-		if (buffer == nullptr)
+		if (buffer == nullptr || buffer->GetType() != BufferType::Vertex)
 			return false;
 
 		UINT _stride = stride;
 		UINT _offset = offset;
-		switch (buffer->GetType())
-		{
-		case BufferType::Vertex:
-			_context->IASetVertexBuffers(0, 1, &buffer->_data, &_stride, &_offset);
-			break;
+		_context->IASetVertexBuffers(0, 1, &buffer->_data, &_stride, &_offset);
+		return true;
+	}
 
-// 		case BufferType::Pixel:
-// 			_context->IASetIndexBuffer(0, 1, &buffer->_data, &_stride, &_offset);
-// 			break;
-		}
+	bool Video::SetIndexBuffer(VideoBuffer* buffer, IndexType type, unsigned int offset)
+	{
+		static const DXGI_FORMAT convert[] = { DXGI_FORMAT_R16_UINT, DXGI_FORMAT_R32_UINT };
+
+		if (buffer == nullptr || buffer->GetType() != BufferType::Index)
+			return false;
+
+		_context->IASetIndexBuffer(buffer->_data, convert[(int)type], offset);
 		return true;
 	}
 
@@ -278,6 +273,12 @@ namespace uut
 	bool Video::Draw(unsigned int count, unsigned int start)
 	{
 		_context->Draw(count, start);
+		return true;
+	}
+
+	bool Video::DrawIndexed(unsigned int count, unsigned int start, unsigned int baseVertex)
+	{
+		_context->DrawIndexed(count, start, baseVertex);
 		return true;
 	}
 

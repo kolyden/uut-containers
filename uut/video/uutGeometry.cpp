@@ -80,7 +80,10 @@ namespace uut
 		if (!_vbuffer)
 			_vbuffer = _video->CreateBuffer(BufferType::Vertex, BufferUsage::Dynamic, 2048);
 
-		if (!_shader || !_vbuffer)// || !_ibuffer)
+		if (!_ibuffer)
+			_ibuffer = _video->CreateBuffer(BufferType::Index, BufferUsage::Dynamic, 2048);
+
+		if (!_shader || !_vbuffer || !_ibuffer)
 			return false;
 
 		VERTEX* vert = (VERTEX*)_vbuffer->Map();
@@ -91,14 +94,17 @@ namespace uut
 		}
 		_vbuffer->Unmap();
 
+		_ibuffer->Update(_indexes.GetData(), sizeof(uint16_t)* _indexes.Count());
+
 		return true;
 	}
 
 	void Geometry::Draw()
 	{
 		_video->SetShader(_shader);
-		_video->SetBuffer(_vbuffer, sizeof(VERTEX), 0);
+		_video->SetVertexBuffer(_vbuffer, sizeof(VERTEX), 0);
+		_video->SetIndexBuffer(_ibuffer, IndexType::Uint16, 0);
 		_video->SetTopology(VertexTopology::TriangleList);
-		_video->Draw(_vertices.Count(), 0);
+		_video->DrawIndexed(_indexes.Count(), 0, 0);
 	}
 }
