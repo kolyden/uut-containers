@@ -7,7 +7,7 @@
 
 namespace uut
 {
-	class RenderBuffer;
+	class VertexBuffer;
 	class Shader;
 
 	class Geometry : public VideoObject
@@ -21,16 +21,21 @@ namespace uut
 		void SetColors(const List<Color>& colors);
 		const List<Color>& GetColors() const;
 
+		void SetIndexes(const List<uint16_t>& indexes);
+		const List<uint16_t>& GetIndexes() const;
+
 		bool Generate();
 		void Draw();
 
 		Shader* GetShader() const { return _shader; }
-		RenderBuffer* GetBuffer() const { return _buffer; }
+		VertexBuffer* GetBuffer() const { return _vbuffer; }
 
 	protected:
 		List<Vector3> _vertices;
 		List<Color> _colors;
+		List<uint16_t> _indexes;
 		SharedPtr<Shader> _shader;
-		SharedPtr<RenderBuffer> _buffer;
+		SharedPtr<VertexBuffer> _vbuffer;
+		SharedPtr<VertexBuffer> _ibuffer;
 	};
 }

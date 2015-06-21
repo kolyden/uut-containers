@@ -1,6 +1,6 @@
 #include "uutGeometry.h"
 #include "uutVideo.h"
-#include "uutRenderBuffer.h"
+#include "uutVertexBuffer.h"
 #include "uutShader.h"
 
 namespace uut
@@ -62,24 +62,34 @@ namespace uut
 		return _colors;
 	}
 
+	void Geometry::SetIndexes(const List<uint16_t>& indexes)
+	{
+		_indexes = indexes;
+	}
+
+	const List<uint16_t>& Geometry::GetIndexes() const
+	{
+		return _indexes;
+	}
+
 	bool Geometry::Generate()
 	{
 		if (!_shader)
 			_shader = _video->CreateShaderFromMemory(g_decl, 2, g_shader);
 
-		if (!_buffer)
-			_buffer = _video->CreateBuffer(2048);
+		if (!_vbuffer)
+			_vbuffer = _video->CreateVertexBuffer(BufferUsage::Dynamic, 2048);
 
-		if (!_shader || !_buffer)
+		if (!_shader || !_vbuffer)// || !_ibuffer)
 			return false;
 
-		VERTEX* vert = (VERTEX*)_buffer->Map();
+		VERTEX* vert = (VERTEX*)_vbuffer->Map();
 		for (int i = 0; i < _vertices.Count(); i++)
 		{
 			vert[i].pos = _vertices[i];
 			vert[i].color = _colors[i];
 		}
-		_buffer->Unmap();
+		_vbuffer->Unmap();
 
 		return true;
 	}
@@ -87,7 +97,7 @@ namespace uut
 	void Geometry::Draw()
 	{
 		_video->SetShader(_shader);
-		_video->SetBuffer(_buffer, sizeof(VERTEX), 0);
+		_video->SetBuffer(_vbuffer, sizeof(VERTEX), 0);
 		_video->SetTopology(VertexTopology::TriangleList);
 		_video->Draw(_vertices.Count(), 0);
 	}

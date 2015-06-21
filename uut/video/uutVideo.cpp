@@ -2,7 +2,7 @@
 #include "uutWindow.h"
 #include "uutTexture.h"
 #include "uutShader.h"
-#include "uutRenderBuffer.h"
+#include "uutVertexBuffer.h"
 
 namespace uut
 {
@@ -199,20 +199,22 @@ namespace uut
 		return shader;
 	}
 
-	SharedPtr<RenderBuffer> Video::CreateBuffer(unsigned int size)
+	SharedPtr<VertexBuffer> Video::CreateVertexBuffer(BufferUsage usage, unsigned int size)
 	{
+		D3D11_USAGE convertUsage[2] = { D3D11_USAGE_DEFAULT, D3D11_USAGE_DYNAMIC };
+
 		D3D11_BUFFER_DESC bd;
 		ZeroMemory(&bd, sizeof(bd));
 
-		bd.Usage = D3D11_USAGE_DYNAMIC;
+		bd.Usage = convertUsage[(int)usage];
 		bd.ByteWidth = size;
 		bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 		bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 
-		SharedPtr<RenderBuffer> buffer(new RenderBuffer(this));
+		SharedPtr<VertexBuffer> buffer(new VertexBuffer(this));
 		auto ret = _device->CreateBuffer(&bd, NULL, &buffer->_data);
 		if (ParseReturn(ret))
-			return SharedPtr<RenderBuffer>::EMPTY;
+			return SharedPtr<VertexBuffer>::EMPTY;
 
 		return buffer;
 	}
@@ -229,7 +231,7 @@ namespace uut
 		return true;
 	}
 
-	bool Video::SetBuffer(RenderBuffer* buffer, unsigned int stride, unsigned int offset)
+	bool Video::SetBuffer(VertexBuffer* buffer, unsigned int stride, unsigned int offset)
 	{
 		if (buffer == nullptr)
 			return false;

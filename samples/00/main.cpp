@@ -1,12 +1,4 @@
-#include "video/uutVideo.h"
-#include "video/uutShader.h"
-#include "video/uutRenderBuffer.h"
-#include "video/uutColor.h"
-#include "video/uutWindow.h"
-#include "input/uutInput.h"
-#include "math/uutVector3.h"
-#include "video/uutGeometry.h"
-#include "video/uutCamera.h"
+#include "uut.h"
 
 int WINAPI WinMain(HINSTANCE hInstance,
 	HINSTANCE hPrevInstance,

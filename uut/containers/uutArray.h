@@ -1,10 +1,10 @@
 #pragma once
-#include "core/Defs.h"
+#include "core/uutDefs.h"
 
 namespace game
 {
 	template<class T, int numElements>
-	class UUT_API Array : public ICollection<T>
+	class UUT_API Array
 	{
 	public:
 		unsigned Count() const { return numElements; }
@@ -16,7 +16,7 @@ namespace game
 		const T* GetData() const { return _data; }
 
 		T& operator[] (int index) { return _data[index]; }
-		const T& operator[] const (int index) { return _data[index]; }
+		const T& operator[] (int index) const { return _data[index]; }
 
 	protected:
 		T _data[numElements];

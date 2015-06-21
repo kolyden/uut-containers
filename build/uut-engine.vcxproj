@@ -21,7 +21,7 @@
     <ClCompile Include="..\uut\video\uutShader.cpp" />
     <ClCompile Include="..\uut\video\uutTexture.cpp" />
     <ClCompile Include="..\uut\video\uutVideo.cpp" />
-    <ClCompile Include="..\uut\video\uutRenderBuffer.cpp" />
+    <ClCompile Include="..\uut\video\uutVertexBuffer.cpp" />
     <ClCompile Include="..\uut\video\uutVideoObject.cpp" />
     <ClCompile Include="..\uut\video\uutWindow.cpp" />
   </ItemGroup>
@@ -37,9 +37,10 @@
     <ClInclude Include="..\uut\input\uutKeycodes.h" />
     <ClInclude Include="..\uut\math\uutVector2.h" />
     <ClInclude Include="..\uut\math\uutVector3.h" />
+    <ClInclude Include="..\uut\uut.h" />
     <ClInclude Include="..\uut\video\uutCamera.h" />
     <ClInclude Include="..\uut\video\uutGeometry.h" />
-    <ClInclude Include="..\uut\video\uutRenderBuffer.h" />
+    <ClInclude Include="..\uut\video\uutVertexBuffer.h" />
     <ClInclude Include="..\uut\video\uutColor.h" />
     <ClInclude Include="..\uut\video\uutColor32.h" />
     <ClInclude Include="..\uut\video\uutShader.h" />

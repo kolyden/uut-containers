@@ -3,11 +3,11 @@
 
 namespace uut
 {
-	class RenderBuffer : public VideoObject
+	class VertexBuffer : public VideoObject
 	{
 	public:
-		RenderBuffer(Video* video);
-		virtual ~RenderBuffer();
+		VertexBuffer(Video* video);
+		virtual ~VertexBuffer();
 
 		bool Update(const void* ptr, unsigned int size);
 		void* Map();

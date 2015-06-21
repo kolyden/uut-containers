@@ -11,6 +11,12 @@ namespace uut
 {
 	using namespace DirectX;
 
+	enum class BufferUsage
+	{
+		Default,
+		Dynamic,
+	};
+
 	enum class VertexTopology
 	{
 		PointList,
