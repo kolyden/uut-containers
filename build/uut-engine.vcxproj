@@ -11,28 +11,42 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\uut\containers\uutHashString.cpp" />
+    <ClCompile Include="..\uut\containers\uutString.cpp" />
+    <ClCompile Include="..\uut\core\uutApplication.cpp" />
+    <ClCompile Include="..\uut\core\uutCore.cpp" />
+    <ClCompile Include="..\uut\core\uutModule.cpp" />
     <ClCompile Include="..\uut\core\uutObject.cpp" />
     <ClCompile Include="..\uut\core\uutRefCounted.cpp" />
+    <ClCompile Include="..\uut\core\uutTypeInfo.cpp" />
     <ClCompile Include="..\uut\input\uutInput.cpp" />
     <ClCompile Include="..\uut\video\uutCamera.cpp" />
     <ClCompile Include="..\uut\video\uutColor.cpp" />
     <ClCompile Include="..\uut\video\uutColor32.cpp" />
     <ClCompile Include="..\uut\video\uutGeometry.cpp" />
+    <ClCompile Include="..\uut\video\uutIndexBuffer.cpp" />
     <ClCompile Include="..\uut\video\uutShader.cpp" />
     <ClCompile Include="..\uut\video\uutTexture.cpp" />
     <ClCompile Include="..\uut\video\uutVideo.cpp" />
     <ClCompile Include="..\uut\video\uutVertexBuffer.cpp" />
+    <ClCompile Include="..\uut\video\uutVideoBuffer.cpp" />
     <ClCompile Include="..\uut\video\uutVideoObject.cpp" />
     <ClCompile Include="..\uut\video\uutWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\uut\containers\uutArray.h" />
     <ClInclude Include="..\uut\containers\uutDictionary.h" />
+    <ClInclude Include="..\uut\containers\uutHashString.h" />
     <ClInclude Include="..\uut\containers\uutList.h" />
+    <ClInclude Include="..\uut\containers\uutString.h" />
+    <ClInclude Include="..\uut\core\uutApplication.h" />
+    <ClInclude Include="..\uut\core\uutCore.h" />
     <ClInclude Include="..\uut\core\uutDefs.h" />
+    <ClInclude Include="..\uut\core\uutModule.h" />
     <ClInclude Include="..\uut\core\uutObject.h" />
     <ClInclude Include="..\uut\core\uutPtr.h" />
     <ClInclude Include="..\uut\core\uutRefCounted.h" />
+    <ClInclude Include="..\uut\core\uutTypeInfo.h" />
     <ClInclude Include="..\uut\input\uutInput.h" />
     <ClInclude Include="..\uut\input\uutKeycodes.h" />
     <ClInclude Include="..\uut\math\uutVector2.h" />
@@ -40,12 +54,14 @@
     <ClInclude Include="..\uut\uut.h" />
     <ClInclude Include="..\uut\video\uutCamera.h" />
     <ClInclude Include="..\uut\video\uutGeometry.h" />
+    <ClInclude Include="..\uut\video\uutIndexBuffer.h" />
     <ClInclude Include="..\uut\video\uutVertexBuffer.h" />
     <ClInclude Include="..\uut\video\uutColor.h" />
     <ClInclude Include="..\uut\video\uutColor32.h" />
     <ClInclude Include="..\uut\video\uutShader.h" />
     <ClInclude Include="..\uut\video\uutTexture.h" />
     <ClInclude Include="..\uut\video\uutVideo.h" />
+    <ClInclude Include="..\uut\video\uutVideoBuffer.h" />
     <ClInclude Include="..\uut\video\uutVideoDefs.h" />
     <ClInclude Include="..\uut\video\uutVideoObject.h" />
     <ClInclude Include="..\uut\video\uutWindow.h" />

@@ -1,13 +1,14 @@
 #pragma once
-#include "core/uutObject.h"
+#include "core/uutModule.h"
 #include "containers/uutDictionary.h"
 #include "uutKeycodes.h"
 #include <bitset>
 
 namespace uut
 {
-	class Input : public Object
+	class Input : public Module
 	{
+		OBJECT(Input, Module)
 	public:
 		Input();
 

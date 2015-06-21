@@ -2,7 +2,9 @@
 #include "uutWindow.h"
 #include "uutTexture.h"
 #include "uutShader.h"
+#include "core/uutCore.h"
 #include "uutVertexBuffer.h"
+#include "uutIndexBuffer.h"
 
 namespace uut
 {
@@ -20,6 +22,7 @@ namespace uut
 		{
 			_window = new Window();
 			_window->Create(width, height);
+			GetCore()->AddModule(_window);
 		}
 
 		DXGI_SWAP_CHAIN_DESC scd;

@@ -57,6 +57,30 @@
     <ClCompile Include="..\uut\video\uutVertexBuffer.cpp">
       <Filter>video</Filter>
     </ClCompile>
+    <ClCompile Include="..\uut\video\uutIndexBuffer.cpp">
+      <Filter>video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\video\uutVideoBuffer.cpp">
+      <Filter>video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\core\uutModule.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\containers\uutHashString.cpp">
+      <Filter>containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\containers\uutString.cpp">
+      <Filter>containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\core\uutTypeInfo.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\core\uutCore.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\core\uutApplication.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\uut\containers\uutList.h">
@@ -126,5 +150,29 @@
       <Filter>video</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\uut.h" />
+    <ClInclude Include="..\uut\video\uutIndexBuffer.h">
+      <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\video\uutVideoBuffer.h">
+      <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\core\uutModule.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\containers\uutHashString.h">
+      <Filter>containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\containers\uutString.h">
+      <Filter>containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\core\uutTypeInfo.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\core\uutCore.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\core\uutApplication.h">
+      <Filter>core</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

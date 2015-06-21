@@ -27,7 +27,17 @@ namespace uut
 		T* GetData() { return _data.data(); }
 		const T* GetData() const { return _data.data(); }
 
+		static const List EMPTY;
+
 	protected:
 		std::vector<T> _data;
 	};
+
+	template<class T> const List<T> List<T>::EMPTY;
+
+	template<class T> typename List<T>::Iterator begin(List<T>& list) { return list.Begin(); }
+	template<class T> typename List<T>::Iterator end(List<T>& list) { return list.End(); }
+
+	template<class T> typename List<T>::ConstIterator begin(const List<T>& list) { return list.Begin(); }
+	template<class T> typename List<T>::ConstIterator end(const List<T>& list) { return list.End(); }
 }

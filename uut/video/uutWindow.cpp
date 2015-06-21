@@ -1,4 +1,5 @@
 #include "uutWindow.h"
+#include "core/uutCore.h"
 #include "input/uutInput.h"
 
 namespace uut
@@ -8,6 +9,7 @@ namespace uut
 		, _wc({ 0 })
 		, _input(new Input())
 	{
+		GetCore()->AddModule(_input);
 	}
 
 	bool Window::Create(int width, int height)

@@ -1,13 +1,14 @@
 #pragma once
-#include "core/uutObject.h"
+#include "core/uutModule.h"
 #include "core/uutPtr.h"
 
 namespace uut
 {
 	class Input;
 
-	class Window : public Object
+	class Window : public Module
 	{
+		OBJECT(Window, Module)
 	public:
 		Window();
 

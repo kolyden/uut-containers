@@ -1,24 +1,12 @@
 #pragma once
-#include "uutVideoObject.h"
+#include "uutVideoBuffer.h"
 
 namespace uut
 {
-	class VertexBuffer : public VideoObject
+	class UUT_API VertexBuffer : public VideoBuffer
 	{
+		OBJECT(VertexBuffer, VideoBuffer)
 	public:
 		VertexBuffer(Video* video);
-		virtual ~VertexBuffer();
-
-		bool Update(const void* ptr, unsigned int size);
-		void* Map();
-		void Unmap();
-
-		bool IsMapped() const { return _mapped; }
-
-	protected:
-		ID3D11Buffer* _data;
-		bool _mapped;
-
-		friend class Video;
 	};
 }

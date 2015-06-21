@@ -2,6 +2,7 @@
 #include "containers/uutArray.h"
 #include "containers/uutDictionary.h"
 #include "containers/uutList.h"
+#include "core/uutApplication.h"
 #include "input/uutInput.h"
 #include "math/uutVector2.h"
 #include "math/uutVector3.h"

@@ -6,8 +6,9 @@ namespace uut
 {
 	class Video;
 
-	class VideoObject : public Object
+	class UUT_API VideoObject : public Object
 	{
+		OBJECT(VideoObject, Object)
 	public:
 		VideoObject(Video* video);
 		virtual ~VideoObject() {}

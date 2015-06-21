@@ -1,5 +1,5 @@
 #pragma once
-#include "core/uutObject.h"
+#include "core/uutModule.h"
 #include "uutVideoDefs.h"
 #include "uutColor.h"
 
@@ -9,10 +9,11 @@ namespace uut
 	class Texture;
 	class Shader;
 	class VertexBuffer;
-	class VertexLayout;
+	class IndexBuffer;
 
-	class Video : public Object
+	class Video : public Module
 	{
+		OBJECT(Video, Module)
 	public:
 		Video();
 		virtual ~Video();
