@@ -1,4 +1,6 @@
 #include "uut.h"
+#include <mmsystem.h>
+#pragma comment (lib, "Winmm.lib")
 
 namespace uut
 {
@@ -12,6 +14,7 @@ namespace uut
 
 		MyApp()
 			: _color(0.0f, 0.2f, 0.4f)
+			, _updateCamera(true)
 		{
 		}
 
@@ -27,18 +30,45 @@ namespace uut
 			_camPosition = XMVectorSet(0.0f, 0.0f, -0.5f, 0.0f);
 			_camTarget = XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f);
 			_camUp = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
-			_camView = XMMatrixLookAtLH(_camPosition, _camTarget, _camUp);
 
 			const float aspect = static_cast<float>(_video->GetSize().x) / _video->GetSize().y;
 			_camProjection = XMMatrixPerspectiveFovLH(0.4f*3.14f, aspect, 1.0f, 1000.0f);
+
+			_time = timeGetTime();
 		}
 
 		virtual void OnUpdate() override
 		{
+			const DWORD curTime = timeGetTime();
+			const float delta = 0.001f * (curTime - _time);
+			_time = curTime;
+
 			if (_input->IsKey(KEY_1))
 				_color = Color::WHITE;
 			if (_input->IsKey(KEY_2))
 				_color = Color::BLACK;
+
+			if (_input->IsKey(KEY_RIGHT))
+			{
+				const float amount = 0.1f * delta;
+				_camPosition -= XMVectorSet(amount, 0.0f, 0.0f, 0.0f);
+				_camTarget -= XMVectorSet(amount, 0.0f, 0.0f, 0.0f);
+				_updateCamera = true;
+			}
+
+			if (_input->IsKey(KEY_LEFT))
+			{
+				const float amount = 0.1f * delta;
+				_camPosition += XMVectorSet(amount, 0.0f, 0.0f, 0.0f);
+				_camTarget += XMVectorSet(amount, 0.0f, 0.0f, 0.0f);
+				_updateCamera = true;
+			}
+
+			if (_updateCamera)
+			{
+				_updateCamera = false;
+				_camView = XMMatrixLookAtLH(_camPosition, _camTarget, _camUp);
+			}
 		}
 
 		virtual void OnRender() override
@@ -60,6 +90,7 @@ namespace uut
 		Color _color;
 		SharedPtr<Geometry> _geom;
 		SharedPtr<VideoBuffer> _cbuffer;
+		DWORD _time;
 
 		XMMATRIX _WVP;
 		XMMATRIX _World;
@@ -70,6 +101,7 @@ namespace uut
 		XMVECTOR _camTarget;
 		XMVECTOR _camUp;
 		cbPerObject _cbPerObj;
+		bool _updateCamera;
 	};
 }
 
