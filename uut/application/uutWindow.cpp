@@ -8,12 +8,14 @@ namespace uut
 	Window::Window()
 		: _hwnd(0)
 		, _wc({ 0 })
+		, _size(0, 0)
 	{
 	}
 
-	bool Window::Create(int width, int height)
+	bool Window::Create(const IntVector2& size)
 	{
 		HINSTANCE hinstance = GetModuleHandle(NULL);
+		_size = size;
 
 		WNDCLASSEX wc;
 		ZeroMemory(&wc, sizeof(WNDCLASSEX));
@@ -28,7 +30,7 @@ namespace uut
 		// register the window class
 		RegisterClassEx(&wc);
 
-		RECT wr = { 0, 0, width, height };    // set the size, but not the position
+		RECT wr = { 0, 0, _size.x, _size.y };    // set the size, but not the position
 		AdjustWindowRect(&wr, WS_OVERLAPPEDWINDOW, FALSE);    // adjust the size
 
 		// create the window and use the result as the handle

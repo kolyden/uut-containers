@@ -57,12 +57,6 @@
     <ClCompile Include="..\uut\input\uutInput.cpp">
       <Filter>input</Filter>
     </ClCompile>
-    <ClCompile Include="..\uut\video\uutVertexBuffer.cpp">
-      <Filter>video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\uut\video\uutIndexBuffer.cpp">
-      <Filter>video</Filter>
-    </ClCompile>
     <ClCompile Include="..\uut\video\uutVideoBuffer.cpp">
       <Filter>video</Filter>
     </ClCompile>
@@ -161,13 +155,7 @@
     <ClInclude Include="..\uut\input\uutInput.h">
       <Filter>input</Filter>
     </ClInclude>
-    <ClInclude Include="..\uut\video\uutVertexBuffer.h">
-      <Filter>video</Filter>
-    </ClInclude>
     <ClInclude Include="..\uut\uut.h" />
-    <ClInclude Include="..\uut\video\uutIndexBuffer.h">
-      <Filter>video</Filter>
-    </ClInclude>
     <ClInclude Include="..\uut\video\uutVideoBuffer.h">
       <Filter>video</Filter>
     </ClInclude>

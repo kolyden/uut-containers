@@ -15,7 +15,7 @@ namespace uut
 		core->AddModule(video);
 		core->AddModule(input);
 
-		video->SetMode(800, 600, false);
+		video->SetMode(IntVector2(800, 600), false);
 		_target = video->CreateRenderTarget();
 		video->SetTarget(_target);
 	}

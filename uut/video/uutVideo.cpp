@@ -3,8 +3,7 @@
 #include "uutTexture.h"
 #include "uutShader.h"
 #include "core/uutCore.h"
-#include "uutVertexBuffer.h"
-#include "uutIndexBuffer.h"
+#include "uutVideoBuffer.h"
 #include "uutRenderTarget.h"
 
 namespace uut
@@ -16,47 +15,46 @@ namespace uut
 	{
 	}
 
-	bool Video::SetMode(int width, int height, bool fullscreen)
+	bool Video::SetMode(const IntVector2& size, bool fullscreen)
 	{
+		_size = size;
 		if (_window == nullptr)
 		{
 			_window = new Window();
-			_window->Create(width, height);
+			_window->Create(_size);
 			GetCore()->AddModule(_window);
 		}
 
 		DXGI_SWAP_CHAIN_DESC scd;
 		ZeroMemory(&scd, sizeof(DXGI_SWAP_CHAIN_DESC));
+
+		scd.BufferDesc.Width = _size.x;
+		scd.BufferDesc.Height = _size.y;
+		scd.BufferDesc.RefreshRate.Numerator = 60;
+		scd.BufferDesc.RefreshRate.Denominator = 1;
+		scd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+		scd.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
+		scd.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
+
 		scd.BufferCount = 1;                                    // one back buffer
-		scd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;     // use 32-bit color
-		scd.BufferDesc.Width = width;
-		scd.BufferDesc.Height = height;
 		scd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;      // how swap chain is to be used
 		scd.OutputWindow = _window->GetHWND();
 		scd.SampleDesc.Count = 4;
 		scd.Windowed = fullscreen ? FALSE : TRUE;
 		scd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
-		D3D11CreateDeviceAndSwapChain(NULL,
-			D3D_DRIVER_TYPE_HARDWARE,
-			NULL,
-			D3D11_CREATE_DEVICE_DEBUG,
-			NULL,
-			NULL,
-			D3D11_SDK_VERSION,
-			&scd,
-			&_swapChain,
-			&_device,
-			NULL,
-			&_context);
+		HRESULT hret = D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE,
+			NULL, NULL, NULL, NULL, D3D11_SDK_VERSION, &scd, &_swapChain, &_device, NULL, &_context);
+		if (ParseReturn(hret))
+			return false;
 
 		D3D11_VIEWPORT viewport;
 		ZeroMemory(&viewport, sizeof(D3D11_VIEWPORT));
 
 		viewport.TopLeftX = 0;
 		viewport.TopLeftY = 0;
-		viewport.Width = 1.0f*width;
-		viewport.Height = 1.0f*height;
+		viewport.Width = 1.0f*_size.x;
+		viewport.Height = 1.0f*_size.y;
 
 		_context->RSSetViewports(1, &viewport);
 
@@ -133,16 +131,26 @@ namespace uut
 		if (code == 0)
 			return SharedPtr<Shader>::EMPTY;
 
+		ID3DBlob* error = NULL;
+
 		SharedPtr<Shader> shader(new Shader(this));
-		auto ret = D3DCompile(code, size, "memory", 0, 0, "VShader", "vs_4_0", 0, 0, &shader->_vsBlob, 0);
+		auto ret = D3DCompile(code, size, "memory", 0, 0, "VS", "vs_4_0", 0, 0, &shader->_vsBlob, &error);
 		if (ParseReturn(ret))
+		{
+			if (error)
+			{
+				auto msg = (char*)error->GetBufferPointer();
+				error->Release();
+			}
+
 			return SharedPtr<Shader>::EMPTY;
+		}
 
 		ret = _device->CreateVertexShader(shader->_vsBlob->GetBufferPointer(), shader->_vsBlob->GetBufferSize(), NULL, &shader->_vs);
 		if (ParseReturn(ret))
 			return SharedPtr<Shader>::EMPTY;
 
-		ret = D3DCompile(code, size, "memory", 0, 0, "PShader", "ps_4_0", 0, 0, &shader->_psBlob, 0);
+		ret = D3DCompile(code, size, "memory", 0, 0, "PS", "ps_4_0", 0, 0, &shader->_psBlob, 0);
 		if (ParseReturn(ret))
 			return SharedPtr<Shader>::EMPTY;
 
@@ -151,7 +159,7 @@ namespace uut
 			return SharedPtr<Shader>::EMPTY;
 
 		//////////////////////////////////////////////////////////////////////////
-		static const char* semanticName[3] = { "POSITION", "TEXCOORDS", "COLOR" };
+		static const char* semanticName[3] = { "POSITION", "COLOR", "TEXCOORDS" };
 
 		shader->_declare = List<VertexDeclare>(decl, count);
 
@@ -189,13 +197,20 @@ namespace uut
 		switch (type)
 		{
 		case BufferType::Vertex:
-			buffer = new VertexBuffer(this);
+			buffer = new VideoBuffer(type, this);
 			bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+			bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 			break;
 
 		case BufferType::Index:
-			buffer = new IndexBuffer(this);
+			buffer = new VideoBuffer(type, this);
 			bd.BindFlags = D3D11_BIND_INDEX_BUFFER;
+			bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+			break;
+
+		case BufferType::Constant:
+			buffer = new VideoBuffer(type, this);
+			bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 			break;
 
 		default:
@@ -204,7 +219,6 @@ namespace uut
 
 		bd.Usage = convertUsage[(int)usage];
 		bd.ByteWidth = size;
-		bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 
 		auto ret = _device->CreateBuffer(&bd, NULL, &buffer->_data);
 		if (ParseReturn(ret))
@@ -253,6 +267,15 @@ namespace uut
 			return false;
 
 		_context->IASetIndexBuffer(buffer->_data, convert[(int)type], offset);
+		return true;
+	}
+
+	bool Video::SetConstantBuffer(VideoBuffer* buffer)
+	{
+		if (buffer == nullptr || buffer->GetType() != BufferType::Constant)
+			return false;
+
+		_context->VSSetConstantBuffers(0, 1, &buffer->_data);
 		return true;
 	}
 

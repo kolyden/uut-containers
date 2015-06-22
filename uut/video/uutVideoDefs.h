@@ -15,6 +15,7 @@ namespace uut
 	{
 		Vertex,
 		Index,
+		Constant,
 	};
 
 	enum class BufferUsage
@@ -35,8 +36,8 @@ namespace uut
 	enum class VertexUsage
 	{
 		Position,
-		TexCoords,
 		Color,
+		TexCoords,
 	};
 
 	enum class VertexType

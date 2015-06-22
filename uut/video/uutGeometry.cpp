@@ -6,21 +6,25 @@
 namespace uut
 {
 	static const char* g_shader =
-		"struct VOut \
+		"cbuffer cbPerObject \
 		{ \
-			float4 position : SV_POSITION; \
-			float4 color : COLOR; \
+			float4x4 WVP; \
 		}; \
-		VOut VShader(float4 position : POSITION, float4 color : COLOR) \
+		struct VS_OUTPUT \
 		{ \
-			VOut output; \
-			output.position = position; \
-			output.color = color; \
+			float4 Pos : SV_POSITION; \
+			float4 Color : COLOR; \
+		}; \
+		VS_OUTPUT VS(float4 inPos : POSITION, float4 inColor : COLOR) \
+		{ \
+			VS_OUTPUT output; \
+			output.Pos = mul(inPos, WVP); \
+			output.Color = inColor; \
 			return output; \
 		} \
-		float4 PShader(float4 position : SV_POSITION, float4 color : COLOR) : SV_TARGET \
+		float4 PS(VS_OUTPUT input) : SV_TARGET \
 		{ \
-			return color; \
+			return input.Color; \
 		}";
 
 	struct VERTEX
