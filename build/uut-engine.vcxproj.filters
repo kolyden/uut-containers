@@ -93,6 +93,9 @@
     <ClCompile Include="..\uut\application\uutWindow.cpp">
       <Filter>application</Filter>
     </ClCompile>
+    <ClCompile Include="..\uut\video\uutDepthTexture.cpp">
+      <Filter>video</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\uut\containers\uutList.h">
@@ -194,6 +197,9 @@
     </ClInclude>
     <ClInclude Include="..\uut\application\uutEventListener.h">
       <Filter>application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\video\uutDepthTexture.h">
+      <Filter>video</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

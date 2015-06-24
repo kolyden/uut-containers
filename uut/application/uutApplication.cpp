@@ -8,6 +8,7 @@
 namespace uut
 {
 	Application::Application()
+		: _quit(false)
 	{
 		auto video = new Video();
 		auto input = new Input();
@@ -16,8 +17,8 @@ namespace uut
 		core->AddModule(input);
 
 		video->SetMode(IntVector2(800, 600), false);
-		_target = video->CreateRenderTarget();
-		video->SetTarget(_target);
+// 		_target = video->GetBackBuffer();
+// 		video->SetTarget(_target);
 	}
 
 	void Application::Run()
@@ -31,10 +32,15 @@ namespace uut
 
 		OnInit();
 
-		while (_window->MessagePool())
+		while (!_quit && _window->MessagePool())
 		{
 			OnUpdate();
 			OnRender();
 		}
+	}
+
+	void Application::Quit()
+	{
+		_quit = true;
 	}
 }

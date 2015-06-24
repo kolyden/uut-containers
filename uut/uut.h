@@ -11,6 +11,7 @@
 #include "video/uutCamera.h"
 #include "video/uutColor.h"
 #include "video/uutColor32.h"
+#include "video/uutDepthTexture.h"
 #include "video/uutGeometry.h"
 #include "video/uutRenderTarget.h"
 #include "video/uutShader.h"

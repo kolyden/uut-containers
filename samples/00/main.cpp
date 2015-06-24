@@ -20,6 +20,9 @@ namespace uut
 
 		virtual void OnInit() override
 		{
+			_depth = _video->CreateDepthTexture();
+			_video->SetTarget(_video->GetBackBuffer(), _depth);
+
 			_geom = new Geometry(_video);
 			_geom->SetVertices({ Vector3(-0.5f, -0.5f, 0.5f), Vector3(-0.5f, 0.5f, 0.5f), Vector3(0.5f, 0.5f, 0.5f), Vector3(0.5f, -0.5f, 0.5f) });
 			_geom->SetColors({ Color(1.0f, 0.0f, 0.0f), Color(0.0f, 1.0f, 0.0f), Color(0.0f, 0.0f, 1.0f), Color(0.0f, 1.0f, 0.0f) });
@@ -47,6 +50,8 @@ namespace uut
 				_color = Color::WHITE;
 			if (_input->IsKey(KEY_2))
 				_color = Color::BLACK;
+			if (_input->IsKey(KEY_ESCAPE))
+				Quit();
 
 			if (_input->IsKey(KEY_RIGHT))
 			{
@@ -73,7 +78,8 @@ namespace uut
 
 		virtual void OnRender() override
 		{
-			_target->Clear(_color);
+			_video->GetBackBuffer()->Clear(_color);
+// 			_depth->Clear();
 
 			_World = XMMatrixIdentity();
 			_WVP = _World * _camView * _camProjection;
@@ -90,6 +96,7 @@ namespace uut
 		Color _color;
 		SharedPtr<Geometry> _geom;
 		SharedPtr<VideoBuffer> _cbuffer;
+		SharedPtr<DepthTexture> _depth;
 		DWORD _time;
 
 		XMMATRIX _WVP;

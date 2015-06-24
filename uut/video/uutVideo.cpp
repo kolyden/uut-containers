@@ -4,6 +4,7 @@
 #include "uutShader.h"
 #include "core/uutCore.h"
 #include "uutVideoBuffer.h"
+#include "uutDepthTexture.h"
 #include "uutRenderTarget.h"
 
 namespace uut
@@ -55,8 +56,16 @@ namespace uut
 		viewport.TopLeftY = 0;
 		viewport.Width = 1.0f*_size.x;
 		viewport.Height = 1.0f*_size.y;
+		viewport.MinDepth = 0.0f;
+		viewport.MaxDepth = 1.0f;
 
 		_context->RSSetViewports(1, &viewport);
+
+		_backBuffer = new RenderTarget(this);
+		_swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&_backBuffer->_data);
+		_device->CreateRenderTargetView(_backBuffer->_data, NULL, &_backBuffer->_view);
+
+		SetTarget(_backBuffer);
 
 		if (fullscreen)
 			_swapChain->SetFullscreenState(TRUE, NULL);
@@ -111,14 +120,32 @@ namespace uut
 		return DXGI_FORMAT_UNKNOWN;
 	}
 
-	SharedPtr<RenderTarget> Video::CreateRenderTarget()
+	SharedPtr<DepthTexture> Video::CreateDepthTexture()
 	{
-		SharedPtr<RenderTarget> target(new RenderTarget(this));
+		SharedPtr<DepthTexture> tex(new DepthTexture(this));
 
-		_swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&target->_data);
-		_device->CreateRenderTargetView(target->_data, NULL, &target->_view);
+		D3D11_TEXTURE2D_DESC depthStencilDesc;
+		depthStencilDesc.Width = _size.x;
+		depthStencilDesc.Height = _size.y;
+		depthStencilDesc.MipLevels = 1;
+		depthStencilDesc.ArraySize = 1;
+		depthStencilDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+		depthStencilDesc.SampleDesc.Count = 1;
+		depthStencilDesc.SampleDesc.Quality = 0;
+		depthStencilDesc.Usage = D3D11_USAGE_DEFAULT;
+		depthStencilDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+		depthStencilDesc.CPUAccessFlags = 0;
+		depthStencilDesc.MiscFlags = 0;
 
-		return target;
+		int hret = _device->CreateTexture2D(&depthStencilDesc, NULL, &tex->_data);
+		if (ParseReturn(hret))
+			return SharedPtr<DepthTexture>::EMPTY;
+
+		hret = _device->CreateDepthStencilView(tex->_data, NULL, &tex->_view);
+		if (ParseReturn(hret))
+			return SharedPtr<DepthTexture>::EMPTY;
+
+		return tex;
 	}
 
 	SharedPtr<Shader> Video::CreateShaderFromMemory(const VertexDeclare* decl, uint8_t count, const char* code, int size /* = -1 */)
@@ -227,12 +254,12 @@ namespace uut
 		return buffer;
 	}
 
-	bool Video::SetTarget(RenderTarget* target)
+	bool Video::SetTarget(RenderTarget* target, DepthTexture* depth /* = nullptr */)
 	{
 		if (target == nullptr)
 			return false;
 
-		_context->OMSetRenderTargets(1, &target->_view, NULL);
+		_context->OMSetRenderTargets(1, &target->_view, (depth ? depth->_view : nullptr));
 		return true;
 	}
 
