@@ -23,7 +23,6 @@
     <ClCompile Include="..\uut\input\uutInput.cpp" />
     <ClCompile Include="..\uut\io\Asset.cpp" />
     <ClCompile Include="..\uut\io\AssetCache.cpp" />
-    <ClCompile Include="..\uut\video\uutCamera.cpp" />
     <ClCompile Include="..\uut\video\uutColor.cpp" />
     <ClCompile Include="..\uut\video\uutColor32.cpp" />
     <ClCompile Include="..\uut\video\uutDepthTexture.cpp" />
@@ -59,7 +58,6 @@
     <ClInclude Include="..\uut\math\uutVector2.h" />
     <ClInclude Include="..\uut\math\uutVector3.h" />
     <ClInclude Include="..\uut\uut.h" />
-    <ClInclude Include="..\uut\video\uutCamera.h" />
     <ClInclude Include="..\uut\video\uutDepthTexture.h" />
     <ClInclude Include="..\uut\video\uutGeometry.h" />
     <ClInclude Include="..\uut\video\uutRenderTarget.h" />
