@@ -21,8 +21,6 @@
     <ClCompile Include="..\uut\core\uutRefCounted.cpp" />
     <ClCompile Include="..\uut\core\uutTypeInfo.cpp" />
     <ClCompile Include="..\uut\input\uutInput.cpp" />
-    <ClCompile Include="..\uut\io\Asset.cpp" />
-    <ClCompile Include="..\uut\io\AssetCache.cpp" />
     <ClCompile Include="..\uut\video\uutColor.cpp" />
     <ClCompile Include="..\uut\video\uutColor32.cpp" />
     <ClCompile Include="..\uut\video\uutDepthTexture.cpp" />
@@ -53,8 +51,6 @@
     <ClInclude Include="..\uut\core\uutTypeInfo.h" />
     <ClInclude Include="..\uut\input\uutInput.h" />
     <ClInclude Include="..\uut\input\uutKeycodes.h" />
-    <ClInclude Include="..\uut\io\Asset.h" />
-    <ClInclude Include="..\uut\io\AssetCache.h" />
     <ClInclude Include="..\uut\math\uutVector2.h" />
     <ClInclude Include="..\uut\math\uutVector3.h" />
     <ClInclude Include="..\uut\uut.h" />

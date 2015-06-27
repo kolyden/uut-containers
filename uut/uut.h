@@ -8,7 +8,6 @@
 #include "math/uutVector2.h"
 #include "math/uutVector3.h"
 
-#include "video/uutCamera.h"
 #include "video/uutColor.h"
 #include "video/uutColor32.h"
 #include "video/uutDepthTexture.h"
