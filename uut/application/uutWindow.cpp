@@ -12,7 +12,7 @@ namespace uut
 	{
 	}
 
-	bool Window::Create(const IntVector2& size)
+	bool Window::Create(const Vector2i& size)
 	{
 		HINSTANCE hinstance = GetModuleHandle(NULL);
 		_size = size;

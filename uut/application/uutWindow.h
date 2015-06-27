@@ -14,10 +14,10 @@ namespace uut
 	public:
 		Window();
 
-		bool Create(const IntVector2& size);
+		bool Create(const Vector2i& size);
 		bool MessagePool();
 
-		const IntVector2& GetSize() const { return _size; }
+		const Vector2i& GetSize() const { return _size; }
 
 		void AddEventListener(EventListener* listener);
 		void RemoveEventListener(EventListener* listener);
@@ -27,7 +27,7 @@ namespace uut
 	protected:
 		HWND _hwnd;
 		WNDCLASSEX _wc;
-		IntVector2 _size;
+		Vector2i _size;
 		List<EventListener*> _listeners;
 
 		static LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);

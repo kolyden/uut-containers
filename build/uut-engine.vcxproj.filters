@@ -84,6 +84,18 @@
     <ClCompile Include="..\uut\video\uutDepthTexture.cpp">
       <Filter>video</Filter>
     </ClCompile>
+    <ClCompile Include="..\uut\math\uutMatrix.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\math\uutRect.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\math\uutVector2.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\math\uutVector3.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\uut\containers\uutList.h">
@@ -179,6 +191,12 @@
     </ClInclude>
     <ClInclude Include="..\uut\video\uutDepthTexture.h">
       <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\math\uutMatrix.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\math\uutRect.h">
+      <Filter>math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

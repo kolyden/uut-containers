@@ -22,8 +22,8 @@ namespace uut
 		Video();
 		virtual ~Video();
 
-		bool SetMode(const IntVector2& size, bool fullscreen);
-		const IntVector2& GetSize() const { return _size; }
+		bool SetMode(const Vector2i& size, bool fullscreen);
+		const Vector2i& GetSize() const { return _size; }
 
 		ID3D11Device* GetDevice() const { return _device; }
 		ID3D11DeviceContext* GetContext() const { return _context; }
@@ -52,7 +52,7 @@ namespace uut
 		IDXGISwapChain* _swapChain;
 		ID3D11Device* _device;
 		ID3D11DeviceContext* _context;
-		IntVector2 _size;
+		Vector2i _size;
 
 		SharedPtr<Window> _window;
 		SharedPtr<RenderTarget> _backBuffer;

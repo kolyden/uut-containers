@@ -16,7 +16,7 @@ namespace uut
 	{
 	}
 
-	bool Video::SetMode(const IntVector2& size, bool fullscreen)
+	bool Video::SetMode(const Vector2i& size, bool fullscreen)
 	{
 		_size = size;
 		if (_window == nullptr)
