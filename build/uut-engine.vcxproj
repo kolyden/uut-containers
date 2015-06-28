@@ -27,7 +27,7 @@
     <ClCompile Include="..\uut\math\uutVector3.cpp" />
     <ClCompile Include="..\uut\video\uutColor.cpp" />
     <ClCompile Include="..\uut\video\uutRender.cpp" />
-    <ClCompile Include="..\uut\video\uutRenderBuffer.cpp" />
+    <ClCompile Include="..\uut\video\uutVertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\uut\application\uutApplication.h" />
@@ -54,7 +54,7 @@
     <ClInclude Include="..\uut\uut.h" />
     <ClInclude Include="..\uut\video\uutColor.h" />
     <ClInclude Include="..\uut\video\uutRender.h" />
-    <ClInclude Include="..\uut\video\uutRenderBuffer.h" />
+    <ClInclude Include="..\uut\video\uutVertexBuffer.h" />
     <ClInclude Include="..\uut\video\uutVideoDefs.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -4,6 +4,21 @@
 
 namespace uut
 {
+	struct CUSTOMVERTEX
+	{
+		FLOAT x, y, z, rhw;    // from the D3DFVF_XYZRHW flag
+		DWORD color;    // from the D3DFVF_DIFFUSE flag
+	};
+
+	static int VERTEXFORMAT = VERTEX_XYZRHW | VERTEX_COLOR;
+
+	CUSTOMVERTEX OurVertices[] =
+	{
+		{ 320.0f, 50.0f, 1.0f, 1.0f, D3DCOLOR_XRGB(0, 0, 255), },
+		{ 520.0f, 400.0f, 1.0f, 1.0f, D3DCOLOR_XRGB(0, 255, 0), },
+		{ 120.0f, 400.0f, 1.0f, 1.0f, D3DCOLOR_XRGB(255, 0, 0), },
+	};
+
 	class MyApp : public Application
 	{
 	public:
@@ -14,6 +29,11 @@ namespace uut
 
 		virtual void OnInit() override
 		{
+			_vbuffer = _render->CreateVertexBuffer(sizeof(CUSTOMVERTEX)* 3, VERTEXFORMAT);
+			auto ptr = _vbuffer->Lock();
+			memcpy(ptr, OurVertices, sizeof(CUSTOMVERTEX)* 3);
+			_vbuffer->Unlock();
+
 // 			_depth = _video->CreateDepthTexture();
 // 			_video->SetTarget(_video->GetBackBuffer(), _depth);
 // 
@@ -75,6 +95,9 @@ namespace uut
 			_render->Clear(_color);
 			if (_render->BeginScene())
 			{
+				_render->SetVertexFormat(VERTEXFORMAT);
+				_render->SetVertexBuffer(_vbuffer, 0, sizeof(CUSTOMVERTEX));
+				_render->DrawPrimitive(PRIMITIVE_TRIANGLELIST, 0, 1);
 				_render->EndScene();
 			}
 			_render->Present();
@@ -97,6 +120,7 @@ namespace uut
 // 		SharedPtr<VideoBuffer> _cbuffer;
 // 		SharedPtr<DepthTexture> _depth;
 		DWORD _time;
+		SharedPtr<VertexBuffer> _vbuffer;
 
 // 		XMMATRIX _WVP;
 // 		XMMATRIX _World;

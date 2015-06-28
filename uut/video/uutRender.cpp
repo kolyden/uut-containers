@@ -1,5 +1,6 @@
 #include "uutRender.h"
 #include "application/uutWindow.h"
+#include "uutVertexBuffer.h"
 
 namespace uut
 {
@@ -61,5 +62,67 @@ namespace uut
 	void Render::Present()
 	{
 		_d3dDevice->Present(NULL, NULL, NULL, NULL);
+	}
+
+	SharedPtr<VertexBuffer> Render::CreateVertexBuffer(unsigned int size, int format)
+	{
+		LPDIRECT3DVERTEXBUFFER9 data;
+		DWORD fvf = ConvertFormat(format);
+		HRESULT ret =_d3dDevice->CreateVertexBuffer(size, 0,
+			fvf, D3DPOOL_MANAGED, &data, NULL);
+		if (ret != D3D_OK)
+			return SharedPtr<VertexBuffer>::EMPTY;
+
+		SharedPtr<VertexBuffer> buffer(new VertexBuffer());
+		buffer->_data = data;
+		buffer->_format = format;
+		return buffer;
+	}
+
+	void Render::SetVertexFormat(int format)
+	{
+		DWORD fvf = ConvertFormat(format);
+		_d3dDevice->SetFVF(fvf);
+	}
+
+	bool Render::SetVertexBuffer(VertexBuffer* buffer, uint32_t offset, uint32_t stride)
+	{
+		if (buffer == nullptr)
+			return false;
+
+		_d3dDevice->SetStreamSource(0, buffer->_data, offset, stride);
+		return true;
+	}
+
+	void Render::DrawPrimitive(EPrimitiveType type, uint32_t start, uint32_t primitiveCount)
+	{
+		auto primitive = ConvertPrimitiveType(type);
+		_d3dDevice->DrawPrimitive(primitive, start, primitiveCount);
+	}
+
+	//////////////////////////////////////////////////////////////////////////
+	DWORD Render::ConvertFormat(unsigned int format)
+	{
+		DWORD fvf = 0;
+		if (format & VERTEX_XYZ)
+			fvf |= D3DFVF_XYZ;
+		if (format & VERTEX_XYZRHW)
+			fvf |= D3DFVF_XYZRHW;
+		if (format & VERTEX_COLOR)
+			fvf |= D3DFVF_DIFFUSE;
+		if (format & VERTEX_TEXCOORDS0)
+			fvf |= D3DFVF_TEX0;
+
+		return fvf;
+	}
+
+	D3DPRIMITIVETYPE Render::ConvertPrimitiveType(EPrimitiveType type)
+	{
+		static D3DPRIMITIVETYPE convert[] = {
+			D3DPT_POINTLIST, D3DPT_LINELIST, D3DPT_LINESTRIP,
+			D3DPT_TRIANGLELIST, D3DPT_TRIANGLESTRIP,
+		};
+
+		return convert[type];
 	}
 }

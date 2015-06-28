@@ -19,43 +19,20 @@ namespace uut
 		Dynamic,
 	};
 
-	enum class VertexTopology
+	enum EPrimitiveType
 	{
-		PointList,
-		LineList,
-		LineStrip,
-		TriangleList,
-		TriangleStrip,
+		PRIMITIVE_POINTLIST,
+		PRIMITIVE_LINELIST,
+		PRIMITIVE_LINESTRIP,
+		PRIMITIVE_TRIANGLELIST,
+		PRIMITIVE_TRIANGLESTRIP,
 	};
 
-	enum class VertexUsage
+	enum VertexFormat
 	{
-		Position,
-		Color,
-		TexCoords,
-	};
-
-	enum class VertexType
-	{
-		SByte,
-		UByte,
-		SShort,
-		UShort,
-		Float,
-	};
-
-	enum class IndexType
-	{
-		Uint16,
-		Uint32,
-	};
-
-	struct VertexDeclare
-	{
-		uint8_t _index;
-		VertexUsage _usage;
-		VertexType _type;
-		uint8_t _count;
-		uint16_t _offset;
+		VERTEX_XYZ        = 1,
+		VERTEX_XYZRHW     = 2,
+		VERTEX_COLOR      = 4,
+		VERTEX_TEXCOORDS0 = 8,
 	};
 }

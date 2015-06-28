@@ -69,7 +69,7 @@
     <ClCompile Include="..\uut\video\uutRender.cpp">
       <Filter>video</Filter>
     </ClCompile>
-    <ClCompile Include="..\uut\video\uutRenderBuffer.cpp">
+    <ClCompile Include="..\uut\video\uutVertexBuffer.cpp">
       <Filter>video</Filter>
     </ClCompile>
   </ItemGroup>
@@ -147,7 +147,7 @@
     <ClInclude Include="..\uut\video\uutRender.h">
       <Filter>video</Filter>
     </ClInclude>
-    <ClInclude Include="..\uut\video\uutRenderBuffer.h">
+    <ClInclude Include="..\uut\video\uutVertexBuffer.h">
       <Filter>video</Filter>
     </ClInclude>
   </ItemGroup>
