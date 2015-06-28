@@ -34,6 +34,8 @@ namespace uut
 		d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;
 		d3dpp.BackBufferWidth = size.x;
 		d3dpp.BackBufferHeight = size.y;
+		d3dpp.EnableAutoDepthStencil = TRUE;
+		d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
 
 		// create a device class using this information and information from the d3dpp stuct
 		_d3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL,
@@ -41,12 +43,13 @@ namespace uut
 			&d3dpp, &_d3dDevice);
 
 		_d3dDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+		_d3dDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
 		return true;
 	}
 
 	void Render::Clear(const Color4b& color)
 	{
-		_d3dDevice->Clear(0, NULL, D3DCLEAR_TARGET,
+		_d3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
 			D3DCOLOR_RGBA(color.r, color.g, color.b, color.a), 1.0f, 0);
 	}
 
@@ -149,7 +152,7 @@ namespace uut
 	D3DRENDERSTATETYPE Render::ConvertRenderState(ERenderState state)
 	{
 		static D3DRENDERSTATETYPE convert[] = {
-			D3DRS_LIGHTING
+			D3DRS_LIGHTING, D3DRS_ZENABLE,
 		};
 		return convert[state];
 	}

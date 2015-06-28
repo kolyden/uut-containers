@@ -48,5 +48,6 @@ namespace uut
 	enum ERenderState
 	{
 		RENDERSTATE_LIGHTNING,
+		RENDERSTATE_ZENABLE,
 	};
 }
