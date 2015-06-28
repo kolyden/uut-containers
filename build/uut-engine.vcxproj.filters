@@ -72,6 +72,9 @@
     <ClCompile Include="..\uut\video\uutVertexBuffer.cpp">
       <Filter>video</Filter>
     </ClCompile>
+    <ClCompile Include="..\uut\math\uutMath.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\uut\containers\uutList.h">
@@ -149,6 +152,9 @@
     </ClInclude>
     <ClInclude Include="..\uut\video\uutVertexBuffer.h">
       <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\math\uutMath.h">
+      <Filter>math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

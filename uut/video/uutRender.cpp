@@ -31,15 +31,16 @@ namespace uut
 		d3dpp.Windowed = TRUE;
 		d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
 		d3dpp.hDeviceWindow = _window->GetHWND();
+		d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;
+		d3dpp.BackBufferWidth = size.x;
+		d3dpp.BackBufferHeight = size.y;
 
 		// create a device class using this information and information from the d3dpp stuct
-		_d3d->CreateDevice(D3DADAPTER_DEFAULT,
-			D3DDEVTYPE_HAL,
-			_window->GetHWND(),
-			D3DCREATE_SOFTWARE_VERTEXPROCESSING,
-			&d3dpp,
-			&_d3dDevice);
+		_d3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL,
+			_window->GetHWND(), D3DCREATE_SOFTWARE_VERTEXPROCESSING,
+			&d3dpp, &_d3dDevice);
 
+		_d3dDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 		return true;
 	}
 
@@ -79,6 +80,18 @@ namespace uut
 		return buffer;
 	}
 
+	void Render::SetRenderState(ERenderState state, bool val)
+	{
+		auto rs = ConvertRenderState(state);
+		_d3dDevice->SetRenderState(rs, val ? TRUE : FALSE);
+	}
+
+	void Render::SetTransform(ETransformType transform, const Matrix4& mat)
+	{
+		auto state = ConvertTransformType(transform);
+		_d3dDevice->SetTransform(state, (D3DXMATRIX*)&mat);
+	}
+
 	void Render::SetVertexFormat(int format)
 	{
 		DWORD fvf = ConvertFormat(format);
@@ -89,7 +102,6 @@ namespace uut
 	{
 		if (buffer == nullptr)
 			return false;
-
 		_d3dDevice->SetStreamSource(0, buffer->_data, offset, stride);
 		return true;
 	}
@@ -124,5 +136,21 @@ namespace uut
 		};
 
 		return convert[type];
+	}
+
+	D3DTRANSFORMSTATETYPE Render::ConvertTransformType(ETransformType transform)
+	{
+		static D3DTRANSFORMSTATETYPE convert[] = {
+			D3DTS_WORLD, D3DTS_VIEW, D3DTS_PROJECTION };
+
+		return convert[transform];
+	}
+
+	D3DRENDERSTATETYPE Render::ConvertRenderState(ERenderState state)
+	{
+		static D3DRENDERSTATETYPE convert[] = {
+			D3DRS_LIGHTING
+		};
+		return convert[state];
 	}
 }

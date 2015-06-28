@@ -1,4 +1,5 @@
 #include "uutMatrix.h"
+#include <d3dx9.h>
 
 namespace uut
 {
@@ -9,45 +10,62 @@ namespace uut
 		memcpy(m, mat, sizeof(float) * 16);
 	}
 
-	Matrix4 Matrix4::buildOrtho(const Rectf& rect,
-		float znear, float zfar)
+	Matrix4 Matrix4::MakeIdentity()
 	{
-		Matrix4 ret;
+		D3DXMATRIX mat;
+		D3DXMatrixIdentity(&mat);
+		return Matrix4(&mat._11);
+	}
 
-        const float left = rect.pos.x;
-        const float right = left + rect.size.x;
+	Matrix4 Matrix4::MakeTranslate(const Vector3f& vec)
+	{
+		D3DXMATRIX mat;
+		D3DXMatrixTranslation(&mat, vec.x, vec.y, vec.z);
+		return Matrix4(&mat._11);
+	}
 
-        const float top = rect.pos.y;
-        const float bottom = top + rect.size.y;
+	Matrix4 Matrix4::MakeRotateX(float angle)
+	{
+		D3DXMATRIX mat;
+		D3DXMatrixRotationX(&mat, angle);
+		return Matrix4(&mat._11);
+	}
 
-        const float r_l = (right - left);
-		const float t_b = (top - bottom);
-		const float f_n = (zfar - znear);
+	Matrix4 Matrix4::MakeRotateY(float angle)
+	{
+		D3DXMATRIX mat;
+		D3DXMatrixRotationY(&mat, angle);
+		return Matrix4(&mat._11);
+	}
 
-		const float tx = -(right + left) / r_l;
-		const float ty = -(top + bottom) / t_b;
-		const float tz = -(zfar + znear) / f_n;
+	Matrix4 Matrix4::MakeRotateZ(float angle)
+	{
+		D3DXMATRIX mat;
+		D3DXMatrixRotationZ(&mat, angle);
+		return Matrix4(&mat._11);
+	}
 
-		ret.m[0][0] = 2.0f / r_l;
-		ret.m[0][1] = 0.0f;
-		ret.m[0][2] = 0.0f;
-		ret.m[0][3] = 0.0f;
+	uut::Matrix4 Matrix4::MakeScaling(const Vector3f& scale)
+	{
+		D3DXMATRIX mat;
+		D3DXMatrixScaling(&mat, scale.x, scale.y, scale.z);
+		return Matrix4(&mat._11);
+	}
 
-		ret.m[1][0] = 0.0f;
-		ret.m[1][1] = 2.0f / t_b;
-		ret.m[1][2] = 0.0f;
-		ret.m[1][3] = 0.0f;
+	Matrix4 Matrix4::MakePerspective(float fovy, float aspect, float znear, float zfar)
+	{
+		D3DXMATRIX mat;
+		D3DXMatrixPerspectiveFovLH(&mat, fovy, aspect, znear, zfar);
+		return Matrix4(&mat._11);
+	}
 
-		ret.m[2][0] = 0.0f;
-		ret.m[2][1] = 0.0f;
-		ret.m[2][2] = -2.0f / f_n;
-		ret.m[2][3] = 0.0f;
-
-		ret.m[3][0] = tx;
-		ret.m[3][1] = ty;
-		ret.m[3][2] = tz;
-		ret.m[3][3] = 1.0f;
-
-		return ret;
+	uut::Matrix4 Matrix4::MakeLookAt(const Vector3f& eye, const Vector3f& at, const Vector3f& up)
+	{
+		D3DXMATRIX mat;
+		D3DXVECTOR3 v0(eye.x, eye.y, eye.z);
+		D3DXVECTOR3 v1(at.x, at.y, at.z);
+		D3DXVECTOR3 v2(up.x, up.y, up.z);
+		D3DXMatrixLookAtLH(&mat, &v0, &v1, &v2);
+		return Matrix4(&mat._11);
 	}
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include "core/uutModule.h"
 #include "math/uutVector2.h"
+#include "math/uutMatrix.h"
 #include "uutVideoDefs.h"
 #include "uutColor.h"
 
@@ -16,6 +17,8 @@ namespace uut
 		Render();
 		virtual ~Render();
 
+		LPDIRECT3DDEVICE9 GetDevice() const { return _d3dDevice; }
+
 		bool Init(Window* window, const Vector2i& size);
 		void Clear(const Color4b& color);
 		bool BeginScene();
@@ -24,6 +27,8 @@ namespace uut
 
 		SharedPtr<VertexBuffer> CreateVertexBuffer(unsigned int size, int format);
 
+		void SetRenderState(ERenderState state, bool val);
+		void SetTransform(ETransformType transform, const Matrix4& mat);
 		void SetVertexFormat(int format);
 		bool SetVertexBuffer(VertexBuffer* buffer, uint32_t offset, uint32_t stride);
 
@@ -36,5 +41,7 @@ namespace uut
 
 		static DWORD ConvertFormat(unsigned int format);
 		static D3DPRIMITIVETYPE ConvertPrimitiveType(EPrimitiveType type);
+		static D3DTRANSFORMSTATETYPE ConvertTransformType(ETransformType transform);
+		static D3DRENDERSTATETYPE ConvertRenderState(ERenderState state);
 	};
 }

@@ -6,17 +6,17 @@ namespace uut
 {
 	struct CUSTOMVERTEX
 	{
-		FLOAT x, y, z, rhw;    // from the D3DFVF_XYZRHW flag
-		DWORD color;    // from the D3DFVF_DIFFUSE flag
+		FLOAT x, y, z;
+		DWORD color;
 	};
 
-	static int VERTEXFORMAT = VERTEX_XYZRHW | VERTEX_COLOR;
+	static int VERTEXFORMAT = VERTEX_XYZ | VERTEX_COLOR;
 
 	CUSTOMVERTEX OurVertices[] =
 	{
-		{ 320.0f, 50.0f, 1.0f, 1.0f, D3DCOLOR_XRGB(0, 0, 255), },
-		{ 520.0f, 400.0f, 1.0f, 1.0f, D3DCOLOR_XRGB(0, 255, 0), },
-		{ 120.0f, 400.0f, 1.0f, 1.0f, D3DCOLOR_XRGB(255, 0, 0), },
+		{ 3.0f, -3.0f, 0.0f, D3DCOLOR_XRGB(0, 0, 255), },
+		{ 0.0f, 3.0f, 0.0f, D3DCOLOR_XRGB(0, 255, 0), },
+		{ -3.0f, -3.0f, 0.0f, D3DCOLOR_XRGB(255, 0, 0), },
 	};
 
 	class MyApp : public Application
@@ -24,6 +24,7 @@ namespace uut
 	public:
 		MyApp()
 			: _color(0, 50, 200)
+			, _angle(0)
 		{
 		}
 
@@ -57,8 +58,10 @@ namespace uut
 		virtual void OnUpdate() override
 		{
 			const DWORD curTime = timeGetTime();
-			const float delta = 0.001f * (curTime - _time);
+			const float delta = 0.002f * (curTime - _time);
 			_time = curTime;
+
+			_angle += Math::M_HALF_PI * delta;
 
 			if (_input->IsKey(KEY_1))
 				_color = Color4b::WHITE;
@@ -96,6 +99,14 @@ namespace uut
 			if (_render->BeginScene())
 			{
 				_render->SetVertexFormat(VERTEXFORMAT);
+
+				auto mat = Matrix4::MakeRotateY(_angle);
+				_render->SetTransform(TRANSFORM_WORLD, mat);
+				_render->SetTransform(TRANSFORM_VIEW, 
+					Matrix4::MakeLookAt(Vector3f(0, 0, 10), Vector3f(0, 0, 0), Vector3f(0, 1, 0)));
+				_render->SetTransform(TRANSFORM_PROJECTION,
+					Matrix4::MakePerspective(Math::Deg2Rad(45), 800.0f / 600.0f, 1.0f, 100.0f));
+
 				_render->SetVertexBuffer(_vbuffer, 0, sizeof(CUSTOMVERTEX));
 				_render->DrawPrimitive(PRIMITIVE_TRIANGLELIST, 0, 1);
 				_render->EndScene();
@@ -116,6 +127,7 @@ namespace uut
 
 	protected:
 		Color4b _color;
+		float _angle;
 // 		SharedPtr<Geometry> _geom;
 // 		SharedPtr<VideoBuffer> _cbuffer;
 // 		SharedPtr<DepthTexture> _depth;

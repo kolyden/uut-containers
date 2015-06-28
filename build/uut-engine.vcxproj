@@ -21,6 +21,7 @@
     <ClCompile Include="..\uut\core\uutRefCounted.cpp" />
     <ClCompile Include="..\uut\core\uutTypeInfo.cpp" />
     <ClCompile Include="..\uut\input\uutInput.cpp" />
+    <ClCompile Include="..\uut\math\uutMath.cpp" />
     <ClCompile Include="..\uut\math\uutMatrix.cpp" />
     <ClCompile Include="..\uut\math\uutRect.cpp" />
     <ClCompile Include="..\uut\math\uutVector2.cpp" />
@@ -47,6 +48,7 @@
     <ClInclude Include="..\uut\core\uutTypeInfo.h" />
     <ClInclude Include="..\uut\input\uutInput.h" />
     <ClInclude Include="..\uut\input\uutKeycodes.h" />
+    <ClInclude Include="..\uut\math\uutMath.h" />
     <ClInclude Include="..\uut\math\uutMatrix.h" />
     <ClInclude Include="..\uut\math\uutRect.h" />
     <ClInclude Include="..\uut\math\uutVector2.h" />
@@ -89,14 +91,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)$(Configuration)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)$(Configuration)\$(ProjectName)\</IntDir>
-    <IncludePath>$(IncludePath)</IncludePath>
-    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DXSDK_DIR)\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)$(Configuration)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)$(Configuration)\$(ProjectName)\</IntDir>
-    <IncludePath>$(IncludePath)</IncludePath>
-    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DXSDK_DIR)\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

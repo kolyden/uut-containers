@@ -1,8 +1,10 @@
 #pragma once
 #include "core/uutDefs.h"
 #include <d3d9.h>
+#include <d3dx9.h>
 
 #pragma comment (lib, "d3d9.lib")
+#pragma comment (lib, "d3dx9.lib")
 
 namespace uut
 {
@@ -34,5 +36,17 @@ namespace uut
 		VERTEX_XYZRHW     = 2,
 		VERTEX_COLOR      = 4,
 		VERTEX_TEXCOORDS0 = 8,
+	};
+
+	enum ETransformType
+	{
+		TRANSFORM_WORLD,
+		TRANSFORM_VIEW,
+		TRANSFORM_PROJECTION,
+	};
+
+	enum ERenderState
+	{
+		RENDERSTATE_LIGHTNING,
 	};
 }
