@@ -4,9 +4,8 @@
 namespace uut
 {
 	class Window;
-	class Video;
+	class Render;
 	class Input;
-	class RenderTarget;
 
 	class Application : public Object
 	{
@@ -19,7 +18,7 @@ namespace uut
 
 	protected:
 		WeakPtr<Window> _window;
-		WeakPtr<Video> _video;
+		WeakPtr<Render> _render;
 		WeakPtr<Input> _input;
 // 		SharedPtr<RenderTarget> _target;
 

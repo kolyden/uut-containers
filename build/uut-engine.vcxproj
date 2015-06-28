@@ -26,16 +26,8 @@
     <ClCompile Include="..\uut\math\uutVector2.cpp" />
     <ClCompile Include="..\uut\math\uutVector3.cpp" />
     <ClCompile Include="..\uut\video\uutColor.cpp" />
-    <ClCompile Include="..\uut\video\uutColor32.cpp" />
-    <ClCompile Include="..\uut\video\uutDepthTexture.cpp" />
-    <ClCompile Include="..\uut\video\uutGeometry.cpp" />
-    <ClCompile Include="..\uut\video\uutRenderTarget.cpp" />
-    <ClCompile Include="..\uut\video\uutShader.cpp" />
-    <ClCompile Include="..\uut\video\uutTexture.cpp" />
-    <ClCompile Include="..\uut\video\uutTexture2D.cpp" />
-    <ClCompile Include="..\uut\video\uutVideo.cpp" />
-    <ClCompile Include="..\uut\video\uutVideoBuffer.cpp" />
-    <ClCompile Include="..\uut\video\uutVideoObject.cpp" />
+    <ClCompile Include="..\uut\video\uutRender.cpp" />
+    <ClCompile Include="..\uut\video\uutRenderBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\uut\application\uutApplication.h" />
@@ -60,18 +52,10 @@
     <ClInclude Include="..\uut\math\uutVector2.h" />
     <ClInclude Include="..\uut\math\uutVector3.h" />
     <ClInclude Include="..\uut\uut.h" />
-    <ClInclude Include="..\uut\video\uutDepthTexture.h" />
-    <ClInclude Include="..\uut\video\uutGeometry.h" />
-    <ClInclude Include="..\uut\video\uutRenderTarget.h" />
-    <ClInclude Include="..\uut\video\uutTexture2D.h" />
     <ClInclude Include="..\uut\video\uutColor.h" />
-    <ClInclude Include="..\uut\video\uutColor32.h" />
-    <ClInclude Include="..\uut\video\uutShader.h" />
-    <ClInclude Include="..\uut\video\uutTexture.h" />
-    <ClInclude Include="..\uut\video\uutVideo.h" />
-    <ClInclude Include="..\uut\video\uutVideoBuffer.h" />
+    <ClInclude Include="..\uut\video\uutRender.h" />
+    <ClInclude Include="..\uut\video\uutRenderBuffer.h" />
     <ClInclude Include="..\uut\video\uutVideoDefs.h" />
-    <ClInclude Include="..\uut\video\uutVideoObject.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DACB1596-24F1-4DDD-B842-CA03959AF88B}</ProjectGuid>

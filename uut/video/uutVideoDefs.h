@@ -1,16 +1,11 @@
 #pragma once
 #include "core/uutDefs.h"
-#include <d3d11.h>
-#include <D3Dcompiler.h>
-#include <DirectXMath.h>
+#include <d3d9.h>
 
-#pragma comment (lib, "d3d11.lib")
-#pragma comment (lib, "D3DCompiler.lib")
+#pragma comment (lib, "d3d9.lib")
 
 namespace uut
 {
-	using namespace DirectX;
-
 	enum class BufferType
 	{
 		Vertex,
