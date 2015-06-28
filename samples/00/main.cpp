@@ -14,9 +14,30 @@ namespace uut
 
 	CUSTOMVERTEX OurVertices[] =
 	{
-		{ 3.0f, -3.0f, 0.0f, D3DCOLOR_XRGB(0, 0, 255), },
-		{ 0.0f, 3.0f, 0.0f, D3DCOLOR_XRGB(0, 255, 0), },
-		{ -3.0f, -3.0f, 0.0f, D3DCOLOR_XRGB(255, 0, 0), },
+		{ -3.0f, 3.0f, -3.0f, D3DCOLOR_XRGB(0, 0, 255), },
+		{ 3.0f, 3.0f, -3.0f, D3DCOLOR_XRGB(0, 255, 0), },
+		{ -3.0f, -3.0f, -3.0f, D3DCOLOR_XRGB(255, 0, 0), },
+		{ 3.0f, -3.0f, -3.0f, D3DCOLOR_XRGB(0, 255, 255), },
+		{ -3.0f, 3.0f, 3.0f, D3DCOLOR_XRGB(0, 0, 255), },
+		{ 3.0f, 3.0f, 3.0f, D3DCOLOR_XRGB(255, 0, 0), },
+		{ -3.0f, -3.0f, 3.0f, D3DCOLOR_XRGB(0, 255, 0), },
+		{ 3.0f, -3.0f, 3.0f, D3DCOLOR_XRGB(0, 255, 255), },
+	};
+
+	short indices[] =
+	{
+		0, 1, 2,    // side 1
+		2, 1, 3,
+		4, 0, 6,    // side 2
+		6, 0, 2,
+		7, 5, 6,    // side 3
+		6, 5, 4,
+		3, 1, 7,    // side 4
+		7, 1, 5,
+		4, 5, 0,    // side 5
+		0, 5, 1,
+		3, 7, 2,    // side 6
+		2, 7, 6,
 	};
 
 	class MyApp : public Application
@@ -30,11 +51,19 @@ namespace uut
 
 		virtual void OnInit() override
 		{
-			_vbuffer = _render->CreateVertexBuffer(sizeof(CUSTOMVERTEX)* 3, VERTEXFORMAT);
-			auto ptr = _vbuffer->Lock();
-			memcpy(ptr, OurVertices, sizeof(CUSTOMVERTEX)* 3);
-			_vbuffer->Unlock();
+			_vbuffer = _render->CreateVertexBuffer(sizeof(CUSTOMVERTEX)* 8, VERTEXFORMAT);
+			{
+				auto ptr = _vbuffer->Lock();
+				memcpy(ptr, OurVertices, sizeof(CUSTOMVERTEX)* 8);
+				_vbuffer->Unlock();
+			}
 
+			_ibuffer = _render->CreateIndexBuffer(36 * sizeof(short), INDEX_16);
+			{
+				auto ptr = _ibuffer->Lock();
+				memcpy(ptr, indices, sizeof(indices));
+				_ibuffer->Unlock();
+			}
 // 			_depth = _video->CreateDepthTexture();
 // 			_video->SetTarget(_video->GetBackBuffer(), _depth);
 // 
@@ -108,7 +137,9 @@ namespace uut
 					Matrix4::MakePerspective(Math::Deg2Rad(45), 800.0f / 600.0f, 1.0f, 100.0f));
 
 				_render->SetVertexBuffer(_vbuffer, 0, sizeof(CUSTOMVERTEX));
-				_render->DrawPrimitive(PRIMITIVE_TRIANGLELIST, 0, 1);
+				_render->SetIndexBuffer(_ibuffer);
+				_render->DrawIndexedPrimitive(PRIMITIVE_TRIANGLELIST, 0, 0, 8, 0, 12);
+// 				_render->DrawPrimitive(PRIMITIVE_TRIANGLELIST, 0, 1);
 				_render->EndScene();
 			}
 			_render->Present();
@@ -129,21 +160,10 @@ namespace uut
 		Color4b _color;
 		float _angle;
 // 		SharedPtr<Geometry> _geom;
-// 		SharedPtr<VideoBuffer> _cbuffer;
-// 		SharedPtr<DepthTexture> _depth;
+
 		DWORD _time;
 		SharedPtr<VertexBuffer> _vbuffer;
-
-// 		XMMATRIX _WVP;
-// 		XMMATRIX _World;
-// 		XMMATRIX _camView;
-// 		XMMATRIX _camProjection;
-// 
-// 		XMVECTOR _camPosition;
-// 		XMVECTOR _camTarget;
-// 		XMVECTOR _camUp;
-// 		cbPerObject _cbPerObj;
-// 		bool _updateCamera;
+		SharedPtr<IndexBuffer> _ibuffer;
 	};
 }
 

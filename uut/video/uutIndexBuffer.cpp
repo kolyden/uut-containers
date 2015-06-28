@@ -1,20 +1,19 @@
-#include "uutVertexBuffer.h"
+#include "uutIndexBuffer.h"
 
 namespace uut
 {
-	VertexBuffer::VertexBuffer()
+	IndexBuffer::IndexBuffer()
 		: _data(NULL)
-		, _format(0)
 	{
 	}
 
-	VertexBuffer::~VertexBuffer()
+	IndexBuffer::~IndexBuffer()
 	{
-		if (_data)
+		if (_data != nullptr)
 			_data->Release();
 	}
 
-	void* VertexBuffer::Lock()
+	void* IndexBuffer::Lock()
 	{
 		void* ptr;
 		auto ret = _data->Lock(0, 0, &ptr, 0);
@@ -25,7 +24,7 @@ namespace uut
 		return ptr;
 	}
 
-	void VertexBuffer::Unlock()
+	void IndexBuffer::Unlock()
 	{
 		if (!_locked)
 			return;

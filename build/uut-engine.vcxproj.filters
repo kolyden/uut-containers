@@ -75,6 +75,12 @@
     <ClCompile Include="..\uut\math\uutMath.cpp">
       <Filter>math</Filter>
     </ClCompile>
+    <ClCompile Include="..\uut\video\uutIndexBuffer.cpp">
+      <Filter>video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\video\uutRenderBuffer.cpp">
+      <Filter>video</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\uut\containers\uutList.h">
@@ -155,6 +161,12 @@
     </ClInclude>
     <ClInclude Include="..\uut\math\uutMath.h">
       <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\video\uutIndexBuffer.h">
+      <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\video\uutRenderBuffer.h">
+      <Filter>video</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

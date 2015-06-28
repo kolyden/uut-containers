@@ -9,6 +9,7 @@ namespace uut
 {
 	class Window;
 	class VertexBuffer;
+	class IndexBuffer;
 
 	class Render : public Module
 	{
@@ -26,13 +27,17 @@ namespace uut
 		void Present();
 
 		SharedPtr<VertexBuffer> CreateVertexBuffer(unsigned int size, int format);
+		SharedPtr<IndexBuffer> CreateIndexBuffer(unsigned int size, EIndexFormat format);
 
 		void SetRenderState(ERenderState state, bool val);
 		void SetTransform(ETransformType transform, const Matrix4& mat);
 		void SetVertexFormat(int format);
 		bool SetVertexBuffer(VertexBuffer* buffer, uint32_t offset, uint32_t stride);
+		bool SetIndexBuffer(IndexBuffer* buffer);
 
 		void DrawPrimitive(EPrimitiveType type, uint32_t start, uint32_t primitiveCount);
+		void DrawIndexedPrimitive(EPrimitiveType type, int vertexStart,
+			uint32_t minIndex, uint32_t numVertices, uint32_t startIndex, uint32_t primitiveCount);
 
 	protected:
 		SharedPtr<Window> _window;

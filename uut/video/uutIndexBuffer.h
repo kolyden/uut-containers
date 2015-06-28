@@ -3,19 +3,19 @@
 
 namespace uut
 {
-	class VertexBuffer : public RenderBuffer
+	class IndexBuffer : public RenderBuffer
 	{
-		OBJECT(VertexBuffer, RenderBuffer)
+		OBJECT(IndexBuffer, RenderBuffer)
 	public:
-		VertexBuffer();
-		virtual ~VertexBuffer();
+		IndexBuffer();
+		virtual ~IndexBuffer();
 
 		virtual void* Lock() override;
 		virtual void Unlock() override;
 
 	protected:
-		LPDIRECT3DVERTEXBUFFER9 _data;
-		int _format;
+		LPDIRECT3DINDEXBUFFER9 _data;
+		EIndexFormat _format;
 
 		friend class Render;
 	};

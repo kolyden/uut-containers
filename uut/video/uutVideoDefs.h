@@ -50,4 +50,10 @@ namespace uut
 		RENDERSTATE_LIGHTNING,
 		RENDERSTATE_ZENABLE,
 	};
+
+	enum EIndexFormat
+	{
+		INDEX_16,
+		INDEX_32,
+	};
 }

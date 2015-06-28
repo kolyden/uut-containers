@@ -1,6 +1,7 @@
 #include "uutRender.h"
 #include "application/uutWindow.h"
 #include "uutVertexBuffer.h"
+#include "uutIndexBuffer.h"
 
 namespace uut
 {
@@ -83,6 +84,21 @@ namespace uut
 		return buffer;
 	}
 
+	SharedPtr<IndexBuffer> Render::CreateIndexBuffer(unsigned int size, EIndexFormat format)
+	{
+		LPDIRECT3DINDEXBUFFER9 data;
+
+		HRESULT ret = _d3dDevice->CreateIndexBuffer(size, 0,
+			D3DFMT_INDEX16, D3DPOOL_MANAGED, &data, NULL);
+		if (ret != D3D_OK)
+			return SharedPtr<IndexBuffer>::EMPTY;
+
+		SharedPtr<IndexBuffer> buffer(new IndexBuffer());
+		buffer->_data = data;
+		buffer->_format = format;
+		return buffer;
+	}
+
 	void Render::SetRenderState(ERenderState state, bool val)
 	{
 		auto rs = ConvertRenderState(state);
@@ -109,10 +125,25 @@ namespace uut
 		return true;
 	}
 
+	bool Render::SetIndexBuffer(IndexBuffer* buffer)
+	{
+		if (buffer == nullptr)
+			return false;
+
+		_d3dDevice->SetIndices(buffer->_data);
+		return true;
+	}
+
 	void Render::DrawPrimitive(EPrimitiveType type, uint32_t start, uint32_t primitiveCount)
 	{
 		auto primitive = ConvertPrimitiveType(type);
 		_d3dDevice->DrawPrimitive(primitive, start, primitiveCount);
+	}
+
+	void Render::DrawIndexedPrimitive(EPrimitiveType type, int vertexStart, uint32_t minIndex, uint32_t numVertices, uint32_t startIndex, uint32_t primitiveCount)
+	{
+		auto primitive = ConvertPrimitiveType(type);
+		_d3dDevice->DrawIndexedPrimitive(primitive, vertexStart, minIndex, numVertices, startIndex, primitiveCount);
 	}
 
 	//////////////////////////////////////////////////////////////////////////

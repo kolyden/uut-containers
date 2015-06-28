@@ -15,6 +15,7 @@
 #include "math/uutMatrix.h"
 
 #include "video/uutColor.h"
+#include "video/uutIndexBuffer.h"
 #include "video/uutRender.h"
 #include "video/uutVertexBuffer.h"
 // #include "video/uutDepthTexture.h"
