@@ -35,16 +35,18 @@ namespace uut
 			uint32_t data;
 			struct
 			{
-				uint8_t r;
-				uint8_t g;
 				uint8_t b;
+				uint8_t g;
+				uint8_t r;
 				uint8_t a;
 			};
 		};
 
 		Color4b() {}
 		explicit Color4b(uint32_t color) : data(color) {}
-		Color4b(uint8_t _r, uint8_t _g, uint8_t _b, uint8_t _a = 255)
+		Color4b(uint8_t _r, uint8_t _g, uint8_t _b)
+			: r(_r), g(_g), b(_b), a(255) {}
+		Color4b(uint8_t _r, uint8_t _g, uint8_t _b, uint8_t _a)
 			: r(_r), g(_g), b(_b), a(_a) {}
 
 		static const Color4b BLACK;

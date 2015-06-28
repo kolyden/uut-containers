@@ -15,11 +15,11 @@
 #include "math/uutMatrix.h"
 
 #include "video/uutColor.h"
+#include "video/uutGeometry.h"
 #include "video/uutIndexBuffer.h"
 #include "video/uutRender.h"
 #include "video/uutVertexBuffer.h"
 // #include "video/uutDepthTexture.h"
-// #include "video/uutGeometry.h"
 // #include "video/uutRenderTarget.h"
 // #include "video/uutShader.h"
 // #include "video/uutTexture2D.h"

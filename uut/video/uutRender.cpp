@@ -51,7 +51,7 @@ namespace uut
 	void Render::Clear(const Color4b& color)
 	{
 		_d3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
-			D3DCOLOR_RGBA(color.r, color.g, color.b, color.a), 1.0f, 0);
+			color.data, 1.0f, 0);
 	}
 
 	bool Render::BeginScene()

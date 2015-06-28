@@ -1,5 +1,5 @@
 #pragma once
-#include "uutVideoObject.h"
+#include "core/uutObject.h"
 #include "uutColor.h"
 #include "math/uutVector3.h"
 #include "math/uutVector2.h"
@@ -7,19 +7,21 @@
 
 namespace uut
 {
-	class Shader;
-	class VideoBuffer;
+	class Render;
+	class VertexBuffer;
+	class IndexBuffer;
 
-	class Geometry : public VideoObject
+	class Geometry : public Object
 	{
+		OBJECT(Geometry, Object)
 	public:
-		Geometry(Video* video);
+		Geometry(Render* render);
 
-		void SetVertices(const List<Vector3>& vertices);
-		const List<Vector3>& GetVertices() const;
+		void SetVertices(const List<Vector3f>& vertices);
+		const List<Vector3f>& GetVertices() const;
 
-		void SetColors(const List<Color>& colors);
-		const List<Color>& GetColors() const;
+		void SetColors(const List<Color4b>& colors);
+		const List<Color4b>& GetColors() const;
 
 		void SetIndexes(const List<uint16_t>& indexes);
 		const List<uint16_t>& GetIndexes() const;
@@ -27,14 +29,13 @@ namespace uut
 		bool Generate();
 		void Draw();
 
-		Shader* GetShader() const { return _shader; }
-
 	protected:
-		List<Vector3> _vertices;
-		List<Color> _colors;
+		WeakPtr<Render> _render;
+		List<Vector3f> _vertices;
+		List<Color4b> _colors;
 		List<uint16_t> _indexes;
-		SharedPtr<Shader> _shader;
-		SharedPtr<VideoBuffer> _vbuffer;
-		SharedPtr<VideoBuffer> _ibuffer;
+
+		SharedPtr<VertexBuffer> _vbuffer;
+		SharedPtr<IndexBuffer> _ibuffer;
 	};
 }

@@ -7,21 +7,21 @@ namespace uut
 	struct CUSTOMVERTEX
 	{
 		FLOAT x, y, z;
-		DWORD color;
+		Color4b color;
 	};
 
 	static int VERTEXFORMAT = VERTEX_XYZ | VERTEX_COLOR;
 
 	CUSTOMVERTEX OurVertices[] =
 	{
-		{ -3.0f, 3.0f, -3.0f, D3DCOLOR_XRGB(0, 0, 255), },
-		{ 3.0f, 3.0f, -3.0f, D3DCOLOR_XRGB(0, 255, 0), },
-		{ -3.0f, -3.0f, -3.0f, D3DCOLOR_XRGB(255, 0, 0), },
-		{ 3.0f, -3.0f, -3.0f, D3DCOLOR_XRGB(0, 255, 255), },
-		{ -3.0f, 3.0f, 3.0f, D3DCOLOR_XRGB(0, 0, 255), },
-		{ 3.0f, 3.0f, 3.0f, D3DCOLOR_XRGB(255, 0, 0), },
-		{ -3.0f, -3.0f, 3.0f, D3DCOLOR_XRGB(0, 255, 0), },
-		{ 3.0f, -3.0f, 3.0f, D3DCOLOR_XRGB(0, 255, 255), },
+		{ -3.0f, 3.0f, -3.0f, Color4b(0, 0, 255), },
+		{ 3.0f, 3.0f, -3.0f, Color4b(0, 255, 0), },
+		{ -3.0f, -3.0f, -3.0f, Color4b(255, 0, 0), },
+		{ 3.0f, -3.0f, -3.0f, Color4b(0, 255, 255), },
+		{ -3.0f, 3.0f, 3.0f, Color4b(0, 0, 255), },
+		{ 3.0f, 3.0f, 3.0f, Color4b(255, 0, 0), },
+		{ -3.0f, -3.0f, 3.0f, Color4b(0, 255, 0), },
+		{ 3.0f, -3.0f, 3.0f, Color4b(0, 255, 255), },
 	};
 
 	short indices[] =
@@ -44,7 +44,7 @@ namespace uut
 	{
 	public:
 		MyApp()
-			: _color(0, 50, 200)
+			: _color(Color4b::BLACK)
 			, _angle(0)
 		{
 		}
@@ -64,22 +64,6 @@ namespace uut
 				memcpy(ptr, indices, sizeof(indices));
 				_ibuffer->Unlock();
 			}
-// 			_depth = _video->CreateDepthTexture();
-// 			_video->SetTarget(_video->GetBackBuffer(), _depth);
-// 
-// 			_geom = new Geometry(_video);
-// 			_geom->SetVertices({ Vector3(-0.5f, -0.5f, 0.5f), Vector3(-0.5f, 0.5f, 0.5f), Vector3(0.5f, 0.5f, 0.5f), Vector3(0.5f, -0.5f, 0.5f) });
-// 			_geom->SetColors({ Color(1.0f, 0.0f, 0.0f), Color(0.0f, 1.0f, 0.0f), Color(0.0f, 0.0f, 1.0f), Color(0.0f, 1.0f, 0.0f) });
-// 			_geom->SetIndexes({ 0, 1, 2, 0, 2, 3 });
-// 			_geom->Generate();
-// 
-// 			_cbuffer = _video->CreateBuffer(BufferType::Constant, BufferUsage::Default, sizeof(cbPerObject));
-// 			_camPosition = XMVectorSet(0.0f, 0.0f, -0.5f, 0.0f);
-// 			_camTarget = XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f);
-// 			_camUp = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
-// 
-// 			const float aspect = static_cast<float>(_video->GetSize().x) / _video->GetSize().y;
-// 			_camProjection = XMMatrixPerspectiveFovLH(0.4f*3.14f, aspect, 1.0f, 1000.0f);
 
 			_time = timeGetTime();
 		}
@@ -93,9 +77,11 @@ namespace uut
 			_angle += Math::M_HALF_PI * delta;
 
 			if (_input->IsKey(KEY_1))
-				_color = Color4b::WHITE;
-			if (_input->IsKey(KEY_2))
 				_color = Color4b::BLACK;
+			if (_input->IsKey(KEY_2))
+				_color = Color4b::WHITE;
+			if (_input->IsKey(KEY_3))
+				_color = Color4b(100, 100, 100);
 			if (_input->IsKey(KEY_ESCAPE))
 				Quit();
 
@@ -132,28 +118,16 @@ namespace uut
 				auto mat = Matrix4::MakeRotateY(_angle);
 				_render->SetTransform(TRANSFORM_WORLD, mat);
 				_render->SetTransform(TRANSFORM_VIEW, 
-					Matrix4::MakeLookAt(Vector3f(0, 0, 10), Vector3f(0, 0, 0), Vector3f(0, 1, 0)));
+					Matrix4::MakeLookAt(Vector3f(0, 0, 20), Vector3f(0, 0, 0), Vector3f(0, 1, 0)));
 				_render->SetTransform(TRANSFORM_PROJECTION,
 					Matrix4::MakePerspective(Math::Deg2Rad(45), 800.0f / 600.0f, 1.0f, 100.0f));
 
 				_render->SetVertexBuffer(_vbuffer, 0, sizeof(CUSTOMVERTEX));
 				_render->SetIndexBuffer(_ibuffer);
 				_render->DrawIndexedPrimitive(PRIMITIVE_TRIANGLELIST, 0, 0, 8, 0, 12);
-// 				_render->DrawPrimitive(PRIMITIVE_TRIANGLELIST, 0, 1);
 				_render->EndScene();
 			}
 			_render->Present();
-// 			_video->GetBackBuffer()->Clear(_color);
-// 
-// 			_World = XMMatrixIdentity();
-// 			_WVP = _World * _camView * _camProjection;
-// 
-// 			_cbPerObj.WVP = XMMatrixTranspose(_WVP);
-// 			_video->GetContext()->UpdateSubresource(_cbuffer->GetData(), 0, NULL, &_cbPerObj, 0, 0);
-// 			_video->SetConstantBuffer(_cbuffer);
-// 
-// 			_geom->Draw();
-// 			_video->Present();
 		}
 
 	protected:
