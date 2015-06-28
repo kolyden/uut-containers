@@ -52,10 +52,10 @@ namespace uut
 	bool Geometry::Generate()
 	{
 		if (!_vbuffer)
-			_vbuffer = _render->CreateVertexBuffer(2048, VERTEX::FORMAT);
+			_vbuffer = _render->CreateVertexBuffer(BUFFER_SIZE, VERTEX::FORMAT);
 
 		if (!_ibuffer)
-			_ibuffer = _render->CreateIndexBuffer(2048, INDEX_16);
+			_ibuffer = _render->CreateIndexBuffer(BUFFER_SIZE, INDEX_16);
 
 		if (!_vbuffer || !_ibuffer)
 			return false;
@@ -78,7 +78,7 @@ namespace uut
 	void Geometry::Draw()
 	{
 		_render->SetVertexFormat(VERTEX::FORMAT);
-		_render->SetVertexBuffer(_vbuffer, sizeof(VERTEX), 0);
+		_render->SetVertexBuffer(_vbuffer, 0, sizeof(VERTEX));
 		_render->SetIndexBuffer(_ibuffer);
 		_render->DrawIndexedPrimitive( PRIMITIVE_TRIANGLELIST, 0, 0, _vertices.Count(), 0, _indexes.Count() / 3);
 	}
