@@ -2,6 +2,7 @@
 #include "application/uutWindow.h"
 #include "uutVertexBuffer.h"
 #include "uutIndexBuffer.h"
+#include "uutTexture.h"
 
 namespace uut
 {
@@ -97,6 +98,20 @@ namespace uut
 		buffer->_data = data;
 		buffer->_format = format;
 		return buffer;
+	}
+
+	SharedPtr<Texture> Render::CreateTexture(const Vector2i& size)
+	{
+		LPDIRECT3DTEXTURE9 data;
+		HRESULT ret = _d3dDevice->CreateTexture(size.x, size.y, 0, 0,
+			D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &data, NULL);
+		if (ret != D3D_OK)
+			return SharedPtr<Texture>::EMPTY;
+
+		SharedPtr<Texture> tex(new Texture());
+		tex->_data = data;
+		tex->_size = size;
+		return tex;
 	}
 
 	void Render::SetRenderState(ERenderState state, bool val)

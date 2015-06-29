@@ -10,6 +10,7 @@ namespace uut
 	class Window;
 	class VertexBuffer;
 	class IndexBuffer;
+	class Texture;
 
 	class Render : public Module
 	{
@@ -28,6 +29,7 @@ namespace uut
 
 		SharedPtr<VertexBuffer> CreateVertexBuffer(unsigned int size, int format);
 		SharedPtr<IndexBuffer> CreateIndexBuffer(unsigned int size, EIndexFormat format);
+		SharedPtr<Texture> CreateTexture(const Vector2i& size);
 
 		void SetRenderState(ERenderState state, bool val);
 		void SetTransform(ETransformType transform, const Matrix4& mat);

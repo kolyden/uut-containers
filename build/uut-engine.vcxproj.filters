@@ -84,6 +84,15 @@
     <ClCompile Include="..\uut\video\uutGeometry.cpp">
       <Filter>video</Filter>
     </ClCompile>
+    <ClCompile Include="..\uut\video\uutTexture.cpp">
+      <Filter>video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\math\uutQuaternion.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\math\uutCamera.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\uut\containers\uutList.h">
@@ -173,6 +182,15 @@
     </ClInclude>
     <ClInclude Include="..\uut\video\uutGeometry.h">
       <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\video\uutTexture.h">
+      <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\math\uutQuaternion.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\math\uutCamera.h">
+      <Filter>math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

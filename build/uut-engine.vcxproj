@@ -21,8 +21,10 @@
     <ClCompile Include="..\uut\core\uutRefCounted.cpp" />
     <ClCompile Include="..\uut\core\uutTypeInfo.cpp" />
     <ClCompile Include="..\uut\input\uutInput.cpp" />
+    <ClCompile Include="..\uut\math\uutCamera.cpp" />
     <ClCompile Include="..\uut\math\uutMath.cpp" />
     <ClCompile Include="..\uut\math\uutMatrix.cpp" />
+    <ClCompile Include="..\uut\math\uutQuaternion.cpp" />
     <ClCompile Include="..\uut\math\uutRect.cpp" />
     <ClCompile Include="..\uut\math\uutVector2.cpp" />
     <ClCompile Include="..\uut\math\uutVector3.cpp" />
@@ -31,6 +33,7 @@
     <ClCompile Include="..\uut\video\uutIndexBuffer.cpp" />
     <ClCompile Include="..\uut\video\uutRender.cpp" />
     <ClCompile Include="..\uut\video\uutRenderBuffer.cpp" />
+    <ClCompile Include="..\uut\video\uutTexture.cpp" />
     <ClCompile Include="..\uut\video\uutVertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -51,8 +54,10 @@
     <ClInclude Include="..\uut\core\uutTypeInfo.h" />
     <ClInclude Include="..\uut\input\uutInput.h" />
     <ClInclude Include="..\uut\input\uutKeycodes.h" />
+    <ClInclude Include="..\uut\math\uutCamera.h" />
     <ClInclude Include="..\uut\math\uutMath.h" />
     <ClInclude Include="..\uut\math\uutMatrix.h" />
+    <ClInclude Include="..\uut\math\uutQuaternion.h" />
     <ClInclude Include="..\uut\math\uutRect.h" />
     <ClInclude Include="..\uut\math\uutVector2.h" />
     <ClInclude Include="..\uut\math\uutVector3.h" />
@@ -62,6 +67,7 @@
     <ClInclude Include="..\uut\video\uutIndexBuffer.h" />
     <ClInclude Include="..\uut\video\uutRender.h" />
     <ClInclude Include="..\uut\video\uutRenderBuffer.h" />
+    <ClInclude Include="..\uut\video\uutTexture.h" />
     <ClInclude Include="..\uut\video\uutVertexBuffer.h" />
     <ClInclude Include="..\uut\video\uutVideoDefs.h" />
   </ItemGroup>

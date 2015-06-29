@@ -10,8 +10,9 @@ namespace uut
 		MyApp()
 			: _color(Color4b::BLACK)
 			, _angle(0)
-			, _camPosition(0, 0, 20)
+			, _drag(false)
 		{
+			_camera.SetPosition(Vector3f(0, 0, -20));
 		}
 
 		virtual void OnInit() override
@@ -55,6 +56,24 @@ namespace uut
 
 			_angle += Math::M_HALF_PI * delta;
 
+			if (_drag)
+			{
+				if (!_input->IsMouseButton(0))
+					_drag = false;
+				else
+				{
+					const auto pos = _input->GetMousePos();
+					const Vector2i deltapos = pos - _dragPos;
+					_dragPos = pos;
+					_camera.Move(Vector3f(delta * deltapos.x, 0, delta * deltapos.y));
+				}
+			}
+			else if (_input->IsMouseButton(0))
+			{
+				_drag = true;
+				_dragPos = _input->GetMousePos();
+			}
+
 			if (_input->IsKey(KEY_1))
 				_color = Color4b::BLACK;
 			if (_input->IsKey(KEY_2))
@@ -66,9 +85,12 @@ namespace uut
 
 			const float amount = 10.0f;
 			if (_input->IsKey(KEY_RIGHT))
-				_camPosition.x += amount * delta;
+				_camera.Move(Vector3f(+amount * delta, 0, 0));
+// 				_camPosition.x += amount * delta;
+
 			if (_input->IsKey(KEY_LEFT))
-				_camPosition.x -= amount * delta;
+				_camera.Move(Vector3f(-amount * delta, 0, 0));
+// 				_camPosition.x -= amount * delta;
 		}
 
 		virtual void OnRender() override
@@ -78,8 +100,7 @@ namespace uut
 			{
 				auto mat = Matrix4::MakeRotateY(_angle);
 				_render->SetTransform(TRANSFORM_WORLD, mat);
-				_render->SetTransform(TRANSFORM_VIEW, 
-					Matrix4::MakeLookAt(_camPosition, Vector3f(_camPosition.x, 0, 0), Vector3f(0, 1, 0)));
+				_render->SetTransform(TRANSFORM_VIEW, _camera.Generate());
 				_render->SetTransform(TRANSFORM_PROJECTION,
 					Matrix4::MakePerspective(Math::Deg2Rad(45), 800.0f / 600.0f, 1.0f, 100.0f));
 
@@ -98,7 +119,9 @@ namespace uut
 		SharedPtr<VertexBuffer> _vbuffer;
 		SharedPtr<IndexBuffer> _ibuffer;
 
-		Vector3f _camPosition;
+		Camera _camera;
+		bool _drag;
+		Vector2i _dragPos;
 	};
 }
 

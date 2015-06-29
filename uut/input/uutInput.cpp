@@ -4,6 +4,7 @@
 namespace uut
 {
 	Input::Input()
+		: _mousePos(0)
 	{
 		_keys.reset();
 	}
@@ -28,5 +29,20 @@ namespace uut
 	void Input::OnKeyUp(EKeycode code)
 	{
 		_keys[code] = false;
+	}
+
+	void Input::OnMouseDown(int button)
+	{
+		_mouseButton[button] = true;
+	}
+
+	void Input::OnMouseUp(int button)
+	{
+		_mouseButton[button] = false;
+	}
+
+	void Input::OnMouseMove(const Vector2i& pos)
+	{
+		_mousePos = pos;
 	}
 }

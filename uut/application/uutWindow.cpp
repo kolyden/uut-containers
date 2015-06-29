@@ -100,6 +100,7 @@ namespace uut
 	LRESULT CALLBACK Window::WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		auto window = (Window*)GetWindowLongPtr(hWnd, GWL_USERDATA);
+		int x, y;
 		switch (message)
 		{
 		case WM_DESTROY:
@@ -114,6 +115,24 @@ namespace uut
 		case WM_KEYUP:
 			for (int i = 0; i < window->_listeners.Count(); i++)
 				window->_listeners[i]->OnKeyUp((EKeycode)wParam);
+			break;
+
+		case WM_MOUSEMOVE:
+			if (wParam & MK_LBUTTON)
+			{
+				for (int i = 0; i < window->_listeners.Count(); i++)
+					window->_listeners[i]->OnMouseDown(0);
+			}
+			else
+			{
+				for (int i = 0; i < window->_listeners.Count(); i++)
+					window->_listeners[i]->OnMouseUp(0);
+			}
+
+			x = GET_X_LPARAM(lParam);
+			y = GET_Y_LPARAM(lParam);
+			for (int i = 0; i < window->_listeners.Count(); i++)
+				window->_listeners[i]->OnMouseMove(Vector2i(x, y));
 			break;
 		}
 
