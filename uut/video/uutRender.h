@@ -2,8 +2,8 @@
 #include "core/uutModule.h"
 #include "math/uutVector2.h"
 #include "math/uutMatrix.h"
+#include "math/uutColor.h"
 #include "uutVideoDefs.h"
-#include "uutColor.h"
 
 namespace uut
 {

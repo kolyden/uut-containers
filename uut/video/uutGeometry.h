@@ -1,6 +1,6 @@
 #pragma once
 #include "core/uutObject.h"
-#include "uutColor.h"
+#include "math/uutColor.h"
 #include "math/uutVector3.h"
 #include "math/uutVector2.h"
 #include "containers/uutList.h"
@@ -27,6 +27,7 @@ namespace uut
 		const List<uint16_t>& GetIndexes() const;
 
 		bool Generate();
+		void Clear();
 		void Draw();
 
 	protected:

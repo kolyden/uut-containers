@@ -18,6 +18,7 @@ namespace uut
 
 		void Add(const T& item) { _data.push_back(item); }
 		void Clear() { _data.clear(); }
+		bool IsEmpty() const { return _data.empty(); }
 
 		void SetSize(unsigned int size) { _data.resize(size); }
 

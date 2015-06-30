@@ -27,9 +27,6 @@
     <ClCompile Include="..\uut\core\uutRefCounted.cpp">
       <Filter>core</Filter>
     </ClCompile>
-    <ClCompile Include="..\uut\video\uutColor.cpp">
-      <Filter>video</Filter>
-    </ClCompile>
     <ClCompile Include="..\uut\input\uutInput.cpp">
       <Filter>input</Filter>
     </ClCompile>
@@ -93,6 +90,15 @@
     <ClCompile Include="..\uut\math\uutCamera.cpp">
       <Filter>math</Filter>
     </ClCompile>
+    <ClCompile Include="..\uut\video\uutGraphics.cpp">
+      <Filter>video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\math\uutVertex.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\math\uutColor.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\uut\containers\uutList.h">
@@ -121,9 +127,6 @@
     </ClInclude>
     <ClInclude Include="..\uut\math\uutVector3.h">
       <Filter>math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\uut\video\uutColor.h">
-      <Filter>video</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\input\uutKeycodes.h">
       <Filter>input</Filter>
@@ -190,6 +193,15 @@
       <Filter>math</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\math\uutCamera.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\video\uutGraphics.h">
+      <Filter>video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\math\uutVertex.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\math\uutColor.h">
       <Filter>math</Filter>
     </ClInclude>
   </ItemGroup>

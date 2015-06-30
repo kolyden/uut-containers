@@ -75,6 +75,13 @@ namespace uut
 		return true;
 	}
 
+	void Geometry::Clear()
+	{
+		_vertices.Clear();
+		_colors.Clear();
+		_indexes.Clear();
+	}
+
 	void Geometry::Draw()
 	{
 		_render->SetVertexFormat(VERTEX::FORMAT);

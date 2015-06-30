@@ -45,6 +45,9 @@ namespace uut
 				2, 7, 6,
 			});
 			_geom->Generate();
+
+			_graphics = new Graphics(_render);
+
 			_time = timeGetTime();
 		}
 
@@ -104,7 +107,14 @@ namespace uut
 				_render->SetTransform(TRANSFORM_PROJECTION,
 					Matrix4::MakePerspective(Math::Deg2Rad(45), 800.0f / 600.0f, 1.0f, 100.0f));
 
-				_geom->Draw();
+				_graphics->DrawQuad(
+					Vertex(-3.0f, 3.0f, -3.0f),
+					Vertex(3.0f, 3.0f, -3.0f),
+					Vertex(-3.0f, -3.0f, -3.0f),
+					Vertex(3.0f, -3.0f, -3.0f));
+				_graphics->Flush();
+
+// 				_geom->Draw();
 				_render->EndScene();
 			}
 			_render->Present();
@@ -118,6 +128,7 @@ namespace uut
 		DWORD _time;
 		SharedPtr<VertexBuffer> _vbuffer;
 		SharedPtr<IndexBuffer> _ibuffer;
+		SharedPtr<Graphics> _graphics;
 
 		Camera _camera;
 		bool _drag;
