@@ -4,6 +4,7 @@
 #include "math/uutVector3.h"
 #include "math/uutVector2.h"
 #include "containers/uutList.h"
+#include "uutVideoDefs.h"
 
 namespace uut
 {
@@ -15,7 +16,10 @@ namespace uut
 	{
 		OBJECT(Geometry, Object)
 	public:
-		Geometry(Render* render);
+		Geometry(Render* render, int vertexCount = 2048, int indexCount = 4096);
+
+		void SetPrimitive(EPrimitiveType type);
+		EPrimitiveType GetPrimitive() const;
 
 		void SetVertices(const List<Vector3f>& vertices);
 		const List<Vector3f>& GetVertices() const;
@@ -35,6 +39,9 @@ namespace uut
 		List<Vector3f> _vertices;
 		List<Color4b> _colors;
 		List<uint16_t> _indexes;
+		EPrimitiveType _primitive;
+		int _vertexCount;
+		int _indexCount;
 
 		SharedPtr<VertexBuffer> _vbuffer;
 		SharedPtr<IndexBuffer> _ibuffer;

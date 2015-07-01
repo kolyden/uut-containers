@@ -11,7 +11,7 @@ namespace uut
 		static const float M_DEGTORAD = (float)M_PI / 180.0f;
 		static const float M_RADTODEG = 1.0f / M_DEGTORAD;
 
-		extern float Deg2Rad(float deg) { return deg * M_DEGTORAD; }
-		extern float Rad2Deg(float rad) { return rad * M_RADTODEG; }
+		extern float Deg2Rad(float deg);
+		extern float Rad2Deg(float rad);
 	}
 }

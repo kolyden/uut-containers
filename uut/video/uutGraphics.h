@@ -28,6 +28,6 @@ namespace uut
 		List<Vertex> _verts;
 		List<uint16_t> _indexes;
 
-		void TestBatch(EPrimitiveType type, int count);
+		void TestBatch(EPrimitiveType type, int vertsCount, int indexCount);
 	};
 }

@@ -20,4 +20,7 @@ namespace uut
 	//////////////////////////////////////////////////////////////////////////
 	const Color4b Color4b::BLACK(0, 0, 0);
 	const Color4b Color4b::WHITE(255, 255, 255);
+	const Color4b Color4b::RED(255, 0, 0);
+	const Color4b Color4b::GREEN(0, 255, 0);
+	const Color4b Color4b::BLUE(0, 0, 255);
 }

@@ -26,6 +26,9 @@ namespace uut
 		Vector3f operator * (const Vector3f& other) const { return Vector3f(x * other.x, y * other.y, z * other.z); }
 		Vector3f operator / (const Vector3f& other) const { return Vector3f(x / other.x, y / other.y, z / other.z); }
 
+		Vector3f operator * (float val) const { return Vector3f(x * val, y * val, z * val); }
+		Vector3f operator / (float val) const { return Vector3f(x / val, y / val, z / val); }
+
 		Vector3f& operator += (const Vector3f& other) { x += other.x; y += other.y; z += other.z; return *this; }
 		Vector3f& operator -= (const Vector3f& other) { x -= other.x; y -= other.y; z -= other.z; return *this; }
 		Vector3f& operator *= (const Vector3f& other) { x *= other.x; y *= other.y; z *= other.z; return *this; }

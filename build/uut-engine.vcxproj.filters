@@ -99,6 +99,9 @@
     <ClCompile Include="..\uut\math\uutColor.cpp">
       <Filter>math</Filter>
     </ClCompile>
+    <ClCompile Include="..\uut\math\uutRandom.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\uut\containers\uutList.h">
@@ -202,6 +205,9 @@
       <Filter>math</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\math\uutColor.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\math\uutRandom.h">
       <Filter>math</Filter>
     </ClInclude>
   </ItemGroup>

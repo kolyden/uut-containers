@@ -26,6 +26,7 @@
     <ClCompile Include="..\uut\math\uutMath.cpp" />
     <ClCompile Include="..\uut\math\uutMatrix.cpp" />
     <ClCompile Include="..\uut\math\uutQuaternion.cpp" />
+    <ClCompile Include="..\uut\math\uutRandom.cpp" />
     <ClCompile Include="..\uut\math\uutRect.cpp" />
     <ClCompile Include="..\uut\math\uutVector2.cpp" />
     <ClCompile Include="..\uut\math\uutVector3.cpp" />
@@ -61,6 +62,7 @@
     <ClInclude Include="..\uut\math\uutMath.h" />
     <ClInclude Include="..\uut\math\uutMatrix.h" />
     <ClInclude Include="..\uut\math\uutQuaternion.h" />
+    <ClInclude Include="..\uut\math\uutRandom.h" />
     <ClInclude Include="..\uut\math\uutRect.h" />
     <ClInclude Include="..\uut\math\uutVector2.h" />
     <ClInclude Include="..\uut\math\uutVector3.h" />
@@ -124,6 +126,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>../uut/</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -140,6 +143,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>../uut/</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

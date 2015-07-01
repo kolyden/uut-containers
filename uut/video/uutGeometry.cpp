@@ -9,14 +9,25 @@ namespace uut
 	{
 		static const int FORMAT = VERTEX_XYZ | VERTEX_COLOR;
 		Vector3f pos;
-		Color4b color;
+		D3DCOLOR color;
 	};
 
-	static const int BUFFER_SIZE = sizeof(VERTEX)* 1000;
-
-	Geometry::Geometry(Render* render)
+	Geometry::Geometry(Render* render, int vertexCount /* = 2048 */, int indexCount /* = 4096 */)
 		: _render(render)
+		, _vertexCount(vertexCount)
+		, _indexCount(indexCount)
+		, _primitive(PRIMITIVE_TRIANGLELIST)
 	{
+	}
+
+	void Geometry::SetPrimitive(EPrimitiveType type)
+	{
+		_primitive = type;
+	}
+
+	EPrimitiveType Geometry::GetPrimitive() const
+	{
+		return _primitive;
 	}
 
 	void Geometry::SetVertices(const List<Vector3f>& vertices)
@@ -52,10 +63,10 @@ namespace uut
 	bool Geometry::Generate()
 	{
 		if (!_vbuffer)
-			_vbuffer = _render->CreateVertexBuffer(BUFFER_SIZE, VERTEX::FORMAT);
+			_vbuffer = _render->CreateVertexBuffer(sizeof(VERTEX)*_vertexCount, VERTEX::FORMAT);
 
 		if (!_ibuffer)
-			_ibuffer = _render->CreateIndexBuffer(BUFFER_SIZE, INDEX_16);
+			_ibuffer = _render->CreateIndexBuffer(sizeof(uint16_t)*_indexCount, INDEX_16);
 
 		if (!_vbuffer || !_ibuffer)
 			return false;
@@ -64,7 +75,7 @@ namespace uut
 		for (int i = 0; i < _vertices.Count(); i++)
 		{
 			vert[i].pos = _vertices[i];
-			vert[i].color = _colors[i];
+			vert[i].color = D3DCOLOR_ARGB(_colors[i].a, _colors[i].r, _colors[i].g, _colors[i].b);
 		}
 		_vbuffer->Unlock();
 
@@ -84,9 +95,19 @@ namespace uut
 
 	void Geometry::Draw()
 	{
+		int primitiveCount = 0;
+		switch (_primitive)
+		{
+		case PRIMITIVE_POINTLIST: primitiveCount = _indexes.Count(); break;
+		case PRIMITIVE_LINELIST: primitiveCount = _indexes.Count() / 2; break;
+		case PRIMITIVE_TRIANGLELIST:
+			primitiveCount = _indexes.Count() / 3;
+			break;
+		}
 		_render->SetVertexFormat(VERTEX::FORMAT);
 		_render->SetVertexBuffer(_vbuffer, 0, sizeof(VERTEX));
 		_render->SetIndexBuffer(_ibuffer);
-		_render->DrawIndexedPrimitive( PRIMITIVE_TRIANGLELIST, 0, 0, _vertices.Count(), 0, _indexes.Count() / 3);
+		_render->DrawIndexedPrimitive(_primitive, 0, 0,
+			_vertices.Count(), 0, primitiveCount);
 	}
 }
