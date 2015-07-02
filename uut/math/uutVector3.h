@@ -1,4 +1,5 @@
 #pragma once
+#include "uutMath.h"
 
 namespace uut
 {
@@ -35,6 +36,33 @@ namespace uut
 		Vector3f& operator /= (const Vector3f& other) { x /= other.x; y /= other.y; z /= other.z; return *this; }
 
 		Vector3f operator-() const { return Vector3f(-x, -y, -z); }
+
+		void Normalize()
+		{
+			float lenSquared = LengthSquared();
+			if (!Math::Equals(lenSquared, 1.0f) && lenSquared > 0.0f)
+			{
+				float invLen = 1.0f / sqrtf(lenSquared);
+				x *= invLen;
+				y *= invLen;
+				z *= invLen;
+			}
+		}
+
+		Vector3f Normalized() const
+		{
+			float lenSquared = LengthSquared();
+			if (!Math::Equals(lenSquared, 1.0f) && lenSquared > 0.0f)
+			{
+				float invLen = 1.0f / sqrtf(lenSquared);
+				return *this * invLen;
+			}
+			else
+				return *this;
+		}
+
+		float Length() const { return sqrtf(x * x + y * y + z * z); }
+		float LengthSquared() const { return x * x + y * y + z * z; }
 
 		static const Vector3f ZERO;
 		static const Vector3f ONE;

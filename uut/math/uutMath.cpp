@@ -12,4 +12,9 @@ namespace uut
 		return rad * M_RADTODEG;
 	}
 
+	extern bool Math::Equals(float lhs, float rhs)
+	{
+		return lhs + M_EPSILON >= rhs && lhs - M_EPSILON <= rhs;
+	}
+
 }
