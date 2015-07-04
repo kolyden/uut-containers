@@ -2,6 +2,8 @@
 
 namespace uut
 {
+	const Rectf Rectf::EMPTY(0, 0, 0, 0);
+
 	Rectf::Rectf() {}
 
 	Rectf::Rectf(float x, float y, float width, float height)
@@ -17,6 +19,8 @@ namespace uut
 	}
 
     //////////////////////////////////////////////////////////////////////////
+	const Recti Recti::EMPTY(0, 0, 0, 0);
+
     Recti::Recti() {}
 
     Recti::Recti(int x, int y, int width, int height)

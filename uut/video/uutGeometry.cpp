@@ -6,33 +6,22 @@
 
 namespace uut
 {
-	struct VERTEX
-	{
-		Vector3f pos;
-		D3DCOLOR color;
-	};
-
-	static const VertexDeclare g_decl[] = {
-		{ DECLARE_POSITION, VALUE_FLOAT, 3, 0 }, 
-		{ DECLARE_COLOR, VALUE_DWORD, 1, offsetof(VERTEX, color) },
-	};
-
 	Geometry::Geometry(Render* render, int vertexCount /* = 2048 */, int indexCount /* = 4096 */)
 		: _render(render)
 		, _vertexCount(vertexCount)
 		, _indexCount(indexCount)
-		, _primitive(PRIMITIVE_TRIANGLELIST)
+		, _type(PRIMITIVE_TRIANGLELIST)
 	{
 	}
 
 	void Geometry::SetPrimitive(EPrimitiveType type)
 	{
-		_primitive = type;
+		_type = type;
 	}
 
 	EPrimitiveType Geometry::GetPrimitive() const
 	{
-		return _primitive;
+		return _type;
 	}
 
 	void Geometry::SetVertices(const List<Vector3f>& vertices)
@@ -55,6 +44,16 @@ namespace uut
 		return _colors;
 	}
 
+	void Geometry::SetUV(const List<Vector2f>& uvs)
+	{
+		_uvs = uvs;
+	}
+
+	const List<Vector2f>& Geometry::GetUV() const
+	{
+		return _uvs;
+	}
+
 	void Geometry::SetIndexes(const List<uint16_t>& indexes)
 	{
 		_indexes = indexes;
@@ -68,22 +67,24 @@ namespace uut
 	bool Geometry::Generate()
 	{
 		if (!_vbuffer)
-			_vbuffer = _render->CreateVertexBuffer(sizeof(VERTEX)*_vertexCount);
+			_vbuffer = _render->CreateVertexBuffer(sizeof(Vertex)*_vertexCount);
 
 		if (!_ibuffer)
 			_ibuffer = _render->CreateIndexBuffer(sizeof(uint16_t)*_indexCount, INDEX_16);
 
 		if (!_layout)
-			_layout = _render->CreateVertexLayout(g_decl, 2);
+			_layout = _render->CreateVertexLayout(Vertex::DECLARE);
 
 		if (!_vbuffer || !_ibuffer || !_layout)
 			return false;
 
-		VERTEX* vert = (VERTEX*)_vbuffer->Lock();
+		auto vert = (Vertex*)_vbuffer->Lock();
 		for (int i = 0; i < _vertices.Count(); i++)
 		{
 			vert[i].pos = _vertices[i];
-			vert[i].color = D3DCOLOR_ARGB(_colors[i].a, _colors[i].r, _colors[i].g, _colors[i].b);
+			vert[i].color = _colors[i];
+				//D3DCOLOR_ARGB(_colors[i].a, _colors[i].r, _colors[i].g, _colors[i].b);
+			vert[i].tex = _uvs[i];
 		}
 		_vbuffer->Unlock();
 
@@ -104,7 +105,7 @@ namespace uut
 	void Geometry::Draw()
 	{
 		int primitiveCount = 0;
-		switch (_primitive)
+		switch (_type)
 		{
 		case PRIMITIVE_POINTLIST: primitiveCount = _indexes.Count(); break;
 		case PRIMITIVE_LINELIST: primitiveCount = _indexes.Count() / 2; break;
@@ -113,9 +114,9 @@ namespace uut
 			break;
 		}
 		_render->SetVertexLayout(_layout);
-		_render->SetVertexBuffer(_vbuffer, 0, sizeof(VERTEX));
+		_render->SetVertexBuffer(_vbuffer, 0, sizeof(Vertex));
 		_render->SetIndexBuffer(_ibuffer);
-		_render->DrawIndexedPrimitive(_primitive, 0, 0,
+		_render->DrawIndexedPrimitive(_type, 0, 0,
 			_vertices.Count(), 0, primitiveCount);
 	}
 }

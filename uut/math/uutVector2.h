@@ -35,6 +35,9 @@ namespace uut
 		Vector2f operator / (float val) const { return Vector2f(x / val, y / val); }
 		Vector2f& operator *= (float val) { x *= val; y *= val; return *this; }
 		Vector2f& operator /= (float val) { x /= val; y /= val; return *this; }
+
+		static const Vector2f ZERO;
+		static const Vector2f ONE;
 	};
 
 	//////////////////////////////////////////////////////////////////////////
@@ -63,5 +66,8 @@ namespace uut
 
 		Vector2i operator * (int val) const { return Vector2i(x * val, y * val); }
 		Vector2i& operator *= (int val) { x *= val; y *= val; return *this; }
+
+		static const Vector2i ZERO;
+		static const Vector2i ONE;
 	};
 }

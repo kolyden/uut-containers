@@ -8,6 +8,7 @@ namespace uut
 {
 	class Render;
 	class Geometry;
+	class Texture;
 
 	class Graphics : public Module
 	{
@@ -16,8 +17,8 @@ namespace uut
 		Graphics(Render* render);
 
 		void DrawLine(const Vertex& start, const Vertex& end);
-		void DrawTriangle(const Vertex& v0, const Vertex& v1, const Vertex& v2);
-		void DrawQuad(const Vertex& v0, const Vertex& v1, const Vertex& v2, const Vertex& v3);
+		void DrawTriangle(const Vertex& v0, const Vertex& v1, const Vertex& v2, Texture* tex = nullptr);
+		void DrawQuad(const Vertex& v0, const Vertex& v1, const Vertex& v2, const Vertex& v3, Texture* tex = nullptr);
 
 		void Flush();
 
@@ -27,7 +28,8 @@ namespace uut
 		EPrimitiveType _primitive;
 		List<Vertex> _verts;
 		List<uint16_t> _indexes;
+		SharedPtr<Texture> _texture;
 
-		void TestBatch(EPrimitiveType type, int vertsCount, int indexCount);
+		void TestBatch(EPrimitiveType type, int vertsCount, int indexCount, Texture* tex);
 	};
 }

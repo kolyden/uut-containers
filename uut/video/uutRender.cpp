@@ -145,7 +145,7 @@ namespace uut
 	SharedPtr<Texture> Render::CreateTexture(const Vector2i& size)
 	{
 		LPDIRECT3DTEXTURE9 data;
-		HRESULT ret = _d3dDevice->CreateTexture(size.x, size.y, 0, 0,
+		const auto ret = _d3dDevice->CreateTexture(size.x, size.y, 0, 0,
 			D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &data, NULL);
 		if (ret != D3D_OK)
 			return SharedPtr<Texture>::EMPTY;
@@ -180,6 +180,18 @@ namespace uut
 		_d3dDevice->SetTransform(state, (D3DXMATRIX*)&mat);
 	}
 
+	bool Render::SetTexture(Texture* texture)
+	{
+		if (texture == nullptr)
+		{
+			_d3dDevice->SetTexture(0, nullptr);
+			return true;
+		}
+
+		const auto ret = _d3dDevice->SetTexture(0, texture->_data);
+		return (ret == D3D_OK);
+	}
+
 	bool Render::SetVertexLayout(VertexLayout* layout)
 	{
 		if (layout == nullptr || layout->_data == nullptr)
@@ -193,8 +205,9 @@ namespace uut
 	{
 		if (buffer == nullptr)
 			return false;
-		_d3dDevice->SetStreamSource(0, buffer->_data, offset, stride);
-		return true;
+
+		const auto ret = _d3dDevice->SetStreamSource(0, buffer->_data, offset, stride);
+		return (ret == D3D_OK);
 	}
 
 	bool Render::SetIndexBuffer(IndexBuffer* buffer)
