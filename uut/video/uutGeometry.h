@@ -11,6 +11,7 @@ namespace uut
 	class Render;
 	class VertexBuffer;
 	class IndexBuffer;
+	class VertexLayout;
 
 	class Geometry : public Object
 	{
@@ -45,5 +46,6 @@ namespace uut
 
 		SharedPtr<VertexBuffer> _vbuffer;
 		SharedPtr<IndexBuffer> _ibuffer;
+		SharedPtr<VertexLayout> _layout;
 	};
 }

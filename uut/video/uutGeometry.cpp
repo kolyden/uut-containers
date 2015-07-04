@@ -2,14 +2,19 @@
 #include "uutRender.h"
 #include "uutVertexBuffer.h"
 #include "uutIndexBuffer.h"
+#include "uutVertexLayout.h"
 
 namespace uut
 {
 	struct VERTEX
 	{
-		static const int FORMAT = VERTEX_XYZ | VERTEX_COLOR;
 		Vector3f pos;
 		D3DCOLOR color;
+	};
+
+	static const VertexDeclare g_decl[] = {
+		{ DECLARE_POSITION, VALUE_FLOAT, 3, 0 }, 
+		{ DECLARE_COLOR, VALUE_DWORD, 1, offsetof(VERTEX, color) },
 	};
 
 	Geometry::Geometry(Render* render, int vertexCount /* = 2048 */, int indexCount /* = 4096 */)
@@ -63,12 +68,15 @@ namespace uut
 	bool Geometry::Generate()
 	{
 		if (!_vbuffer)
-			_vbuffer = _render->CreateVertexBuffer(sizeof(VERTEX)*_vertexCount, VERTEX::FORMAT);
+			_vbuffer = _render->CreateVertexBuffer(sizeof(VERTEX)*_vertexCount);
 
 		if (!_ibuffer)
 			_ibuffer = _render->CreateIndexBuffer(sizeof(uint16_t)*_indexCount, INDEX_16);
 
-		if (!_vbuffer || !_ibuffer)
+		if (!_layout)
+			_layout = _render->CreateVertexLayout(g_decl, 2);
+
+		if (!_vbuffer || !_ibuffer || !_layout)
 			return false;
 
 		VERTEX* vert = (VERTEX*)_vbuffer->Lock();
@@ -104,7 +112,7 @@ namespace uut
 			primitiveCount = _indexes.Count() / 3;
 			break;
 		}
-		_render->SetVertexFormat(VERTEX::FORMAT);
+		_render->SetVertexLayout(_layout);
 		_render->SetVertexBuffer(_vbuffer, 0, sizeof(VERTEX));
 		_render->SetIndexBuffer(_ibuffer);
 		_render->DrawIndexedPrimitive(_primitive, 0, 0,

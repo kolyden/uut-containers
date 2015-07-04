@@ -38,6 +38,7 @@
     <ClCompile Include="..\uut\video\uutRenderBuffer.cpp" />
     <ClCompile Include="..\uut\video\uutTexture.cpp" />
     <ClCompile Include="..\uut\video\uutVertexBuffer.cpp" />
+    <ClCompile Include="..\uut\video\uutVertexLayout.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\uut\application\uutApplication.h" />
@@ -75,6 +76,7 @@
     <ClInclude Include="..\uut\video\uutRenderBuffer.h" />
     <ClInclude Include="..\uut\video\uutTexture.h" />
     <ClInclude Include="..\uut\video\uutVertexBuffer.h" />
+    <ClInclude Include="..\uut\video\uutVertexLayout.h" />
     <ClInclude Include="..\uut\video\uutVideoDefs.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -30,12 +30,30 @@ namespace uut
 		PRIMITIVE_TRIANGLESTRIP,
 	};
 
-	enum VertexFormat
+	enum DeclareType
 	{
-		VERTEX_XYZ        = 1,
-		VERTEX_XYZRHW     = 2,
-		VERTEX_COLOR      = 4,
-		VERTEX_TEXCOORDS0 = 8,
+		VALUE_BYTE,
+		VALUE_UBYTE,
+		VALUE_SHORT,
+		VALUE_USHORT,
+		VALUE_FLOAT,
+		VALUE_FIXED,
+		VALUE_DWORD,
+	};
+
+	enum DeclareUsage
+	{
+		DECLARE_POSITION,
+		DECLARE_COLOR,
+		DECLARE_TEXCOORDS,
+	};
+
+	struct VertexDeclare
+	{
+		DeclareUsage usage;
+		DeclareType type;
+		uint8_t count;
+		uint16_t offset;
 	};
 
 	enum ETransformType

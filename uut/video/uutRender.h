@@ -1,5 +1,6 @@
 #pragma once
 #include "core/uutModule.h"
+#include "containers/uutList.h"
 #include "math/uutVector2.h"
 #include "math/uutMatrix.h"
 #include "math/uutColor.h"
@@ -9,6 +10,7 @@ namespace uut
 {
 	class Window;
 	class VertexBuffer;
+	class VertexLayout;
 	class IndexBuffer;
 	class Texture;
 
@@ -27,13 +29,18 @@ namespace uut
 		void EndScene();
 		void Present();
 
-		SharedPtr<VertexBuffer> CreateVertexBuffer(unsigned int size, int format);
+		SharedPtr<VertexBuffer> CreateVertexBuffer(unsigned int size);
 		SharedPtr<IndexBuffer> CreateIndexBuffer(unsigned int size, EIndexFormat format);
+
+		SharedPtr<VertexLayout> CreateVertexLayout(const List<VertexDeclare>& declare);
+		SharedPtr<VertexLayout> CreateVertexLayout(const VertexDeclare* declare, uint8_t count);
+
 		SharedPtr<Texture> CreateTexture(const Vector2i& size);
+		SharedPtr<Texture> LoadTexture(const String& path);
 
 		void SetRenderState(ERenderState state, bool val);
 		void SetTransform(ETransformType transform, const Matrix4& mat);
-		void SetVertexFormat(int format);
+		bool SetVertexLayout(VertexLayout* layout);
 		bool SetVertexBuffer(VertexBuffer* buffer, uint32_t offset, uint32_t stride);
 		bool SetIndexBuffer(IndexBuffer* buffer);
 
@@ -46,9 +53,10 @@ namespace uut
 		LPDIRECT3D9 _d3d;
 		LPDIRECT3DDEVICE9 _d3dDevice;
 
-		static DWORD ConvertFormat(unsigned int format);
 		static D3DPRIMITIVETYPE ConvertPrimitiveType(EPrimitiveType type);
 		static D3DTRANSFORMSTATETYPE ConvertTransformType(ETransformType transform);
 		static D3DRENDERSTATETYPE ConvertRenderState(ERenderState state);
+		static D3DDECLUSAGE ConvertUsage(DeclareUsage usage);
+		static D3DDECLTYPE ConvertVertexType(DeclareType type, uint8_t count);
 	};
 }

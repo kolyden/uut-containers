@@ -4,7 +4,6 @@ namespace uut
 {
 	VertexBuffer::VertexBuffer()
 		: _data(NULL)
-		, _format(0)
 	{
 	}
 

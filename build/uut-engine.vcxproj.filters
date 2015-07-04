@@ -102,6 +102,9 @@
     <ClCompile Include="..\uut\math\uutRandom.cpp">
       <Filter>math</Filter>
     </ClCompile>
+    <ClCompile Include="..\uut\video\uutVertexLayout.cpp">
+      <Filter>video</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\uut\containers\uutList.h">
@@ -209,6 +212,9 @@
     </ClInclude>
     <ClInclude Include="..\uut\math\uutRandom.h">
       <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\video\uutVertexLayout.h">
+      <Filter>video</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

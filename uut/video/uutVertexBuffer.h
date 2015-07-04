@@ -15,7 +15,6 @@ namespace uut
 
 	protected:
 		LPDIRECT3DVERTEXBUFFER9 _data;
-		int _format;
 
 		friend class Render;
 	};
