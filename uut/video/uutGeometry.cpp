@@ -114,7 +114,7 @@ namespace uut
 			break;
 		}
 		_render->SetVertexLayout(_layout);
-		_render->SetVertexBuffer(_vbuffer, 0, sizeof(Vertex));
+		_render->SetVertexBuffer(0, _vbuffer, 0, sizeof(Vertex));
 		_render->SetIndexBuffer(_ibuffer);
 		_render->DrawIndexedPrimitive(_type, 0, 0,
 			_vertices.Count(), 0, primitiveCount);

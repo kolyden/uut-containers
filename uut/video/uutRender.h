@@ -40,9 +40,9 @@ namespace uut
 
 		void SetRenderState(ERenderState state, bool val);
 		void SetTransform(ETransformType transform, const Matrix4& mat);
-		bool SetTexture(Texture* texture);
+		bool SetTexture(uint8_t stage, Texture* texture);
 		bool SetVertexLayout(VertexLayout* layout);
-		bool SetVertexBuffer(VertexBuffer* buffer, uint32_t offset, uint32_t stride);
+		bool SetVertexBuffer(uint8_t stream, VertexBuffer* buffer, uint32_t offset, uint32_t stride);
 		bool SetIndexBuffer(IndexBuffer* buffer);
 
 		void DrawPrimitive(EPrimitiveType type, uint32_t start, uint32_t primitiveCount);

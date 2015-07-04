@@ -68,7 +68,7 @@ namespace uut
 		_geometry->SetIndexes(_indexes);
 		_geometry->Generate();
 
-		_render->SetTexture(_texture);
+		_render->SetTexture(0, _texture);
 		_geometry->Draw();
 
 		_verts.Clear();

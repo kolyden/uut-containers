@@ -180,11 +180,11 @@ namespace uut
 		_d3dDevice->SetTransform(state, (D3DXMATRIX*)&mat);
 	}
 
-	bool Render::SetTexture(Texture* texture)
+	bool Render::SetTexture(uint8_t stage, Texture* texture)
 	{
 		if (texture == nullptr)
 		{
-			_d3dDevice->SetTexture(0, nullptr);
+			_d3dDevice->SetTexture(stage, nullptr);
 			return true;
 		}
 
@@ -201,12 +201,12 @@ namespace uut
 		return (ret == D3D_OK);
 	}
 
-	bool Render::SetVertexBuffer(VertexBuffer* buffer, uint32_t offset, uint32_t stride)
+	bool Render::SetVertexBuffer(uint8_t stream, VertexBuffer* buffer, uint32_t offset, uint32_t stride)
 	{
 		if (buffer == nullptr)
 			return false;
 
-		const auto ret = _d3dDevice->SetStreamSource(0, buffer->_data, offset, stride);
+		const auto ret = _d3dDevice->SetStreamSource(stream, buffer->_data, offset, stride);
 		return (ret == D3D_OK);
 	}
 

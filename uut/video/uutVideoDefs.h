@@ -54,6 +54,7 @@ namespace uut
 		DeclareType type;
 		uint8_t count;
 		uint16_t offset;
+		uint8_t stream;
 	};
 
 	enum ETransformType
