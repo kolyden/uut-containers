@@ -74,11 +74,11 @@ namespace uut
 		_d3dDevice->Present(NULL, NULL, NULL, NULL);
 	}
 
-	SharedPtr<VertexBuffer> Render::CreateVertexBuffer(unsigned int size)
+	SharedPtr<VertexBuffer> Render::CreateVertexBuffer(BufferUsage usage, unsigned int size)
 	{
 		LPDIRECT3DVERTEXBUFFER9 data;
-		HRESULT ret =_d3dDevice->CreateVertexBuffer(
-			size, 0, 0, D3DPOOL_DEFAULT, &data, NULL);
+		const HRESULT ret =_d3dDevice->CreateVertexBuffer(size,
+			ConvertBufferUsage(usage), 0, D3DPOOL_DEFAULT, &data, NULL);
 		if (ret != D3D_OK)
 			return SharedPtr<VertexBuffer>::EMPTY;
 
@@ -87,12 +87,13 @@ namespace uut
 		return buffer;
 	}
 
-	SharedPtr<IndexBuffer> Render::CreateIndexBuffer(unsigned int size, EIndexFormat format)
+	SharedPtr<IndexBuffer> Render::CreateIndexBuffer(BufferUsage usage, unsigned int size, EIndexFormat format)
 	{
 		LPDIRECT3DINDEXBUFFER9 data;
 
-		HRESULT ret = _d3dDevice->CreateIndexBuffer(size, 0,
-			D3DFMT_INDEX16, D3DPOOL_DEFAULT, &data, NULL);
+		HRESULT ret = _d3dDevice->CreateIndexBuffer(size,
+			ConvertBufferUsage(usage), D3DFMT_INDEX16,
+			D3DPOOL_DEFAULT, &data, NULL);
 		if (ret != D3D_OK)
 			return SharedPtr<IndexBuffer>::EMPTY;
 
@@ -239,7 +240,6 @@ namespace uut
 		auto primitive = ConvertPrimitiveType(type);
 		_d3dDevice->DrawIndexedPrimitive(primitive, vertexStart, minIndex, numVertices, startIndex, primitiveCount);
 	}
-
 	//////////////////////////////////////////////////////////////////////////
 	D3DPRIMITIVETYPE Render::ConvertPrimitiveType(EPrimitiveType type)
 	{
@@ -249,6 +249,12 @@ namespace uut
 		};
 
 		return convert[type];
+	}
+
+	DWORD Render::ConvertBufferUsage(BufferUsage usage)
+	{
+		static DWORD convert[] = { 0, D3DUSAGE_DYNAMIC };
+		return convert[usage];
 	}
 
 	D3DTRANSFORMSTATETYPE Render::ConvertTransformType(ETransformType transform)

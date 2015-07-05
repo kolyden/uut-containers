@@ -73,6 +73,11 @@ namespace uut
 		return true;
 	}
 
+	void Window::SetTitle(const String& title)
+	{
+		SetWindowTextA(_hwnd, title);
+	}
+
 	void Window::AddEventListener(EventListener* listener)
 	{
 		if (listener == nullptr)
@@ -118,21 +123,44 @@ namespace uut
 			break;
 
 		case WM_MOUSEMOVE:
-			if (wParam & MK_LBUTTON)
-			{
-				for (int i = 0; i < window->_listeners.Count(); i++)
-					window->_listeners[i]->OnMouseDown(0);
-			}
-			else
-			{
-				for (int i = 0; i < window->_listeners.Count(); i++)
-					window->_listeners[i]->OnMouseUp(0);
-			}
-
 			x = GET_X_LPARAM(lParam);
 			y = GET_Y_LPARAM(lParam);
 			for (int i = 0; i < window->_listeners.Count(); i++)
 				window->_listeners[i]->OnMouseMove(Vector2i(x, y));
+
+			bool btnL = (wParam & MK_LBUTTON) != 0;
+			bool btnR = (wParam & MK_RBUTTON) != 0;
+			bool btnM = (wParam & MK_MBUTTON) != 0;
+
+			/// LEFT BUTTON
+			if (!window->_mouseButton[0] && btnL)
+			{
+				window->_mouseButton[0] = true;
+				for (int i = 0; i < window->_listeners.Count(); i++)
+					window->_listeners[i]->OnMouseDown(0);
+			}
+
+			if (window->_mouseButton[0] && !btnL)
+			{
+				window->_mouseButton[0] = false;
+				for (int i = 0; i < window->_listeners.Count(); i++)
+					window->_listeners[i]->OnMouseUp(0);
+			}
+
+			// RIGHT BUTTON
+			if (!window->_mouseButton[1] && btnR)
+			{
+				window->_mouseButton[1] = true;
+				for (int i = 0; i < window->_listeners.Count(); i++)
+					window->_listeners[i]->OnMouseDown(1);
+			}
+
+			if (window->_mouseButton[1] && !btnR)
+			{
+				window->_mouseButton[1] = false;
+				for (int i = 0; i < window->_listeners.Count(); i++)
+					window->_listeners[i]->OnMouseUp(1);
+			}
 			break;
 		}
 

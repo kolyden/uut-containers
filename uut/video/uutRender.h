@@ -29,8 +29,8 @@ namespace uut
 		void EndScene();
 		void Present();
 
-		SharedPtr<VertexBuffer> CreateVertexBuffer(unsigned int size);
-		SharedPtr<IndexBuffer> CreateIndexBuffer(unsigned int size, EIndexFormat format);
+		SharedPtr<VertexBuffer> CreateVertexBuffer(BufferUsage usage, unsigned int size);
+		SharedPtr<IndexBuffer> CreateIndexBuffer(BufferUsage usage, unsigned int size, EIndexFormat format);
 
 		SharedPtr<VertexLayout> CreateVertexLayout(const List<VertexDeclare>& declare);
 		SharedPtr<VertexLayout> CreateVertexLayout(const VertexDeclare* declare, uint8_t count);
@@ -55,6 +55,7 @@ namespace uut
 		LPDIRECT3DDEVICE9 _d3dDevice;
 
 		static D3DPRIMITIVETYPE ConvertPrimitiveType(EPrimitiveType type);
+		static DWORD ConvertBufferUsage(BufferUsage usage);
 		static D3DTRANSFORMSTATETYPE ConvertTransformType(ETransformType transform);
 		static D3DRENDERSTATETYPE ConvertRenderState(ERenderState state);
 		static D3DDECLUSAGE ConvertUsage(DeclareUsage usage);

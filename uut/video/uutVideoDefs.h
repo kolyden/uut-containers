@@ -15,12 +15,6 @@ namespace uut
 		Constant,
 	};
 
-	enum class BufferUsage
-	{
-		Default,
-		Dynamic,
-	};
-
 	enum EPrimitiveType
 	{
 		PRIMITIVE_POINTLIST,
@@ -28,6 +22,12 @@ namespace uut
 		PRIMITIVE_LINESTRIP,
 		PRIMITIVE_TRIANGLELIST,
 		PRIMITIVE_TRIANGLESTRIP,
+	};
+
+	enum BufferUsage
+	{
+		USAGE_DEFAULT,
+		USAGE_DYNAMIC,
 	};
 
 	enum DeclareType

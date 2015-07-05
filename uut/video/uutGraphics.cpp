@@ -5,8 +5,8 @@
 
 namespace uut
 {
-	static const int MAX_VERTS = 2048;
-	static const int MAX_INDEX = 4096;
+	static const int MAX_VERTS = 1024 * 8;
+	static const int MAX_INDEX = 1024 * 12;
 
 	Graphics::Graphics(Render* render)
 		: _render(render)

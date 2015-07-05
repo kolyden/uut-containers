@@ -3,6 +3,7 @@
 #include "core/uutPtr.h"
 #include "containers/uutList.h"
 #include "math/uutVector2.h"
+#include <bitset>
 
 namespace uut
 {
@@ -17,6 +18,7 @@ namespace uut
 		bool Create(const Vector2i& size);
 		bool MessagePool();
 
+		void SetTitle(const String& title);
 		const Vector2i& GetSize() const { return _size; }
 
 		void AddEventListener(EventListener* listener);
@@ -29,6 +31,7 @@ namespace uut
 		WNDCLASSEX _wc;
 		Vector2i _size;
 		List<EventListener*> _listeners;
+		std::bitset<3> _mouseButton;
 
 		static LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 	};

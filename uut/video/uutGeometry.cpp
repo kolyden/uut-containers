@@ -67,10 +67,16 @@ namespace uut
 	bool Geometry::Generate()
 	{
 		if (!_vbuffer)
-			_vbuffer = _render->CreateVertexBuffer(sizeof(Vertex)*_vertexCount);
+		{
+			_vbuffer = _render->CreateVertexBuffer(USAGE_DYNAMIC,
+				sizeof(Vertex)*_vertexCount);
+		}
 
 		if (!_ibuffer)
-			_ibuffer = _render->CreateIndexBuffer(sizeof(uint16_t)*_indexCount, INDEX_16);
+		{
+			_ibuffer = _render->CreateIndexBuffer(USAGE_DYNAMIC,
+				sizeof(uint16_t)*_indexCount, INDEX_16);
+		}
 
 		if (!_layout)
 			_layout = _render->CreateVertexLayout(Vertex::DECLARE);
@@ -83,7 +89,6 @@ namespace uut
 		{
 			vert[i].pos = _vertices[i];
 			vert[i].color = _colors[i];
-				//D3DCOLOR_ARGB(_colors[i].a, _colors[i].r, _colors[i].g, _colors[i].b);
 			vert[i].tex = _uvs[i];
 		}
 		_vbuffer->Unlock();
