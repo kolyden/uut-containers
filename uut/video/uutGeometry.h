@@ -1,11 +1,11 @@
 #pragma once
+#include "containers/uutList.h"
 #include "core/uutObject.h"
-#include "math/uutColor.h"
 #include "math/uutVector3.h"
 #include "math/uutVector2.h"
-#include "math/uutVertex.h"
-#include "containers/uutList.h"
 #include "uutVideoDefs.h"
+#include "uutColor.h"
+#include "uutVertex.h"
 
 namespace uut
 {

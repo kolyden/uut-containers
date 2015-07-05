@@ -159,12 +159,21 @@ namespace uut
 	SharedPtr<Texture> Render::LoadTexture(const String& path)
 	{
 		LPDIRECT3DTEXTURE9 data;
-		const auto ret = D3DXCreateTextureFromFile(_d3dDevice, "test.bmp", &data);
+		auto ret = D3DXCreateTextureFromFile(_d3dDevice, path, &data);
 		if (ret != D3D_OK)
 			return SharedPtr<Texture>::EMPTY;
 
+		D3DSURFACE_DESC desc;
+		ret = data->GetLevelDesc(0, &desc);
+		if (ret != D3D_OK)
+		{
+			data->Release();
+			return SharedPtr<Texture>::EMPTY;
+		}
+
 		SharedPtr<Texture> tex(new Texture());
 		tex->_data = data;
+		tex->_size = Vector2i(desc.Width, desc.Height);
 		return tex;
 	}
 

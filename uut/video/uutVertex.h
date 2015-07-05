@@ -1,9 +1,9 @@
 #pragma once
-#include "uutVector2.h"
-#include "uutVector3.h"
-#include "uutColor.h"
 #include "containers/uutList.h"
-#include "video/uutVideoDefs.h"
+#include "math/uutVector2.h"
+#include "math/uutVector3.h"
+#include "uutColor.h"
+#include "uutVideoDefs.h"
 
 namespace uut
 {

@@ -3,7 +3,7 @@
 #include "containers/uutList.h"
 #include "math/uutVector2.h"
 #include "math/uutMatrix.h"
-#include "math/uutColor.h"
+#include "uutColor.h"
 #include "uutVideoDefs.h"
 
 namespace uut
