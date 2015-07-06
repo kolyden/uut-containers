@@ -45,8 +45,8 @@ namespace uut
 		bool SetVertexBuffer(uint8_t stream, VertexBuffer* buffer, uint32_t offset, uint32_t stride);
 		bool SetIndexBuffer(IndexBuffer* buffer);
 
-		void DrawPrimitive(EPrimitiveType type, uint32_t start, uint32_t primitiveCount);
-		void DrawIndexedPrimitive(EPrimitiveType type, int vertexStart,
+		void DrawPrimitive(VertexTopology type, uint32_t start, uint32_t primitiveCount);
+		void DrawIndexedPrimitive(VertexTopology type, int vertexStart,
 			uint32_t minIndex, uint32_t numVertices, uint32_t startIndex, uint32_t primitiveCount);
 
 	protected:
@@ -54,7 +54,7 @@ namespace uut
 		LPDIRECT3D9 _d3d;
 		LPDIRECT3DDEVICE9 _d3dDevice;
 
-		static D3DPRIMITIVETYPE ConvertPrimitiveType(EPrimitiveType type);
+		static D3DPRIMITIVETYPE ConvertPrimitiveType(VertexTopology type);
 		static DWORD ConvertBufferUsage(BufferUsage usage);
 		static D3DTRANSFORMSTATETYPE ConvertTransformType(ETransformType transform);
 		static D3DRENDERSTATETYPE ConvertRenderState(ERenderState state);

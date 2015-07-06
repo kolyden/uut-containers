@@ -10,18 +10,18 @@ namespace uut
 		: _render(render)
 		, _vertexCount(vertexCount)
 		, _indexCount(indexCount)
-		, _type(PRIMITIVE_TRIANGLELIST)
+		, _topology(PRIMITIVE_TRIANGLELIST)
 	{
 	}
 
-	void Geometry::SetPrimitive(EPrimitiveType type)
+	void Geometry::SetTopology(VertexTopology type)
 	{
-		_type = type;
+		_topology = type;
 	}
 
-	EPrimitiveType Geometry::GetPrimitive() const
+	VertexTopology Geometry::GetTopology() const
 	{
-		return _type;
+		return _topology;
 	}
 
 	void Geometry::SetVertices(const List<Vector3f>& vertices)
@@ -84,7 +84,7 @@ namespace uut
 		if (!_vbuffer || !_ibuffer || !_layout)
 			return false;
 
-		auto vert = (Vertex*)_vbuffer->Lock();
+		auto vert = (Vertex*)_vbuffer->Lock(0, sizeof(Vertex) * _vertices.Count(), true);
 		for (int i = 0; i < _vertices.Count(); i++)
 		{
 			vert[i].pos = _vertices[i];
@@ -93,9 +93,7 @@ namespace uut
 		}
 		_vbuffer->Unlock();
 
-		uint16_t* indx = (uint16_t*)_ibuffer->Lock();
-		memcpy(indx, _indexes.GetData(), sizeof(uint16_t)* _indexes.Count());
-		_ibuffer->Unlock();
+		_ibuffer->Update(_indexes.GetData(), 0, sizeof(uint16_t)* _indexes.Count());
 
 		return true;
 	}
@@ -110,7 +108,7 @@ namespace uut
 	void Geometry::Draw()
 	{
 		int primitiveCount = 0;
-		switch (_type)
+		switch (_topology)
 		{
 		case PRIMITIVE_POINTLIST: primitiveCount = _indexes.Count(); break;
 		case PRIMITIVE_LINELIST: primitiveCount = _indexes.Count() / 2; break;
@@ -121,7 +119,7 @@ namespace uut
 		_render->SetVertexLayout(_layout);
 		_render->SetVertexBuffer(0, _vbuffer, 0, sizeof(Vertex));
 		_render->SetIndexBuffer(_ibuffer);
-		_render->DrawIndexedPrimitive(_type, 0, 0,
+		_render->DrawIndexedPrimitive(_topology, 0, 0,
 			_vertices.Count(), 0, primitiveCount);
 	}
 }

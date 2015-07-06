@@ -13,10 +13,11 @@ namespace uut
 			_data->Release();
 	}
 
-	void* IndexBuffer::Lock()
+	void* IndexBuffer::Lock(unsigned int offset, unsigned int size, bool discard)
 	{
 		void* ptr;
-		auto ret = _data->Lock(0, 0, &ptr, 0);
+		auto ret = _data->Lock(offset, size, &ptr,
+			(discard ? D3DLOCK_DISCARD : 0));
 		if (ret != D3D_OK)
 			return nullptr;
 
@@ -31,5 +32,16 @@ namespace uut
 
 		_data->Unlock();
 		_locked = false;
+	}
+
+	bool IndexBuffer::Update(const void* data, unsigned int offset, unsigned int size)
+	{
+		void* ptr;
+		auto ret = _data->Lock(offset, size, &ptr, D3DLOCK_DISCARD);
+		if (ret != D3D_OK)
+			return false;
+
+		memcpy(ptr, data, size);
+		return true;
 	}
 }

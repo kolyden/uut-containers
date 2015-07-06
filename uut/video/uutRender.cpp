@@ -33,12 +33,12 @@ namespace uut
 		ZeroMemory(&d3dpp, sizeof(d3dpp));
 		d3dpp.Windowed = TRUE;
 		d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
-		d3dpp.hDeviceWindow = _window->GetHWND();
 		d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;
-		d3dpp.BackBufferWidth = size.x;
-		d3dpp.BackBufferHeight = size.y;
+// 		d3dpp.BackBufferWidth = size.x;
+// 		d3dpp.BackBufferHeight = size.y;
 		d3dpp.EnableAutoDepthStencil = TRUE;
 		d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
+		d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
 
 		// create a device class using this information and information from the d3dpp stuct
 		_d3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL,
@@ -46,9 +46,13 @@ namespace uut
 			&d3dpp, &_d3dDevice);
 
 		_d3dDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
-		_d3dDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
+// 		_d3dDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+// 		_d3dDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
+
 		_d3dDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 		_d3dDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+		_d3dDevice->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP);
+		_d3dDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
 
 		return true;
 	}
@@ -84,6 +88,7 @@ namespace uut
 
 		SharedPtr<VertexBuffer> buffer(new VertexBuffer());
 		buffer->_data = data;
+		buffer->_size = size;
 		return buffer;
 	}
 
@@ -100,6 +105,7 @@ namespace uut
 		SharedPtr<IndexBuffer> buffer(new IndexBuffer());
 		buffer->_data = data;
 		buffer->_format = format;
+		buffer->_size = size;
 		return buffer;
 	}
 
@@ -229,19 +235,19 @@ namespace uut
 		return true;
 	}
 
-	void Render::DrawPrimitive(EPrimitiveType type, uint32_t start, uint32_t primitiveCount)
+	void Render::DrawPrimitive(VertexTopology type, uint32_t start, uint32_t primitiveCount)
 	{
 		auto primitive = ConvertPrimitiveType(type);
 		_d3dDevice->DrawPrimitive(primitive, start, primitiveCount);
 	}
 
-	void Render::DrawIndexedPrimitive(EPrimitiveType type, int vertexStart, uint32_t minIndex, uint32_t numVertices, uint32_t startIndex, uint32_t primitiveCount)
+	void Render::DrawIndexedPrimitive(VertexTopology type, int vertexStart, uint32_t minIndex, uint32_t numVertices, uint32_t startIndex, uint32_t primitiveCount)
 	{
 		auto primitive = ConvertPrimitiveType(type);
 		_d3dDevice->DrawIndexedPrimitive(primitive, vertexStart, minIndex, numVertices, startIndex, primitiveCount);
 	}
 	//////////////////////////////////////////////////////////////////////////
-	D3DPRIMITIVETYPE Render::ConvertPrimitiveType(EPrimitiveType type)
+	D3DPRIMITIVETYPE Render::ConvertPrimitiveType(VertexTopology type)
 	{
 		static D3DPRIMITIVETYPE convert[] = {
 			D3DPT_POINTLIST, D3DPT_LINELIST, D3DPT_LINESTRIP,
@@ -253,7 +259,7 @@ namespace uut
 
 	DWORD Render::ConvertBufferUsage(BufferUsage usage)
 	{
-		static DWORD convert[] = { 0, D3DUSAGE_DYNAMIC };
+		static DWORD convert[] = { 0, D3DUSAGE_DYNAMIC | D3DUSAGE_WRITEONLY };
 		return convert[usage];
 	}
 

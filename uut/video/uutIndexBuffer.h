@@ -10,8 +10,9 @@ namespace uut
 		IndexBuffer();
 		virtual ~IndexBuffer();
 
-		virtual void* Lock() override;
+		virtual void* Lock(unsigned int offset, unsigned int size, bool discard = false) override;
 		virtual void Unlock() override;
+		virtual bool Update(const void* data, unsigned int offset, unsigned int size) override;
 
 	protected:
 		LPDIRECT3DINDEXBUFFER9 _data;

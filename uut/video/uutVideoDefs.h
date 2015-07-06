@@ -15,7 +15,7 @@ namespace uut
 		Constant,
 	};
 
-	enum EPrimitiveType
+	enum VertexTopology
 	{
 		PRIMITIVE_POINTLIST,
 		PRIMITIVE_LINELIST,

@@ -20,8 +20,8 @@ namespace uut
 	public:
 		Geometry(Render* render, int vertexCount = 2048, int indexCount = 4096);
 
-		void SetPrimitive(EPrimitiveType type);
-		EPrimitiveType GetPrimitive() const;
+		void SetTopology(VertexTopology type);
+		VertexTopology GetTopology() const;
 
 		void SetVertices(const List<Vector3f>& vertices);
 		const List<Vector3f>& GetVertices() const;
@@ -45,7 +45,7 @@ namespace uut
 		List<Color4b> _colors;
 		List<Vector2f> _uvs;
 		List<uint16_t> _indexes;
-		EPrimitiveType _type;
+		VertexTopology _topology;
 		int _vertexCount;
 		int _indexCount;
 

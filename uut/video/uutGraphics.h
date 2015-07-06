@@ -7,8 +7,10 @@
 namespace uut
 {
 	class Render;
-	class Geometry;
 	class Texture;
+	class VertexBuffer;
+	class IndexBuffer;
+	class VertexLayout;
 
 	class Graphics : public Module
 	{
@@ -23,13 +25,21 @@ namespace uut
 		void Flush();
 
 	protected:
-		WeakPtr<Render> _render;
-		SharedPtr<Geometry> _geometry;
-		EPrimitiveType _primitive;
-		List<Vertex> _verts;
-		List<uint16_t> _indexes;
-		SharedPtr<Texture> _texture;
+		static const int MAX_VERTEX = 1024 * 2;
+		static const int MAX_INDEX = 1024 * 4;
 
-		void TestBatch(EPrimitiveType type, int vertsCount, int indexCount, Texture* tex);
+		WeakPtr<Render> _render;
+		VertexTopology _topology;
+		Vertex _verts[MAX_VERTEX];
+		uint16_t _indexes[MAX_INDEX];
+		uint16_t _vertsCount;
+		uint16_t _indexesCount;
+		uint16_t _primitiveCount;
+		SharedPtr<Texture> _texture;
+		SharedPtr<VertexBuffer> _vbuffer;
+		SharedPtr<IndexBuffer> _ibuffer;
+		SharedPtr<VertexLayout> _layout;
+
+		void TestBatch(VertexTopology type, int vertsCount, int indexCount, Texture* tex);
 	};
 }
