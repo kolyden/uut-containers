@@ -16,7 +16,7 @@ namespace uut
 
 	protected:
 		LPDIRECT3DINDEXBUFFER9 _data;
-		EIndexFormat _format;
+		IndexFormat _format;
 
 		friend class Render;
 	};

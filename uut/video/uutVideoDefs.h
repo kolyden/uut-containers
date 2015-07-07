@@ -57,20 +57,20 @@ namespace uut
 		uint8_t stream;
 	};
 
-	enum ETransformType
+	enum class TransformType
 	{
-		TRANSFORM_WORLD,
-		TRANSFORM_VIEW,
-		TRANSFORM_PROJECTION,
+		World,
+		View,
+		Projection,
 	};
 
-	enum ERenderState
+	enum class RenderState
 	{
-		RENDERSTATE_LIGHTNING,
-		RENDERSTATE_ZENABLE,
+		Lightning,
+		ZEnable,
 	};
 
-	enum EIndexFormat
+	enum IndexFormat
 	{
 		INDEX_16,
 		INDEX_32,

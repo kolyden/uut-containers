@@ -22,7 +22,7 @@ namespace uut
 			_d3d->Release();
 	}
 
-	bool Render::Init(Window* window, const Vector2i& size)
+	bool Render::Init(Window* window)
 	{
 		_window = window;
 		if (_window == nullptr)
@@ -92,7 +92,7 @@ namespace uut
 		return buffer;
 	}
 
-	SharedPtr<IndexBuffer> Render::CreateIndexBuffer(BufferUsage usage, unsigned int size, EIndexFormat format)
+	SharedPtr<IndexBuffer> Render::CreateIndexBuffer(BufferUsage usage, unsigned int size, IndexFormat format)
 	{
 		LPDIRECT3DINDEXBUFFER9 data;
 
@@ -184,13 +184,13 @@ namespace uut
 		return tex;
 	}
 
-	void Render::SetRenderState(ERenderState state, bool val)
+	void Render::SetRenderState(RenderState state, bool val)
 	{
 		auto rs = ConvertRenderState(state);
 		_d3dDevice->SetRenderState(rs, val ? TRUE : FALSE);
 	}
 
-	void Render::SetTransform(ETransformType transform, const Matrix4& mat)
+	void Render::SetTransform(TransformType transform, const Matrix4& mat)
 	{
 		auto state = ConvertTransformType(transform);
 		_d3dDevice->SetTransform(state, (D3DXMATRIX*)&mat);
@@ -263,20 +263,20 @@ namespace uut
 		return convert[usage];
 	}
 
-	D3DTRANSFORMSTATETYPE Render::ConvertTransformType(ETransformType transform)
+	D3DTRANSFORMSTATETYPE Render::ConvertTransformType(TransformType transform)
 	{
 		static D3DTRANSFORMSTATETYPE convert[] = {
 			D3DTS_WORLD, D3DTS_VIEW, D3DTS_PROJECTION };
 
-		return convert[transform];
+		return convert[(int)transform];
 	}
 
-	D3DRENDERSTATETYPE Render::ConvertRenderState(ERenderState state)
+	D3DRENDERSTATETYPE Render::ConvertRenderState(RenderState state)
 	{
 		static D3DRENDERSTATETYPE convert[] = {
 			D3DRS_LIGHTING, D3DRS_ZENABLE,
 		};
-		return convert[state];
+		return convert[(int)state];
 	}
 
 	D3DDECLUSAGE Render::ConvertUsage(DeclareUsage usage)

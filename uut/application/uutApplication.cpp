@@ -17,11 +17,8 @@ namespace uut
 		core->AddModule(render);
 		core->AddModule(input);
 
-		const Vector2i size(800, 600);
-		window->Create(size);
-		render->Init(window, size);
-// 		_target = video->GetBackBuffer();
-// 		video->SetTarget(_target);
+		window->Create(Vector2i(800, 600));
+		render->Init(window);
 	}
 
 	void Application::Run()
