@@ -57,6 +57,9 @@ namespace uut
 	{
 		MSG msg;
 
+		for (int i = 0; i < _listeners.Count(); i++)
+			_listeners[i]->OnMouseWheel(Vector2i::ZERO);
+
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
 			// translate keystroke messages into the right format
@@ -105,7 +108,7 @@ namespace uut
 	LRESULT CALLBACK Window::WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		auto window = (Window*)GetWindowLongPtr(hWnd, GWL_USERDATA);
-		int x, y;
+		int x, y, z;
 		switch (message)
 		{
 		case WM_DESTROY:
@@ -128,39 +131,47 @@ namespace uut
 			for (int i = 0; i < window->_listeners.Count(); i++)
 				window->_listeners[i]->OnMouseMove(Vector2i(x, y));
 
-			bool btnL = (wParam & MK_LBUTTON) != 0;
-			bool btnR = (wParam & MK_RBUTTON) != 0;
-			bool btnM = (wParam & MK_MBUTTON) != 0;
-
-			/// LEFT BUTTON
-			if (!window->_mouseButton[0] && btnL)
 			{
-				window->_mouseButton[0] = true;
-				for (int i = 0; i < window->_listeners.Count(); i++)
-					window->_listeners[i]->OnMouseDown(0);
-			}
+				bool btnL = (wParam & MK_LBUTTON) != 0;
+				bool btnR = (wParam & MK_RBUTTON) != 0;
+				bool btnM = (wParam & MK_MBUTTON) != 0;
 
-			if (window->_mouseButton[0] && !btnL)
-			{
-				window->_mouseButton[0] = false;
-				for (int i = 0; i < window->_listeners.Count(); i++)
-					window->_listeners[i]->OnMouseUp(0);
-			}
+				/// LEFT BUTTON
+				if (!window->_mouseButton[0] && btnL)
+				{
+					window->_mouseButton[0] = true;
+					for (int i = 0; i < window->_listeners.Count(); i++)
+						window->_listeners[i]->OnMouseDown(0);
+				}
 
-			// RIGHT BUTTON
-			if (!window->_mouseButton[1] && btnR)
-			{
-				window->_mouseButton[1] = true;
-				for (int i = 0; i < window->_listeners.Count(); i++)
-					window->_listeners[i]->OnMouseDown(1);
-			}
+				if (window->_mouseButton[0] && !btnL)
+				{
+					window->_mouseButton[0] = false;
+					for (int i = 0; i < window->_listeners.Count(); i++)
+						window->_listeners[i]->OnMouseUp(0);
+				}
 
-			if (window->_mouseButton[1] && !btnR)
-			{
-				window->_mouseButton[1] = false;
-				for (int i = 0; i < window->_listeners.Count(); i++)
-					window->_listeners[i]->OnMouseUp(1);
+				// RIGHT BUTTON
+				if (!window->_mouseButton[1] && btnR)
+				{
+					window->_mouseButton[1] = true;
+					for (int i = 0; i < window->_listeners.Count(); i++)
+						window->_listeners[i]->OnMouseDown(1);
+				}
+
+				if (window->_mouseButton[1] && !btnR)
+				{
+					window->_mouseButton[1] = false;
+					for (int i = 0; i < window->_listeners.Count(); i++)
+						window->_listeners[i]->OnMouseUp(1);
+				}
 			}
+			break;
+
+		case WM_MOUSEWHEEL:
+			z = GET_WHEEL_DELTA_WPARAM(wParam);
+			for (int i = 0; i < window->_listeners.Count(); i++)
+				window->_listeners[i]->OnMouseWheel(Vector2i(0, z));
 			break;
 		}
 

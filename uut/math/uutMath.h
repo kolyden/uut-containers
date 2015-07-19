@@ -16,5 +16,12 @@ namespace uut
 		extern float Rad2Deg(float rad);
 
 		extern bool Equals(float lhs, float rhs);
+
+		extern float Floor(float val);
+		extern float Ceil(float val);
+		extern float Round(float val);
+		extern int FloorToInt(float val);
+		extern int CeilToInt(float val);
+		extern int RoundToInt(float val);
 	}
 }

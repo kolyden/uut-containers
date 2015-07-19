@@ -14,5 +14,6 @@ namespace uut
 		virtual void OnMouseDown(int button) {}
 		virtual void OnMouseUp(int button) {}
 		virtual void OnMouseMove(const Vector2i& pos) {}
+		virtual void OnMouseWheel(const Vector2i& delta) {}
 	};
 }
