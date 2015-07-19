@@ -17,7 +17,7 @@ namespace uut
 		core->AddModule(render);
 		core->AddModule(input);
 
-		window->Create(Vector2i(800, 600));
+		window->Create(Vector2i(1024, 768));
 		render->Init(window);
 	}
 

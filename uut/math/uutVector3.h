@@ -36,6 +36,7 @@ namespace uut
 		Vector3f& operator /= (const Vector3f& other) { x /= other.x; y /= other.y; z /= other.z; return *this; }
 
 		Vector3f operator-() const { return Vector3f(-x, -y, -z); }
+		Vector3f operator+() const { return *this; }
 
 		void Normalize()
 		{
@@ -66,11 +67,8 @@ namespace uut
 
 		static const Vector3f ZERO;
 		static const Vector3f ONE;
-		static const Vector3f FORWARD;
-		static const Vector3f BACKWARD;
-		static const Vector3f UP;
-		static const Vector3f DOWN;
-		static const Vector3f RIGHT;
-		static const Vector3f LEFT;
+		static const Vector3f AXIS_X;
+		static const Vector3f AXIS_Y;
+		static const Vector3f AXIS_Z;
 	};
 }

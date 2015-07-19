@@ -46,6 +46,7 @@ namespace uut
 			&d3dpp, &_d3dDevice);
 
 		_d3dDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+// 		_d3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
 // 		_d3dDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 // 		_d3dDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
 

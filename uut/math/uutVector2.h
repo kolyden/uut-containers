@@ -38,6 +38,8 @@ namespace uut
 
 		static const Vector2f ZERO;
 		static const Vector2f ONE;
+		static const Vector2f AXIS_X;
+		static const Vector2f AXIS_Y;
 	};
 
 	//////////////////////////////////////////////////////////////////////////
@@ -69,5 +71,7 @@ namespace uut
 
 		static const Vector2i ZERO;
 		static const Vector2i ONE;
+		static const Vector2i AXIS_X;
+		static const Vector2i AXIS_Y;
 	};
 }

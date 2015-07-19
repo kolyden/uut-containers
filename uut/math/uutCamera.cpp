@@ -37,8 +37,8 @@ namespace uut
 		{
 			_update = false;
 			auto mat = Matrix4::MakeQuaternion(_rotation);
-			Vector3f at = _position + mat.Transform(Vector3f::FORWARD);
-			_mat = Matrix4::MakeLookAt(_position, at, Vector3f::UP);
+			Vector3f at = _position + mat.Transform(Vector3f::AXIS_Z);
+			_mat = Matrix4::MakeLookAt(_position, at, Vector3f::AXIS_Y);
 		}
 
 		return _mat;
