@@ -5,7 +5,7 @@ namespace uut
 {
 	Input::Input()
 		: _mousePos(0)
-		, _mouseDelta(0)
+		, _mouseWheel(0)
 	{
 		_keys.reset();
 	}
@@ -47,8 +47,8 @@ namespace uut
 		_mousePos = pos;
 	}
 
-	void Input::OnMouseWheel(const Vector2i& delta)
+	void Input::OnMouseWheel(float delta)
 	{
-		_mouseDelta = delta;
+		_mouseWheel = delta;
 	}
 }
