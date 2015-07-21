@@ -2,12 +2,15 @@
 #include "core/uutCore.h"
 #include "input/uutInput.h"
 #include "application/uutEventListener.h"
+#include <windows.h>
+#include <windowsx.h>
 
 namespace uut
 {
+	LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+
 	Window::Window()
-		: _hwnd(0)
-		, _wc({ 0 })
+		: _handle(0)
 		, _size(0, 0)
 	{
 	}
@@ -34,7 +37,7 @@ namespace uut
 // 		AdjustWindowRect(&wr, WS_OVERLAPPEDWINDOW, FALSE);    // adjust the size
 
 		// create the window and use the result as the handle
-		_hwnd = CreateWindowEx(NULL,
+		_handle = CreateWindowEx(NULL,
 			wc.lpszClassName,    // name of the window class
 			"Engine Window",   // title of the window
 			WS_OVERLAPPEDWINDOW,    // window style
@@ -47,8 +50,8 @@ namespace uut
 			hInstance,    // application handle
 			NULL);    // used with multiple windows, NULL
 
-		SetWindowLongPtr(_hwnd, GWL_USERDATA, (LONG_PTR)this);
-		ShowWindow(_hwnd, SW_SHOW);
+		SetWindowLongPtr((HWND)_handle, GWL_USERDATA, (LONG_PTR)this);
+		ShowWindow((HWND)_handle, SW_SHOW);
 
 		return true;
 	}
@@ -78,7 +81,7 @@ namespace uut
 
 	void Window::SetTitle(const String& title)
 	{
-		SetWindowTextA(_hwnd, title);
+		SetWindowTextA((HWND)_handle, title);
 	}
 
 	void Window::AddEventListener(EventListener* listener)
@@ -105,9 +108,9 @@ namespace uut
 	}
 
 	//////////////////////////////////////////////////////////////////////////
-	LRESULT CALLBACK Window::WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+	LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
-		auto window = (Window*)GetWindowLongPtr(hWnd, GWL_USERDATA);
+		auto win = (Window*)GetWindowLongPtr(hWnd, GWL_USERDATA);
 		int x, y;
 		float wheel;
 
@@ -118,71 +121,65 @@ namespace uut
 			return 0;
 
 		case WM_KEYDOWN:
-			for (int i = 0; i < window->_listeners.Count(); i++)
-				window->_listeners[i]->OnKeyDown((EKeycode)wParam);
+			for (auto& it : win->GetListeners())
+				it->OnKeyDown((EKeycode)wParam);
 			return 0;
 			break;
 
 		case WM_KEYUP:
-			for (int i = 0; i < window->_listeners.Count(); i++)
-				window->_listeners[i]->OnKeyUp((EKeycode)wParam);
+			for (auto& it : win->GetListeners())
+				it->OnKeyUp((EKeycode)wParam);
 			return 0;
 			break;
 
 		case WM_LBUTTONDOWN:
-			window->_mouseButton[0] = true;
-			for (int i = 0; i < window->_listeners.Count(); i++)
-				window->_listeners[i]->OnMouseDown(0);
+			for (auto& it : win->GetListeners())
+				it->OnMouseDown(0);
 			return 0;
 			break;
 
 		case WM_LBUTTONUP:
-			window->_mouseButton[0] = false;
-			for (int i = 0; i < window->_listeners.Count(); i++)
-				window->_listeners[i]->OnMouseUp(0);
+			for (auto& it : win->GetListeners())
+				it->OnMouseUp(0);
 			return 0;
 			break;
 
 		case WM_RBUTTONDOWN:
-			window->_mouseButton[1] = true;
-			for (int i = 0; i < window->_listeners.Count(); i++)
-				window->_listeners[i]->OnMouseDown(1);
+			for (auto& it : win->GetListeners())
+				it->OnMouseDown(1);
 			return 0;
 			break;
 
 		case WM_RBUTTONUP:
-			window->_mouseButton[1] = false;
-			for (int i = 0; i < window->_listeners.Count(); i++)
-				window->_listeners[i]->OnMouseUp(1);
+			for (auto& it : win->GetListeners())
+				it->OnMouseUp(1);
 			return 0;
 			break;
 
 		case WM_MBUTTONDOWN:
-			window->_mouseButton[2] = true;
-			for (int i = 0; i < window->_listeners.Count(); i++)
-				window->_listeners[i]->OnMouseDown(2);
+			for (auto& it : win->GetListeners())
+				it->OnMouseDown(2);
 			return 0;
 			break;
 
 		case WM_MBUTTONUP:
-			window->_mouseButton[2] = false;
-			for (int i = 0; i < window->_listeners.Count(); i++)
-				window->_listeners[i]->OnMouseUp(2);
+			for (auto& it : win->GetListeners())
+				it->OnMouseUp(2);
 			return 0;
 			break;
 
 		case WM_MOUSEMOVE:
 			x = GET_X_LPARAM(lParam);
 			y = GET_Y_LPARAM(lParam);
-			for (int i = 0; i < window->_listeners.Count(); i++)
-				window->_listeners[i]->OnMouseMove(Vector2i(x, y));
+			for (auto& it : win->GetListeners())
+				it->OnMouseMove(Vector2i(x, y));
 			return 0;
 			break;
 
 		case WM_MOUSEWHEEL:
 			wheel = static_cast<float>(GET_WHEEL_DELTA_WPARAM(wParam)) / 120.0f;
-			for (int i = 0; i < window->_listeners.Count(); i++)
-				window->_listeners[i]->OnMouseWheel(wheel);
+			for (auto& it : win->GetListeners())
+				it->OnMouseWheel(wheel);
 			return 0;
 			break;
 		}

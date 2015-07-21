@@ -3,6 +3,7 @@
 #include "application/uutWindow.h"
 #include "video/uutRender.h"
 #include "input/uutInput.h"
+#include "io/uutFileSystem.h"
 
 namespace uut
 {
@@ -12,10 +13,13 @@ namespace uut
 		auto window = new Window();
 		auto render = new Render();
 		auto input = new Input();
+		auto fsys = new FileSystem();
+
 		auto core = Core::GetMain();
 		core->AddModule(window);
 		core->AddModule(render);
 		core->AddModule(input);
+		core->AddModule(fsys);
 
 		window->Create(Vector2i(1024, 768));
 		render->Init(window);
@@ -29,6 +33,7 @@ namespace uut
 		_window = core->GetModule<Window>();
 		_render = core->GetModule<Render>();
 		_input = core->GetModule<Input>();
+		_filesys = core->GetModule<FileSystem>();
 
 		OnInit();
 

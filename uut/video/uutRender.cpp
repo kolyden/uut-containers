@@ -42,7 +42,7 @@ namespace uut
 
 		// create a device class using this information and information from the d3dpp stuct
 		_d3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL,
-			_window->GetHWND(), D3DCREATE_SOFTWARE_VERTEXPROCESSING,
+			(HWND)_window->GetHWND(), D3DCREATE_SOFTWARE_VERTEXPROCESSING,
 			&d3dpp, &_d3dDevice);
 
 		_d3dDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
@@ -153,9 +153,12 @@ namespace uut
 	SharedPtr<Texture> Render::CreateTexture(const Vector2i& size)
 	{
 		LPDIRECT3DTEXTURE9 data;
-		const auto ret = _d3dDevice->CreateTexture(size.x, size.y, 0, 0,
-			D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &data, NULL);
-		if (ret != D3D_OK)
+// 		const auto ret = _d3dDevice->CreateTexture(size.x, size.y, 0, 0,
+// 			D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &data, NULL);
+// 		if (ret != D3D_OK)
+// 			return SharedPtr<Texture>::EMPTY;
+		if (D3DXCreateTexture(_d3dDevice, size.x, size.y, 1,
+			D3DUSAGE_DYNAMIC, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &data) < 0)
 			return SharedPtr<Texture>::EMPTY;
 
 		SharedPtr<Texture> tex(new Texture());
@@ -195,6 +198,23 @@ namespace uut
 	{
 		auto state = ConvertTransformType(transform);
 		_d3dDevice->SetTransform(state, (D3DXMATRIX*)&mat);
+	}
+
+	void Render::SetScissorRect(const Recti* rect)
+	{
+		if (rect == nullptr)
+			_d3dDevice->SetRenderState(D3DRS_SCISSORTESTENABLE, FALSE);
+		else
+		{
+			::RECT in = {
+				rect->pos.x, rect->pos.y,
+				rect->pos.x + rect->size.x,
+				rect->pos.y + rect->size.y
+			};
+
+			_d3dDevice->SetRenderState(D3DRS_SCISSORTESTENABLE, TRUE);
+			_d3dDevice->SetScissorRect(&in);
+		}
 	}
 
 	bool Render::SetTexture(uint8_t stage, Texture* texture)

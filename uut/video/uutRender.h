@@ -40,6 +40,8 @@ namespace uut
 
 		void SetRenderState(RenderState state, bool val);
 		void SetTransform(TransformType transform, const Matrix4& mat);
+		void SetScissorRect(const Recti* rect);
+
 		bool SetTexture(uint8_t stage, Texture* texture);
 		bool SetVertexLayout(VertexLayout* layout);
 		bool SetVertexBuffer(uint8_t stream, VertexBuffer* buffer, uint32_t offset, uint32_t stride);

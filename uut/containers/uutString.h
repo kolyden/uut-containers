@@ -11,6 +11,8 @@ namespace uut
 		String(const char* str);
 		String(String&& str);
 
+		void Clear();
+
 		operator const char* ()  const { return _data.c_str(); }
 
 		static const String EMPTY;

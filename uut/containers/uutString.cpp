@@ -17,4 +17,9 @@ namespace uut
 		: _data(std::move(str._data))
 	{
 	}
+
+	void String::Clear()
+	{
+		_data.clear();
+	}
 }

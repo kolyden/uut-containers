@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\libs\imgui\imgui.cpp" />
     <ClCompile Include="..\uut\application\uutApplication.cpp" />
     <ClCompile Include="..\uut\application\uutWindow.cpp" />
     <ClCompile Include="..\uut\containers\uutHashString.cpp" />
@@ -20,7 +21,10 @@
     <ClCompile Include="..\uut\core\uutObject.cpp" />
     <ClCompile Include="..\uut\core\uutRefCounted.cpp" />
     <ClCompile Include="..\uut\core\uutTypeInfo.cpp" />
+    <ClCompile Include="..\uut\gui\uutGui.cpp" />
     <ClCompile Include="..\uut\input\uutInput.cpp" />
+    <ClCompile Include="..\uut\io\uutFileStream.cpp" />
+    <ClCompile Include="..\uut\io\uutFileSystem.cpp" />
     <ClCompile Include="..\uut\math\uutCamera.cpp" />
     <ClCompile Include="..\uut\math\uutMath.cpp" />
     <ClCompile Include="..\uut\math\uutMatrix.cpp" />
@@ -41,6 +45,11 @@
     <ClCompile Include="..\uut\video\uutVertexLayout.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\libs\imgui\imconfig.h" />
+    <ClInclude Include="..\libs\imgui\imgui.h" />
+    <ClInclude Include="..\libs\imgui\stb_rect_pack.h" />
+    <ClInclude Include="..\libs\imgui\stb_textedit.h" />
+    <ClInclude Include="..\libs\imgui\stb_truetype.h" />
     <ClInclude Include="..\uut\application\uutApplication.h" />
     <ClInclude Include="..\uut\application\uutEventListener.h" />
     <ClInclude Include="..\uut\application\uutWindow.h" />
@@ -56,8 +65,12 @@
     <ClInclude Include="..\uut\core\uutPtr.h" />
     <ClInclude Include="..\uut\core\uutRefCounted.h" />
     <ClInclude Include="..\uut\core\uutTypeInfo.h" />
+    <ClInclude Include="..\uut\gui\uutGui.h" />
     <ClInclude Include="..\uut\input\uutInput.h" />
     <ClInclude Include="..\uut\input\uutKeycodes.h" />
+    <ClInclude Include="..\uut\io\uutFileStream.h" />
+    <ClInclude Include="..\uut\io\uutFileSystem.h" />
+    <ClInclude Include="..\uut\io\uutStream.h" />
     <ClInclude Include="..\uut\math\uutCamera.h" />
     <ClInclude Include="..\uut\math\uutMath.h" />
     <ClInclude Include="..\uut\math\uutMatrix.h" />
@@ -127,7 +140,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../uut/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../uut/;../libs/</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -144,7 +157,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../uut/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../uut/;../libs/</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>

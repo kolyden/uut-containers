@@ -6,6 +6,7 @@ namespace uut
 	class Window;
 	class Render;
 	class Input;
+	class FileSystem;
 
 	class Application : public Object
 	{
@@ -20,7 +21,7 @@ namespace uut
 		WeakPtr<Window> _window;
 		WeakPtr<Render> _render;
 		WeakPtr<Input> _input;
-// 		SharedPtr<RenderTarget> _target;
+		WeakPtr<FileSystem> _filesys;
 
 		virtual void OnInit() {}
 		virtual void OnUpdate() {}

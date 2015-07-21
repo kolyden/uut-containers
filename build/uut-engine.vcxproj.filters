@@ -1,220 +1,274 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="containers">
-      <UniqueIdentifier>{54448051-de50-41ca-a307-06f1b144a48f}</UniqueIdentifier>
+    <Filter Include="libs">
+      <UniqueIdentifier>{4b82ba96-34d8-4526-833b-2afd4195fe01}</UniqueIdentifier>
     </Filter>
-    <Filter Include="video">
+    <Filter Include="uut">
+      <UniqueIdentifier>{e461a50f-665e-4867-9da8-d594f8c892a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="uut\video">
       <UniqueIdentifier>{ca103370-976e-422a-9993-685ec0bdd4d3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="core">
+    <Filter Include="uut\io">
+      <UniqueIdentifier>{4ebbd5a1-7a1f-4c58-b4f3-90e2cc29b31e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="uut\application">
+      <UniqueIdentifier>{875330f8-70eb-4c32-887a-98fa0d2c4fb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="uut\containers">
+      <UniqueIdentifier>{54448051-de50-41ca-a307-06f1b144a48f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="uut\core">
       <UniqueIdentifier>{7fae1374-887d-46a4-9c53-a2196ed825ed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="math">
-      <UniqueIdentifier>{031138db-71c6-40ed-9422-9ba877b48e87}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="input">
+    <Filter Include="uut\input">
       <UniqueIdentifier>{7616c88e-2946-46a2-84c8-be75fb07e7ca}</UniqueIdentifier>
     </Filter>
-    <Filter Include="application">
-      <UniqueIdentifier>{875330f8-70eb-4c32-887a-98fa0d2c4fb2}</UniqueIdentifier>
+    <Filter Include="uut\math">
+      <UniqueIdentifier>{031138db-71c6-40ed-9422-9ba877b48e87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libs\imgui">
+      <UniqueIdentifier>{30389106-9679-4d7d-ad4a-f65de2717ab8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="uut\gui">
+      <UniqueIdentifier>{a87d01b4-02ce-4e6a-be98-88912ff3b57a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\uut\core\uutObject.cpp">
-      <Filter>core</Filter>
+      <Filter>uut\core</Filter>
     </ClCompile>
     <ClCompile Include="..\uut\core\uutRefCounted.cpp">
-      <Filter>core</Filter>
+      <Filter>uut\core</Filter>
     </ClCompile>
     <ClCompile Include="..\uut\input\uutInput.cpp">
-      <Filter>input</Filter>
+      <Filter>uut\input</Filter>
     </ClCompile>
     <ClCompile Include="..\uut\core\uutModule.cpp">
-      <Filter>core</Filter>
+      <Filter>uut\core</Filter>
     </ClCompile>
     <ClCompile Include="..\uut\containers\uutHashString.cpp">
-      <Filter>containers</Filter>
+      <Filter>uut\containers</Filter>
     </ClCompile>
     <ClCompile Include="..\uut\containers\uutString.cpp">
-      <Filter>containers</Filter>
+      <Filter>uut\containers</Filter>
     </ClCompile>
     <ClCompile Include="..\uut\core\uutTypeInfo.cpp">
-      <Filter>core</Filter>
+      <Filter>uut\core</Filter>
     </ClCompile>
     <ClCompile Include="..\uut\core\uutCore.cpp">
-      <Filter>core</Filter>
+      <Filter>uut\core</Filter>
     </ClCompile>
     <ClCompile Include="..\uut\application\uutApplication.cpp">
-      <Filter>application</Filter>
+      <Filter>uut\application</Filter>
     </ClCompile>
     <ClCompile Include="..\uut\application\uutWindow.cpp">
-      <Filter>application</Filter>
+      <Filter>uut\application</Filter>
     </ClCompile>
     <ClCompile Include="..\uut\math\uutMatrix.cpp">
-      <Filter>math</Filter>
+      <Filter>uut\math</Filter>
     </ClCompile>
     <ClCompile Include="..\uut\math\uutRect.cpp">
-      <Filter>math</Filter>
+      <Filter>uut\math</Filter>
     </ClCompile>
     <ClCompile Include="..\uut\math\uutVector2.cpp">
-      <Filter>math</Filter>
+      <Filter>uut\math</Filter>
     </ClCompile>
     <ClCompile Include="..\uut\math\uutVector3.cpp">
-      <Filter>math</Filter>
+      <Filter>uut\math</Filter>
     </ClCompile>
     <ClCompile Include="..\uut\video\uutRender.cpp">
-      <Filter>video</Filter>
+      <Filter>uut\video</Filter>
     </ClCompile>
     <ClCompile Include="..\uut\video\uutVertexBuffer.cpp">
-      <Filter>video</Filter>
+      <Filter>uut\video</Filter>
     </ClCompile>
     <ClCompile Include="..\uut\math\uutMath.cpp">
-      <Filter>math</Filter>
+      <Filter>uut\math</Filter>
     </ClCompile>
     <ClCompile Include="..\uut\video\uutIndexBuffer.cpp">
-      <Filter>video</Filter>
+      <Filter>uut\video</Filter>
     </ClCompile>
     <ClCompile Include="..\uut\video\uutRenderBuffer.cpp">
-      <Filter>video</Filter>
+      <Filter>uut\video</Filter>
     </ClCompile>
     <ClCompile Include="..\uut\video\uutGeometry.cpp">
-      <Filter>video</Filter>
+      <Filter>uut\video</Filter>
     </ClCompile>
     <ClCompile Include="..\uut\video\uutTexture.cpp">
-      <Filter>video</Filter>
+      <Filter>uut\video</Filter>
     </ClCompile>
     <ClCompile Include="..\uut\math\uutQuaternion.cpp">
-      <Filter>math</Filter>
+      <Filter>uut\math</Filter>
     </ClCompile>
     <ClCompile Include="..\uut\math\uutCamera.cpp">
-      <Filter>math</Filter>
+      <Filter>uut\math</Filter>
     </ClCompile>
     <ClCompile Include="..\uut\video\uutGraphics.cpp">
-      <Filter>video</Filter>
+      <Filter>uut\video</Filter>
     </ClCompile>
     <ClCompile Include="..\uut\math\uutRandom.cpp">
-      <Filter>math</Filter>
+      <Filter>uut\math</Filter>
     </ClCompile>
     <ClCompile Include="..\uut\video\uutVertexLayout.cpp">
-      <Filter>video</Filter>
+      <Filter>uut\video</Filter>
     </ClCompile>
     <ClCompile Include="..\uut\video\uutVertex.cpp">
-      <Filter>video</Filter>
+      <Filter>uut\video</Filter>
     </ClCompile>
     <ClCompile Include="..\uut\video\uutColor.cpp">
-      <Filter>video</Filter>
+      <Filter>uut\video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\io\uutFileStream.cpp">
+      <Filter>uut\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\io\uutFileSystem.cpp">
+      <Filter>uut\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libs\imgui\imgui.cpp">
+      <Filter>libs\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uut\gui\uutGui.cpp">
+      <Filter>uut\gui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\uut\containers\uutList.h">
-      <Filter>containers</Filter>
+      <Filter>uut\containers</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\containers\uutArray.h">
-      <Filter>containers</Filter>
+      <Filter>uut\containers</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\containers\uutDictionary.h">
-      <Filter>containers</Filter>
+      <Filter>uut\containers</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\core\uutDefs.h">
-      <Filter>core</Filter>
+      <Filter>uut\core</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\core\uutObject.h">
-      <Filter>core</Filter>
+      <Filter>uut\core</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\core\uutPtr.h">
-      <Filter>core</Filter>
+      <Filter>uut\core</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\core\uutRefCounted.h">
-      <Filter>core</Filter>
+      <Filter>uut\core</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\math\uutVector2.h">
-      <Filter>math</Filter>
+      <Filter>uut\math</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\math\uutVector3.h">
-      <Filter>math</Filter>
+      <Filter>uut\math</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\input\uutKeycodes.h">
-      <Filter>input</Filter>
+      <Filter>uut\input</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\input\uutInput.h">
-      <Filter>input</Filter>
+      <Filter>uut\input</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\uut.h" />
     <ClInclude Include="..\uut\core\uutModule.h">
-      <Filter>core</Filter>
+      <Filter>uut\core</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\containers\uutHashString.h">
-      <Filter>containers</Filter>
+      <Filter>uut\containers</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\containers\uutString.h">
-      <Filter>containers</Filter>
+      <Filter>uut\containers</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\core\uutTypeInfo.h">
-      <Filter>core</Filter>
+      <Filter>uut\core</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\core\uutCore.h">
-      <Filter>core</Filter>
+      <Filter>uut\core</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\application\uutApplication.h">
-      <Filter>application</Filter>
+      <Filter>uut\application</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\application\uutWindow.h">
-      <Filter>application</Filter>
+      <Filter>uut\application</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\application\uutEventListener.h">
-      <Filter>application</Filter>
+      <Filter>uut\application</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\math\uutMatrix.h">
-      <Filter>math</Filter>
+      <Filter>uut\math</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\math\uutRect.h">
-      <Filter>math</Filter>
+      <Filter>uut\math</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\video\uutVideoDefs.h">
-      <Filter>video</Filter>
+      <Filter>uut\video</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\video\uutRender.h">
-      <Filter>video</Filter>
+      <Filter>uut\video</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\video\uutVertexBuffer.h">
-      <Filter>video</Filter>
+      <Filter>uut\video</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\math\uutMath.h">
-      <Filter>math</Filter>
+      <Filter>uut\math</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\video\uutIndexBuffer.h">
-      <Filter>video</Filter>
+      <Filter>uut\video</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\video\uutRenderBuffer.h">
-      <Filter>video</Filter>
+      <Filter>uut\video</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\video\uutGeometry.h">
-      <Filter>video</Filter>
+      <Filter>uut\video</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\video\uutTexture.h">
-      <Filter>video</Filter>
+      <Filter>uut\video</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\math\uutQuaternion.h">
-      <Filter>math</Filter>
+      <Filter>uut\math</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\math\uutCamera.h">
-      <Filter>math</Filter>
+      <Filter>uut\math</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\video\uutGraphics.h">
-      <Filter>video</Filter>
+      <Filter>uut\video</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\math\uutRandom.h">
-      <Filter>math</Filter>
+      <Filter>uut\math</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\video\uutVertexLayout.h">
-      <Filter>video</Filter>
+      <Filter>uut\video</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\video\uutVertex.h">
-      <Filter>video</Filter>
+      <Filter>uut\video</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\video\uutColor.h">
-      <Filter>video</Filter>
+      <Filter>uut\video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\io\uutFileStream.h">
+      <Filter>uut\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\io\uutFileSystem.h">
+      <Filter>uut\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\io\uutStream.h">
+      <Filter>uut\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\imgui\imconfig.h">
+      <Filter>libs\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\imgui\imgui.h">
+      <Filter>libs\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\imgui\stb_rect_pack.h">
+      <Filter>libs\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\imgui\stb_textedit.h">
+      <Filter>libs\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\imgui\stb_truetype.h">
+      <Filter>libs\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\gui\uutGui.h">
+      <Filter>uut\gui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

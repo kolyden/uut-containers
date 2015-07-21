@@ -23,16 +23,13 @@ namespace uut
 
 		void AddEventListener(EventListener* listener);
 		void RemoveEventListener(EventListener* listener);
+		const List<EventListener*>& GetListeners() const { return _listeners; }
 
-		HWND GetHWND() const { return _hwnd; }
+		void* GetHWND() const { return _handle; }
 
 	protected:
-		HWND _hwnd;
-		WNDCLASSEX _wc;
+		void* _handle;
 		Vector2i _size;
 		List<EventListener*> _listeners;
-		std::bitset<3> _mouseButton;
-
-		static LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 	};
 }

@@ -5,6 +5,19 @@
 
 namespace uut
 {
+	struct TextureRect
+	{
+		void* _bits;
+		unsigned _pitch;
+
+		TextureRect() {}
+		TextureRect(void* bits, unsigned pitch)
+			: _bits(bits), _pitch(pitch)
+		{}
+
+		static const TextureRect EMPTY;
+	};
+
 	class Texture : public Object
 	{
 		OBJECT(Texture, Object)
@@ -13,6 +26,9 @@ namespace uut
 		virtual ~Texture();
 
 		const Vector2i& GetSize() const { return _size; }
+
+		TextureRect Lock();
+		void Unlock();
 
 	protected:
 		LPDIRECT3DTEXTURE9 _data;
