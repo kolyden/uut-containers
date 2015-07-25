@@ -35,12 +35,19 @@ namespace uut
 		SharedPtr<VertexLayout> CreateVertexLayout(const List<VertexDeclare>& declare);
 		SharedPtr<VertexLayout> CreateVertexLayout(const VertexDeclare* declare, uint8_t count);
 
-		SharedPtr<Texture> CreateTexture(const Vector2i& size);
+		SharedPtr<Texture> CreateTexture(const Vector2i& size, ImageFormat format);
 		SharedPtr<Texture> LoadTexture(const String& path);
 
-		void SetRenderState(RenderState state, bool val);
-		void SetTransform(TransformType transform, const Matrix4& mat);
+		bool SetRenderState(RenderState state, bool val);
+		void SetCullMode(RenderCull mode);
+		void SetBlendOp(BlendOperation op);
+		void SetBlendType(BlendType type, BlendMode mode);
 		void SetScissorRect(const Recti* rect);
+		void SetTextureOp(uint8_t stage, TextureOperation op, TextureOperationValue val);
+		void SetTextureArgument(uint8_t stage, TextureArgument arg, TextureArgumentValue val);
+		void SetTextureFilter(uint8_t stage, TextureFilterTarget target, TextureFilterType type);
+
+		void SetTransform(TransformType transform, const Matrix4& mat);
 
 		bool SetTexture(uint8_t stage, Texture* texture);
 		bool SetVertexLayout(VertexLayout* layout);
@@ -59,8 +66,12 @@ namespace uut
 		static D3DPRIMITIVETYPE ConvertPrimitiveType(VertexTopology type);
 		static DWORD ConvertBufferUsage(BufferUsage usage);
 		static D3DTRANSFORMSTATETYPE ConvertTransformType(TransformType transform);
-		static D3DRENDERSTATETYPE ConvertRenderState(RenderState state);
 		static D3DDECLUSAGE ConvertUsage(DeclareUsage usage);
 		static D3DDECLTYPE ConvertVertexType(DeclareType type, uint8_t count);
+		static D3DFORMAT ConvertFormat(ImageFormat format);
+		static D3DCULL ConvertCull(RenderCull cull);
+		static D3DBLENDOP ConvertOperation(BlendOperation op);
+		static D3DBLEND ConvertBlend(BlendMode mode);
+		static D3DTEXTUREOP ConvertTexOp(TextureOperationValue val);
 	};
 }

@@ -10,6 +10,7 @@ namespace uut
 	public:
 		virtual void OnKeyDown(EKeycode code) {}
 		virtual void OnKeyUp(EKeycode code) {}
+		virtual void OnChar(uint32_t c) {}
 
 		virtual void OnMouseDown(int button) {}
 		virtual void OnMouseUp(int button) {}

@@ -7,7 +7,6 @@
 #include "video/uutVertexBuffer.h"
 #include "video/uutIndexBuffer.h"
 #include "video/uutVertexLayout.h"
-#include <mmsystem.h>
 
 namespace uut
 {
@@ -34,43 +33,51 @@ namespace uut
 		g_gui = this;
 	}
 
-	void Gui::NewFrame()
+	void Gui::Update(float deltaTime)
 	{
 		ImGuiIO& io = ImGui::GetIO();
-
-		// Setup display size (every frame to accommodate for window resizing)
-		io.DisplaySize = ImVec2(
-			(float)_window->GetSize().x,
-			(float)_window->GetSize().y);
-
-		const DWORD curTime = timeGetTime();
-		const float delta = 0.002f * (curTime - _time);
-		_time = curTime;
-
-		io.DeltaTime = delta;
+		io.DeltaTime = deltaTime;
 		io.KeyCtrl = _input->IsKey(KEY_CONTROL);
 		io.KeyShift = _input->IsKey(KEY_SHIFT);
 		io.KeyAlt = _input->IsKey(KEY_MENU);
 
-		for (int i = 0; i < 3; i++)
-			io.MouseDown[i] = _input->IsMouseButton(i);
-		io.MousePos.x = _input->GetMousePos().x;
-		io.MousePos.y = _input->GetMousePos().y;
-		io.MouseWheel = _input->GetMouseWheel();
-		for (int i = 0; i < 255; i++)
-			io.KeysDown[i] = _input->IsKey((EKeycode)i);
+		RECT rect;
+		GetClientRect((HWND)_window->GetHWND(), &rect);
+		io.DisplaySize = ImVec2((float)(rect.right - rect.left), (float)(rect.bottom - rect.top));
 
-		// Hide OS mouse cursor if ImGui is drawing it
-// 		SetCursor(io.MouseDrawCursor ? NULL : LoadCursor(NULL, IDC_ARROW));
-
-		// Start the frame
 		ImGui::NewFrame();
 	}
 
 	void Gui::Draw()
 	{
+		_render->SetRenderState(RenderState::Lightning, false);
+		_render->SetRenderState(RenderState::ZEnable, false);
+		_render->SetRenderState(RenderState::ScissorTest, true);
+		_render->SetRenderState(RenderState::AlphaBlend, true);
+		_render->SetRenderState(RenderState::AlphaTest, false);
+		_render->SetBlendOp(BLENDOP_ADD);
+		_render->SetCullMode(CULL_NONE);
+		_render->SetBlendType(BlendType::Source, BLEND_SRCALPHA);
+		_render->SetBlendType(BlendType::Dest, BLEND_INVSRCALPHA);
+
+		_render->SetTextureOp(0, TSS_COLOROP, TEXOP_SELECTARG1);
+		_render->SetTextureArgument(0, TSS_COLORARG1, TEXARG_DIFFUSE);
+		_render->SetTextureOp(0, TSS_ALPHAOP, TEXOP_MODULATE);
+		_render->SetTextureArgument(0, TSS_ALPHAARG1, TEXARG_TEXTURE);
+		_render->SetTextureArgument(0, TSS_COLORARG2, TEXARG_DIFFUSE);
+
+		_render->SetTextureFilter(0, TEXFILTERTARGET_MIN, TEXFILTER_LINEAR);
+		_render->SetTextureFilter(0, TEXFILTERTARGET_MAG, TEXFILTER_LINEAR);
+
 		ImGui::Render();
-		_render->SetScissorRect(nullptr);
+
+		_render->SetRenderState(RenderState::ScissorTest, false);
+		_render->SetRenderState(RenderState::AlphaBlend, false);
+		_render->SetRenderState(RenderState::ZEnable, true);
+		_render->SetTextureOp(0, TSS_COLOROP, TEXOP_MODULATE);
+		_render->SetTextureArgument(0, TSS_COLORARG1, TEXARG_TEXTURE);
+
+		_render->SetCullMode(CULL_CCW);
 	}
 
 	//////////////////////////////////////////////////////////////////////////
@@ -79,6 +86,8 @@ namespace uut
 		_render = Core::GetMain()->GetModule<Render>();
 		_window = Core::GetMain()->GetModule<Window>();
 		_input = Core::GetMain()->GetModule<Input>();
+
+		_window->AddEventListener(this);
 
 		_vbuffer = _render->CreateVertexBuffer(USAGE_DYNAMIC, sizeof(CUSTOMVERTEX)* VERTEX_BUFFER_SIZE);
 		_ibuffer = _render->CreateIndexBuffer(USAGE_DYNAMIC, sizeof(uint16_t)* INDEX_BUFFER_SIZE, INDEX_16);
@@ -108,12 +117,16 @@ namespace uut
 		io.RenderDrawListsFn = &DrawListStatic;
 		io.ImeWindowHandle = _window->GetHWND();
 
+		io.DisplaySize = ImVec2(
+			(float)_window->GetSize().x,
+			(float)_window->GetSize().y);
+
 		// Build
 		unsigned char* pixels;
 		int width, height, bytes_per_pixel;
-		io.Fonts->GetTexDataAsRGBA32(&pixels, &width, &height, &bytes_per_pixel);
+		io.Fonts->GetTexDataAsAlpha8(&pixels, &width, &height, &bytes_per_pixel);
 
-		_texture = _render->CreateTexture(Vector2i(width, height));
+		_texture = _render->CreateTexture(Vector2i(width, height), FORMAT_A8);
 		if (_texture == nullptr)
 		{
 			IM_ASSERT(0);
@@ -137,7 +150,55 @@ namespace uut
 		io.Fonts->ClearInputData();
 		io.Fonts->ClearTexData();
 
-		_time = timeGetTime();
+		ImGui::NewFrame();
+	}
+
+	void Gui::OnDone()
+	{
+		_window->RemoveEventListener(this);
+	}
+
+	void Gui::OnKeyDown(EKeycode code)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.KeysDown[code] = true;
+	}
+
+	void Gui::OnKeyUp(EKeycode code)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.KeysDown[code] = false;
+	}
+
+	void Gui::OnChar(uint32_t c)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.AddInputCharacter(c);
+	}
+
+	void Gui::OnMouseDown(int button)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.MouseDown[button] = true;
+	}
+
+	void Gui::OnMouseUp(int button)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.MouseDown[button] = false;
+	}
+
+	void Gui::OnMouseMove(const Vector2i& pos)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.MousePos.x = 1.0f * pos.x;
+		io.MousePos.y = 1.0f * pos.y;
+	}
+
+	void Gui::OnMouseWheel(float delta)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.MouseWheel = delta;
 	}
 
 	void Gui::DrawList(ImDrawData* draw_data)
@@ -173,27 +234,8 @@ namespace uut
 		_render->SetVertexBuffer(0, _vbuffer, 0, sizeof(CUSTOMVERTEX));
 		_render->SetIndexBuffer(_ibuffer);
 		_render->SetVertexLayout(_layout);
-		_render->SetTexture(0, nullptr);
 
 		// Setup render state: fixed-pipeline, alpha-blending, no face culling, no depth testing
-// 		g_pd3dDevice->SetPixelShader(NULL);
-// 		g_pd3dDevice->SetVertexShader(NULL);
-// 		g_pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-// 		g_pd3dDevice->SetRenderState(D3DRS_LIGHTING, false);
-// 		g_pd3dDevice->SetRenderState(D3DRS_ZENABLE, false);
-// 		g_pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
-// 		g_pd3dDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
-// 		g_pd3dDevice->SetRenderState(D3DRS_ALPHATESTENABLE, false);
-// 		g_pd3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-// 		g_pd3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-// 		g_pd3dDevice->SetRenderState(D3DRS_SCISSORTESTENABLE, true);
-// 		g_pd3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
-// 		g_pd3dDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_DIFFUSE);
-// 		g_pd3dDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
-// 		g_pd3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
-// 		g_pd3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_DIFFUSE);
-// 		g_pd3dDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
-// 		g_pd3dDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 
 		// Setup orthographic projection matrix
 		_render->SetTransform(TransformType::World, Matrix4::IDENTITY);

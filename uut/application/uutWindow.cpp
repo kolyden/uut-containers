@@ -121,66 +121,74 @@ namespace uut
 			return 0;
 
 		case WM_KEYDOWN:
-			for (auto& it : win->GetListeners())
-				it->OnKeyDown((EKeycode)wParam);
-			return 0;
+			if (wParam < 256)
+			{
+				for (auto& it : win->GetListeners())
+					it->OnKeyDown((EKeycode)wParam);
+				return true;
+			}
 			break;
 
 		case WM_KEYUP:
-			for (auto& it : win->GetListeners())
-				it->OnKeyUp((EKeycode)wParam);
-			return 0;
+			if (wParam < 256)
+			{
+				for (auto& it : win->GetListeners())
+					it->OnKeyUp((EKeycode)wParam);
+				return true;
+			}
 			break;
 
 		case WM_LBUTTONDOWN:
 			for (auto& it : win->GetListeners())
 				it->OnMouseDown(0);
-			return 0;
-			break;
+			return true;
 
 		case WM_LBUTTONUP:
 			for (auto& it : win->GetListeners())
 				it->OnMouseUp(0);
-			return 0;
-			break;
+			return true;
 
 		case WM_RBUTTONDOWN:
 			for (auto& it : win->GetListeners())
 				it->OnMouseDown(1);
-			return 0;
-			break;
+			return true;
 
 		case WM_RBUTTONUP:
 			for (auto& it : win->GetListeners())
 				it->OnMouseUp(1);
-			return 0;
-			break;
+			return true;
 
 		case WM_MBUTTONDOWN:
 			for (auto& it : win->GetListeners())
 				it->OnMouseDown(2);
-			return 0;
-			break;
+			return true;
 
 		case WM_MBUTTONUP:
 			for (auto& it : win->GetListeners())
 				it->OnMouseUp(2);
-			return 0;
-			break;
+			return true;
 
 		case WM_MOUSEMOVE:
 			x = GET_X_LPARAM(lParam);
 			y = GET_Y_LPARAM(lParam);
 			for (auto& it : win->GetListeners())
 				it->OnMouseMove(Vector2i(x, y));
-			return 0;
-			break;
+			return true;
 
 		case WM_MOUSEWHEEL:
 			wheel = static_cast<float>(GET_WHEEL_DELTA_WPARAM(wParam)) / 120.0f;
 			for (auto& it : win->GetListeners())
 				it->OnMouseWheel(wheel);
-			return 0;
+			return true;
+
+		case WM_CHAR:
+			// You can also use ToAscii()+GetKeyboardState() to retrieve characters.
+			if (wParam > 0 && wParam < 0x10000)
+			{
+				for (auto& it : win->GetListeners())
+					it->OnChar(wParam);
+				return true;
+			}
 			break;
 		}
 

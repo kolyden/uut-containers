@@ -150,7 +150,7 @@ namespace uut
 		return layout;
 	}
 
-	SharedPtr<Texture> Render::CreateTexture(const Vector2i& size)
+	SharedPtr<Texture> Render::CreateTexture(const Vector2i& size, ImageFormat format)
 	{
 		LPDIRECT3DTEXTURE9 data;
 // 		const auto ret = _d3dDevice->CreateTexture(size.x, size.y, 0, 0,
@@ -158,7 +158,7 @@ namespace uut
 // 		if (ret != D3D_OK)
 // 			return SharedPtr<Texture>::EMPTY;
 		if (D3DXCreateTexture(_d3dDevice, size.x, size.y, 1,
-			D3DUSAGE_DYNAMIC, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &data) < 0)
+			D3DUSAGE_DYNAMIC, ConvertFormat(format), D3DPOOL_DEFAULT, &data) < 0)
 			return SharedPtr<Texture>::EMPTY;
 
 		SharedPtr<Texture> tex(new Texture());
@@ -188,22 +188,67 @@ namespace uut
 		return tex;
 	}
 
-	void Render::SetRenderState(RenderState state, bool val)
+	bool Render::SetRenderState(RenderState state, bool val)
 	{
-		auto rs = ConvertRenderState(state);
-		_d3dDevice->SetRenderState(rs, val ? TRUE : FALSE);
+		HRESULT ret = S_FALSE;
+		switch (state)
+		{
+		case RenderState::Lightning:
+			ret = _d3dDevice->SetRenderState(D3DRS_LIGHTING, val);
+			break;
+
+		case RenderState::ZEnable:
+			ret = _d3dDevice->SetRenderState(D3DRS_ZENABLE, val);
+			break;
+
+		case RenderState::AlphaBlend:
+			ret = _d3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, val);
+			break;
+
+		case RenderState::AlphaTest:
+			ret = _d3dDevice->SetRenderState(D3DRS_ALPHATESTENABLE, val);
+			break;
+
+		case RenderState::ScissorTest:
+			ret = _d3dDevice->SetRenderState(D3DRS_SCISSORTESTENABLE, val);
+			break;
+		}
+
+		if (ret != D3D_OK)
+			return false;
+
+		return true;
 	}
 
-	void Render::SetTransform(TransformType transform, const Matrix4& mat)
+
+	void Render::SetCullMode(RenderCull mode)
 	{
-		auto state = ConvertTransformType(transform);
-		_d3dDevice->SetTransform(state, (D3DXMATRIX*)&mat);
+		_d3dDevice->SetRenderState(D3DRS_CULLMODE, ConvertCull(mode));
+	}
+
+	void Render::SetBlendOp(BlendOperation op)
+	{
+		_d3dDevice->SetRenderState(D3DRS_BLENDOP, ConvertOperation(op));
+	}
+
+	void Render::SetBlendType(BlendType type, BlendMode mode)
+	{
+		switch (type)
+		{
+		case BlendType::Source:
+			_d3dDevice->SetRenderState(D3DRS_SRCBLEND, ConvertBlend(mode));
+			break;
+
+		case BlendType::Dest:
+			_d3dDevice->SetRenderState(D3DRS_DESTBLEND, ConvertBlend(mode));
+			break;
+		}
 	}
 
 	void Render::SetScissorRect(const Recti* rect)
 	{
 		if (rect == nullptr)
-			_d3dDevice->SetRenderState(D3DRS_SCISSORTESTENABLE, FALSE);
+			_d3dDevice->SetScissorRect(nullptr);
 		else
 		{
 			::RECT in = {
@@ -212,9 +257,155 @@ namespace uut
 				rect->pos.y + rect->size.y
 			};
 
-			_d3dDevice->SetRenderState(D3DRS_SCISSORTESTENABLE, TRUE);
 			_d3dDevice->SetScissorRect(&in);
 		}
+	}
+
+	void Render::SetTextureOp(uint8_t stage, TextureOperation op, TextureOperationValue _val)
+	{
+		auto val = ConvertTexOp(_val);
+
+		switch (op)
+		{
+		case TSS_COLOROP:
+			_d3dDevice->SetTextureStageState(stage, D3DTSS_COLOROP, val);
+			break;
+
+		case TSS_ALPHAOP:
+			_d3dDevice->SetTextureStageState(stage, D3DTSS_ALPHAOP, val);
+			break;
+
+		case TSS_BUMPENVMAT00:
+			_d3dDevice->SetTextureStageState(stage, D3DTSS_BUMPENVMAT00, val);
+			break;
+
+		case TSS_BUMPENVMAT01:
+			_d3dDevice->SetTextureStageState(stage, D3DTSS_BUMPENVMAT01, val);
+			break;
+
+		case TSS_BUMPENVMAT10:
+			_d3dDevice->SetTextureStageState(stage, D3DTSS_BUMPENVMAT10, val);
+			break;
+
+		case TSS_BUMPENVMAT11:
+			_d3dDevice->SetTextureStageState(stage, D3DTSS_BUMPENVMAT11, val);
+			break;
+
+		case TSS_TEXCOORDINDEX:
+			_d3dDevice->SetTextureStageState(stage, D3DTSS_TEXCOORDINDEX, val);
+			break;
+
+		case TSS_BUMPENVLSCALE:
+			_d3dDevice->SetTextureStageState(stage, D3DTSS_BUMPENVLSCALE, val);
+			break;
+
+		case TSS_BUMPENVLOFFSET:
+			_d3dDevice->SetTextureStageState(stage, D3DTSS_BUMPENVLOFFSET, val);
+			break;
+
+		case TSS_TEXTURETRANSFORMFLAGS:
+			_d3dDevice->SetTextureStageState(stage, D3DTSS_TEXTURETRANSFORMFLAGS, val);
+			break;
+
+		case TSS_CONSTANT:
+			_d3dDevice->SetTextureStageState(stage, D3DTSS_CONSTANT, val);
+			break;
+		}
+	}
+
+	void Render::SetTextureArgument(uint8_t stage, TextureArgument arg, TextureArgumentValue _val)
+	{
+		uint32_t val;
+		switch (_val)
+		{
+		case TEXARG_DIFFUSE: val = D3DTA_DIFFUSE; break;
+		case TEXARG_CURRENT: val = D3DTA_CURRENT; break;
+		case TEXARG_TEXTURE: val = D3DTA_TEXTURE; break;
+		case TEXARG_TFACTOR: val = D3DTA_TFACTOR; break;
+		case TEXARG_SPECULAR: val = D3DTA_SPECULAR; break;
+		case TEXARG_TEMP: val = D3DTA_TEMP; break;
+		case TEXARG_CONSTANT: val = D3DTA_CONSTANT; break;
+		case TEXARG_COMPLEMENT: val = D3DTA_COMPLEMENT; break;
+		case TEXARG_ALPHAREPLICATE: val = D3DTA_ALPHAREPLICATE; break;
+			break;
+
+		default:
+			return;
+			break;
+		}
+
+		switch (arg)
+		{
+		case TSS_COLORARG0:
+			_d3dDevice->SetTextureStageState(stage, D3DTSS_COLORARG0, val);
+			break;
+
+		case TSS_COLORARG1:
+			_d3dDevice->SetTextureStageState(stage, D3DTSS_COLORARG1, val);
+			break;
+
+		case TSS_COLORARG2:
+			_d3dDevice->SetTextureStageState(stage, D3DTSS_COLORARG2, val);
+			break;
+
+		case TSS_ALPHAARG0:
+			_d3dDevice->SetTextureStageState(stage, D3DTSS_ALPHAARG0, val);
+			break;
+
+		case TSS_ALPHAARG1:
+			_d3dDevice->SetTextureStageState(stage, D3DTSS_ALPHAARG1, val);
+			break;
+
+		case TSS_ALPHAARG2:
+			_d3dDevice->SetTextureStageState(stage, D3DTSS_ALPHAARG2, val);
+			break;
+
+		case TSS_RESULTARG:
+			_d3dDevice->SetTextureStageState(stage, D3DTSS_COLORARG1, val);
+			break;
+
+		default:
+			return;
+			break;
+		}
+	}
+
+	void Render::SetTextureFilter(uint8_t stage, TextureFilterTarget target, TextureFilterType _type)
+	{
+		D3DTEXTUREFILTERTYPE type;
+		switch (_type)
+		{
+		case TEXFILTER_NONE: type = D3DTEXF_NONE; break;
+		case TEXFILTER_POINT: type = D3DTEXF_POINT; break;
+		case TEXFILTER_LINEAR: type = D3DTEXF_LINEAR; break;
+		case TEXFILTER_ANISOTROPIC: type = D3DTEXF_ANISOTROPIC; break;
+		case TEXFILTER_PYRAMIDALQUAD: type = D3DTEXF_PYRAMIDALQUAD; break;
+		case TEXFILTER_GAUSSIANQUAD: type = D3DTEXF_GAUSSIANQUAD; break;
+		default:
+			return;
+			break;
+		}
+
+		switch (target)
+		{
+		case TEXFILTERTARGET_MAG:
+			_d3dDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, type);
+			break;
+
+		case TEXFILTERTARGET_MIN:
+			_d3dDevice->SetSamplerState(0, D3DSAMP_MINFILTER, type);
+			break;
+
+		case TEXFILTERTARGET_MIP:
+			_d3dDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, type);
+			break;
+		}
+	}
+
+	void Render::SetTransform(TransformType transform, const Matrix4& mat)
+	{
+		auto state = ConvertTransformType(transform);
+		_d3dDevice->SetTransform(state, (D3DXMATRIX*)&mat);
 	}
 
 	bool Render::SetTexture(uint8_t stage, Texture* texture)
@@ -292,14 +483,6 @@ namespace uut
 		return convert[(int)transform];
 	}
 
-	D3DRENDERSTATETYPE Render::ConvertRenderState(RenderState state)
-	{
-		static D3DRENDERSTATETYPE convert[] = {
-			D3DRS_LIGHTING, D3DRS_ZENABLE,
-		};
-		return convert[(int)state];
-	}
-
 	D3DDECLUSAGE Render::ConvertUsage(DeclareUsage usage)
 	{
 		static D3DDECLUSAGE convert[] = {
@@ -343,4 +526,102 @@ namespace uut
 		return D3DDECLTYPE_UNUSED;
 	}
 
+	D3DFORMAT Render::ConvertFormat(ImageFormat format)
+	{
+		switch (format)
+		{
+		case FORMAT_A8: return D3DFMT_A8;
+		case FORMAT_A8R8G8B8: return D3DFMT_A8B8G8R8;
+			break;
+		}
+
+		return D3DFMT_UNKNOWN;
+	}
+
+	D3DCULL Render::ConvertCull(RenderCull cull)
+	{
+		switch (cull)
+		{
+		case CULL_NONE: return D3DCULL_NONE;
+		case CULL_CW: return D3DCULL_CW;
+		case CULL_CCW: return D3DCULL_CCW;
+			break;
+		}
+
+		return D3DCULL_NONE;
+	}
+
+	D3DBLENDOP Render::ConvertOperation(BlendOperation op)
+	{
+		switch (op)
+		{
+		case BLENDOP_ADD: return D3DBLENDOP_ADD;
+		case BLENDOP_SUB: return D3DBLENDOP_SUBTRACT;
+		case BLENDOP_REVSUB: return D3DBLENDOP_REVSUBTRACT;
+		case BLENDOP_MIN: return D3DBLENDOP_MIN;
+		case BLENDOP_MAX: return D3DBLENDOP_MAX;
+			break;
+		}
+
+		return D3DBLENDOP_ADD;
+	}
+
+	D3DBLEND Render::ConvertBlend(BlendMode mode)
+	{
+		switch (mode)
+		{
+		case BLEND_ZERO: return D3DBLEND_ZERO;
+		case BLEND_ONE: return D3DBLEND_ONE;
+		case BLEND_SRCCOLOR: return D3DBLEND_SRCCOLOR;
+		case BLEND_INVSRCCOLOR: return D3DBLEND_INVSRCCOLOR;
+		case BLEND_SRCALPHA: return D3DBLEND_SRCALPHA;
+		case BLEND_INVSRCALPHA: return D3DBLEND_INVSRCALPHA;
+		case BLEND_DESTALPHA: return D3DBLEND_DESTALPHA;
+		case BLEND_INVDESTALPHA: return D3DBLEND_INVDESTALPHA;
+		case BLEND_DESTCOLOR: return D3DBLEND_DESTCOLOR;
+		case BLEND_INVDESTCOLOR: return D3DBLEND_INVDESTCOLOR;
+		case BLEND_SRCALPHASAT: return D3DBLEND_SRCALPHASAT;
+		case BLEND_BOTHSRCALPHA: return D3DBLEND_BOTHSRCALPHA;
+		case BLEND_BOTHINVSRCALPHA: return D3DBLEND_BOTHINVSRCALPHA;
+			break;
+		}
+
+		return D3DBLEND_FORCE_DWORD;
+	}
+
+	D3DTEXTUREOP Render::ConvertTexOp(TextureOperationValue val)
+	{
+		switch (val)
+		{
+		case TEXOP_DISABLE: return D3DTOP_DISABLE;
+		case TEXOP_SELECTARG1: return D3DTOP_SELECTARG1;
+		case TEXOP_SELECTARG2: return D3DTOP_SELECTARG2;
+		case TEXOP_MODULATE: return D3DTOP_MODULATE;
+		case TEXOP_MODULATE2X: return D3DTOP_MODULATE2X;
+		case TEXOP_MODULATE4X: return D3DTOP_MODULATE4X;
+		case TEXOP_ADD: return D3DTOP_ADD;
+		case TEXOP_ADDSIGNED: return D3DTOP_ADDSIGNED;
+		case TEXOP_ADDSIGNED2X: return D3DTOP_ADDSIGNED2X;
+		case TEXOP_SUBTRACT: return D3DTOP_SUBTRACT;
+		case TEXOP_ADDSMOOTH: return D3DTOP_ADDSMOOTH;
+		case TEXOP_BLENDDIFFUSEALPHA: return D3DTOP_BLENDDIFFUSEALPHA;
+		case TEXOP_BLENDTEXTUREALPHA: return D3DTOP_BLENDTEXTUREALPHA;
+		case TEXOP_BLENDFACTORALPHA: return D3DTOP_BLENDFACTORALPHA;
+		case TEXOP_BLENDTEXTUREALPHAPM: return D3DTOP_BLENDTEXTUREALPHAPM;
+		case TEXOP_BLENDCURRENTALPHA: return D3DTOP_BLENDCURRENTALPHA;
+		case TEXOP_PREMODULATE: return D3DTOP_PREMODULATE;
+		case TEXOP_MODULATEALPHA_ADDCOLOR: return D3DTOP_MODULATEALPHA_ADDCOLOR;
+		case TEXOP_MODULATECOLOR_ADDALPHA: return D3DTOP_MODULATECOLOR_ADDALPHA;
+		case TEXOP_MODULATEINVALPHA_ADDCOLOR: return D3DTOP_MODULATEINVALPHA_ADDCOLOR;
+		case TEXOP_MODULATEINVCOLOR_ADDALPHA: return D3DTOP_MODULATEINVCOLOR_ADDALPHA;
+		case TEXOP_BUMPENVMAP: return D3DTOP_BUMPENVMAP;
+		case TEXOP_BUMPENVMAPLUMINANCE: return D3DTOP_BUMPENVMAPLUMINANCE;
+		case TEXOP_DOTPRODUCT3: return D3DTOP_DOTPRODUCT3;
+		case TEXOP_MULTIPLYADD: return D3DTOP_MULTIPLYADD;
+		case TEXOP_LERP: return D3DTOP_LERP;
+			break;
+		}
+
+		return D3DTOP_FORCE_DWORD;
+	}
 }
