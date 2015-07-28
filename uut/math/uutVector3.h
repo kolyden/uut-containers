@@ -70,5 +70,8 @@ namespace uut
 		static const Vector3f AXIS_X;
 		static const Vector3f AXIS_Y;
 		static const Vector3f AXIS_Z;
+		static const Vector3f AXIS_XY;
+		static const Vector3f AXIS_XZ;
+		static const Vector3f AXIS_YZ;
 	};
 }

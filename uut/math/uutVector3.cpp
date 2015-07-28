@@ -7,4 +7,7 @@ namespace uut
 	const Vector3f Vector3f::AXIS_Z(0, 0, 1);
 	const Vector3f Vector3f::AXIS_Y(0, 1, 0);
 	const Vector3f Vector3f::AXIS_X(1, 0, 0);
+	const Vector3f Vector3f::AXIS_XY(1, 1, 0);
+	const Vector3f Vector3f::AXIS_XZ(1, 0, 1);
+	const Vector3f Vector3f::AXIS_YZ(0, 1, 1);
 }
