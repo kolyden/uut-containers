@@ -38,7 +38,10 @@ namespace uut
 		T* GetData() { return _data.data(); }
 		const T* GetData() const { return _data.data(); }
 
+		void Insert(int index, const T& item) { _data.insert(_data.begin() + index, item); }
+
 		void Remove(Iterator iter) { _data.erase(iter); }
+		void RemoveAt(int index) { _data.erase(_data.begin() + index); }
 
 		Iterator Begin() { return _data.begin(); }
 		Iterator End() { return _data.end(); }

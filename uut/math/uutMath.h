@@ -23,5 +23,12 @@ namespace uut
 		extern int FloorToInt(float val);
 		extern int CeilToInt(float val);
 		extern int RoundToInt(float val);
+
+		template<typename T>
+		extern const T& Max(const T& a, const T& b) { return (a > b ? a : b); }
+
+		template<typename T>
+		extern const T& Min(const T& a, const T& b) { return (a < b ? a : b); }
+
 	}
 }
