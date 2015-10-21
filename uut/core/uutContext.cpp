@@ -1,14 +1,14 @@
-#include "uutCore.h"
+#include "uutContext.h"
 #include "uutModule.h"
 
 namespace uut
 {
-	Core::Core()
+	Context::Context()
 		: _inited(false)
 	{
 	}
 
-	void Core::Init()
+	void Context::Init()
 	{
 		if (_inited)
 			return;
@@ -21,7 +21,7 @@ namespace uut
 			it.second->OnInit();
 	}
 
-	void Core::AddModule(Module* module)
+	void Context::AddModule(Module* module)
 	{
 		if (module == nullptr)
 			return;
@@ -35,7 +35,7 @@ namespace uut
 		}
 	}
 
-	Module* Core::GetModule(const HashString& type) const
+	Module* Context::GetModule(const HashString& type) const
 	{
 		auto it = _modules.Find(type);
 		if (it == _modules.End())
@@ -44,7 +44,7 @@ namespace uut
 		return it->second;
 	}
 
-	void Core::AddFactory(ObjectFactory* factory)
+	void Context::AddFactory(ObjectFactory* factory)
 	{
 		if (factory == nullptr)
 			return;
@@ -52,7 +52,7 @@ namespace uut
 		_factories[factory->GetTypeInfo()._name] = factory;
 	}
 
-	ObjectFactory* Core::GetFactory(const HashString& type) const
+	ObjectFactory* Context::GetFactory(const HashString& type) const
 	{
 		auto it = _factories.Find(type);
 		if (it == _factories.End())
@@ -61,7 +61,7 @@ namespace uut
 		return it->second;
 	}
 
-	SharedPtr<Object> Core::CreateObject(const HashString& type) const
+	SharedPtr<Object> Context::CreateObject(const HashString& type) const
 	{
 		auto factory = GetFactory(type);
 		if (factory == nullptr)
@@ -70,9 +70,9 @@ namespace uut
 		return factory->CreateObject();
 	}
 
-	Core* Core::GetMain()
+	Context* Context::GetMain()
 	{
-		static Core core;
+		static Context core;
 		return &core;
 	}
 }

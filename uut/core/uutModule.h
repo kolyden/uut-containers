@@ -16,6 +16,6 @@ namespace uut
 		virtual void OnInit() {}
 		virtual void OnDone() {}
 
-		friend class Core;
+		friend class Context;
 	};
 }

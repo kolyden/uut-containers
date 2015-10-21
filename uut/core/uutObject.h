@@ -4,7 +4,7 @@
 
 namespace uut
 {
-	class Core;
+	class Context;
 	class Module;
 
 #define OBJECT(type, basetype) \
@@ -26,12 +26,12 @@ namespace uut
 
 		virtual ~Object() {}
 
-		static Core* GetCore();
+		static Context* GetCore();
 		static Module* GetModule(const HashString& type);
 		template<class T>static T* GetModule() { return (T*)GetModule(T::GetTypeNameStatic()); }
 
 	private:
-		friend class Core;
+		friend class Context;
 	};
 
 	//////////////////////////////////////////////////////////////////////////

@@ -9,7 +9,7 @@ namespace uut
 	class Object;
 	class ObjectFactory;
 
-	class Core
+	class Context
 	{
 	public:
 		void Init();
@@ -23,12 +23,12 @@ namespace uut
 
 		SharedPtr<Object> CreateObject(const HashString& type) const;
 
-		static Core* GetMain();
+		static Context* GetMain();
 
 	protected:
 		bool _inited;
 
-		Core();
+		Context();
 
 		Dictionary<HashString, SharedPtr<Module>> _modules;
 		Dictionary<HashString, SharedPtr<ObjectFactory>> _factories;

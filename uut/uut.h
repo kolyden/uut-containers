@@ -3,7 +3,7 @@
 #include "containers/uutDictionary.h"
 #include "containers/uutList.h"
 
-#include "core/uutCore.h"
+#include "core/uutContext.h"
 #include "core/uutModule.h"
 
 #include "application/uutWindow.h"

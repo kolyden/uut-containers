@@ -1,11 +1,11 @@
 #include "uutObject.h"
-#include "uutCore.h"
+#include "uutContext.h"
 
 namespace uut
 {
-	Core* Object::GetCore()
+	Context* Object::GetCore()
 	{
-		return Core::GetMain();
+		return Context::GetMain();
 	}
 
 	Module* Object::GetModule(const HashString& type)

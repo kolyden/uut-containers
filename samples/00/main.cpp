@@ -108,14 +108,14 @@ namespace uut
 				_render->SetTransform(TransformType::Projection,
 					Matrix4::MakePerspective(Math::Deg2Rad(45), 800.0f / 600.0f, 1.0f, 100.0f));
 
-				_graphics->DrawQuad(
-					Vertex(-3.0f, 3.0f, -3.0f),
-					Vertex(3.0f, 3.0f, -3.0f),
-					Vertex(-3.0f, -3.0f, -3.0f),
-					Vertex(3.0f, -3.0f, -3.0f));
+// 				_graphics->DrawQuad(
+// 					Vertex(-3.0f, 3.0f, -3.0f),
+// 					Vertex(3.0f, 3.0f, -3.0f),
+// 					Vertex(-3.0f, -3.0f, -3.0f),
+// 					Vertex(3.0f, -3.0f, -3.0f));
 				_graphics->Flush();
 
-// 				_geom->Draw();
+				_geom->Draw();
 				_render->EndScene();
 			}
 			_render->Present();

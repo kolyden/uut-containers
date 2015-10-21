@@ -1,5 +1,5 @@
 #include "uutGui.h"
-#include "core/uutCore.h"
+#include "core/uutContext.h"
 #include "input/uutInput.h"
 #include "application/uutWindow.h"
 #include "video/uutRender.h"
@@ -83,9 +83,9 @@ namespace uut
 	//////////////////////////////////////////////////////////////////////////
 	void Gui::OnInit()
 	{
-		_render = Core::GetMain()->GetModule<Render>();
-		_window = Core::GetMain()->GetModule<Window>();
-		_input = Core::GetMain()->GetModule<Input>();
+		_render = Context::GetMain()->GetModule<Render>();
+		_window = Context::GetMain()->GetModule<Window>();
+		_input = Context::GetMain()->GetModule<Input>();
 
 		_window->AddEventListener(this);
 

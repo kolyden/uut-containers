@@ -16,7 +16,7 @@
     <ClCompile Include="..\uut\application\uutWindow.cpp" />
     <ClCompile Include="..\uut\containers\uutHashString.cpp" />
     <ClCompile Include="..\uut\containers\uutString.cpp" />
-    <ClCompile Include="..\uut\core\uutCore.cpp" />
+    <ClCompile Include="..\uut\core\uutContext.cpp" />
     <ClCompile Include="..\uut\core\uutModule.cpp" />
     <ClCompile Include="..\uut\core\uutObject.cpp" />
     <ClCompile Include="..\uut\core\uutRefCounted.cpp" />
@@ -58,7 +58,7 @@
     <ClInclude Include="..\uut\containers\uutHashString.h" />
     <ClInclude Include="..\uut\containers\uutList.h" />
     <ClInclude Include="..\uut\containers\uutString.h" />
-    <ClInclude Include="..\uut\core\uutCore.h" />
+    <ClInclude Include="..\uut\core\uutContext.h" />
     <ClInclude Include="..\uut\core\uutDefs.h" />
     <ClInclude Include="..\uut\core\uutModule.h" />
     <ClInclude Include="..\uut\core\uutObject.h" />

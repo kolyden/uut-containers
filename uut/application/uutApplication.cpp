@@ -1,5 +1,5 @@
 #include "uutApplication.h"
-#include "core/uutCore.h"
+#include "core/uutContext.h"
 #include "application/uutWindow.h"
 #include "video/uutRender.h"
 #include "input/uutInput.h"
@@ -15,7 +15,7 @@ namespace uut
 		auto input = new Input();
 		auto fsys = new FileSystem();
 
-		auto core = Core::GetMain();
+		auto core = Context::GetMain();
 		core->AddModule(window);
 		core->AddModule(render);
 		core->AddModule(input);
@@ -27,7 +27,7 @@ namespace uut
 
 	void Application::Run()
 	{
-		auto core = Core::GetMain();
+		auto core = Context::GetMain();
 		core->Init();
 
 		_window = core->GetModule<Window>();

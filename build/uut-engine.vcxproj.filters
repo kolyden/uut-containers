@@ -57,9 +57,6 @@
     <ClCompile Include="..\uut\core\uutTypeInfo.cpp">
       <Filter>uut\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\uut\core\uutCore.cpp">
-      <Filter>uut\core</Filter>
-    </ClCompile>
     <ClCompile Include="..\uut\application\uutApplication.cpp">
       <Filter>uut\application</Filter>
     </ClCompile>
@@ -132,6 +129,9 @@
     <ClCompile Include="..\uut\gui\uutGui.cpp">
       <Filter>uut\gui</Filter>
     </ClCompile>
+    <ClCompile Include="..\uut\core\uutContext.cpp">
+      <Filter>uut\core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\uut\containers\uutList.h">
@@ -178,9 +178,6 @@
       <Filter>uut\containers</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\core\uutTypeInfo.h">
-      <Filter>uut\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\uut\core\uutCore.h">
       <Filter>uut\core</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\application\uutApplication.h">
@@ -269,6 +266,9 @@
     </ClInclude>
     <ClInclude Include="..\uut\gui\uutGui.h">
       <Filter>uut\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uut\core\uutContext.h">
+      <Filter>uut\core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
