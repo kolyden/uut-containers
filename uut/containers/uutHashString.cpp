@@ -15,10 +15,30 @@ namespace uut
 	{
 	}
 
+	HashString::HashString(const HashString& str)
+		: _data(str._data)
+		, _hash(str._hash)
+	{
+	}
+
 	HashString::HashString(HashString&& str)
 		: _data(std::move(str._data))
 		, _hash(std::move(str._hash))
 	{
+	}
+
+	HashString & HashString::operator=(const HashString& str)
+	{
+		_data = str._data;
+		_hash = str._hash;
+		return *this;
+	}
+
+	HashString & HashString::operator=(HashString&& str)
+	{
+		_data = std::move(str._data);
+		_hash = str._hash;
+		return *this;
 	}
 
 	int HashString::CalcHash() const

@@ -9,11 +9,15 @@ namespace uut
 	public:
 		String();
 		String(const char* str);
+		String(const String& str);
 		String(String&& str);
 
 		void Clear();
 
 		operator const char* ()  const { return _data.c_str(); }
+
+		String& operator = (const String& str);
+		String& operator = (String&& str);
 
 		static const String EMPTY;
 

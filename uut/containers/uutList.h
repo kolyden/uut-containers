@@ -14,6 +14,7 @@ namespace uut
 
 		List() {}
 		List(const T* data, unsigned count) : _data(data, data + sizeof(data) / sizeof(T)) {}
+		List(int count, const T& item) : _data(count, item) {}
 		List(std::initializer_list<T> data) : _data(data) {}
 
 		void Add(const T& item) { _data.push_back(item); }

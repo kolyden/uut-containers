@@ -13,6 +13,11 @@ namespace uut
 	{
 	}
 
+	String::String(const String& str)
+		: _data(str._data)
+	{
+	}
+
 	String::String(String&& str)
 		: _data(std::move(str._data))
 	{
@@ -21,5 +26,17 @@ namespace uut
 	void String::Clear()
 	{
 		_data.clear();
+	}
+
+	String& String::operator=(const String& str)
+	{
+		_data = str._data;
+		return *this;
+	}
+
+	String& String::operator=(String&& str)
+	{
+		_data = std::move(str._data);
+		return *this;
 	}
 }

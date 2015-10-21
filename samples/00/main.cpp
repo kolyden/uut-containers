@@ -44,6 +44,7 @@ namespace uut
 				3, 7, 2,    // side 6
 				2, 7, 6,
 			});
+			_geom->SetUV(List<Vector2f>(8, Vector2f::ZERO));
 			_geom->Generate();
 
 			_graphics = new Graphics(_render);
@@ -102,9 +103,9 @@ namespace uut
 			if (_render->BeginScene())
 			{
 				auto mat = Matrix4::MakeRotateY(_angle);
-				_render->SetTransform(TRANSFORM_WORLD, mat);
-				_render->SetTransform(TRANSFORM_VIEW, _camera.Generate());
-				_render->SetTransform(TRANSFORM_PROJECTION,
+				_render->SetTransform(TransformType::World, mat);
+				_render->SetTransform(TransformType::View, _camera.Generate());
+				_render->SetTransform(TransformType::Projection,
 					Matrix4::MakePerspective(Math::Deg2Rad(45), 800.0f / 600.0f, 1.0f, 100.0f));
 
 				_graphics->DrawQuad(
