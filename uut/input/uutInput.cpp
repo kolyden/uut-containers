@@ -11,17 +11,6 @@ namespace uut
 	}
 
 	//////////////////////////////////////////////////////////////////////////
-	void Input::OnInit()
-	{
-		_window = GetModule<Window>();
-		_window->AddEventListener(this);
-	}
-
-	void Input::OnDone()
-	{
-		_window->RemoveEventListener(this);
-	}
-
 	void Input::OnKeyDown(EKeycode code)
 	{
 		_keys[code] = true;

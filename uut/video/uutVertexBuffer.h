@@ -5,7 +5,6 @@ namespace uut
 {
 	class VertexBuffer : public RenderBuffer
 	{
-		OBJECT(VertexBuffer, RenderBuffer)
 	public:
 		VertexBuffer();
 		virtual ~VertexBuffer();

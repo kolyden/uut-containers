@@ -1,6 +1,7 @@
 #pragma once
-#include "core/uutModule.h"
+#include "core/uutObject.h"
 #include "containers/uutList.h"
+#include "containers/uutString.h"
 #include "math/uutVector2.h"
 #include "math/uutMatrix.h"
 #include "uutColor.h"
@@ -14,9 +15,8 @@ namespace uut
 	class IndexBuffer;
 	class Texture;
 
-	class Render : public Module
+	class Render : public Object
 	{
-		OBJECT(Render, Module)
 	public:
 		Render();
 		virtual ~Render();

@@ -13,7 +13,6 @@ namespace uut
 
 	class FileStream : public Stream
 	{
-		OBJECT(FileStream, Stream)
 	public:
 		FileStream();
 		virtual ~FileStream();

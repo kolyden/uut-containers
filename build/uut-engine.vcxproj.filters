@@ -31,9 +31,6 @@
     <Filter Include="libs\imgui">
       <UniqueIdentifier>{30389106-9679-4d7d-ad4a-f65de2717ab8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="uut\gui">
-      <UniqueIdentifier>{a87d01b4-02ce-4e6a-be98-88912ff3b57a}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\uut\core\uutObject.cpp">
@@ -45,17 +42,11 @@
     <ClCompile Include="..\uut\input\uutInput.cpp">
       <Filter>uut\input</Filter>
     </ClCompile>
-    <ClCompile Include="..\uut\core\uutModule.cpp">
-      <Filter>uut\core</Filter>
-    </ClCompile>
     <ClCompile Include="..\uut\containers\uutHashString.cpp">
       <Filter>uut\containers</Filter>
     </ClCompile>
     <ClCompile Include="..\uut\containers\uutString.cpp">
       <Filter>uut\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\uut\core\uutTypeInfo.cpp">
-      <Filter>uut\core</Filter>
     </ClCompile>
     <ClCompile Include="..\uut\application\uutApplication.cpp">
       <Filter>uut\application</Filter>
@@ -126,12 +117,6 @@
     <ClCompile Include="..\libs\imgui\imgui.cpp">
       <Filter>libs\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="..\uut\gui\uutGui.cpp">
-      <Filter>uut\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\uut\core\uutContext.cpp">
-      <Filter>uut\core</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\uut\containers\uutList.h">
@@ -168,17 +153,11 @@
       <Filter>uut\input</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\uut.h" />
-    <ClInclude Include="..\uut\core\uutModule.h">
-      <Filter>uut\core</Filter>
-    </ClInclude>
     <ClInclude Include="..\uut\containers\uutHashString.h">
       <Filter>uut\containers</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\containers\uutString.h">
       <Filter>uut\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\uut\core\uutTypeInfo.h">
-      <Filter>uut\core</Filter>
     </ClInclude>
     <ClInclude Include="..\uut\application\uutApplication.h">
       <Filter>uut\application</Filter>
@@ -263,12 +242,6 @@
     </ClInclude>
     <ClInclude Include="..\libs\imgui\stb_truetype.h">
       <Filter>libs\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\uut\gui\uutGui.h">
-      <Filter>uut\gui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\uut\core\uutContext.h">
-      <Filter>uut\core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

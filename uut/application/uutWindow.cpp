@@ -1,5 +1,4 @@
 #include "uutWindow.h"
-#include "core/uutContext.h"
 #include "input/uutInput.h"
 #include "application/uutEventListener.h"
 #include <windows.h>

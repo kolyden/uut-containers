@@ -3,6 +3,8 @@
 
 namespace uut
 {
+	FileSystem::FileSystem() = default;
+
 	SharedPtr<FileStream> FileSystem::OpenRead(const String& path)
 	{
 		auto stream = SharedPtr<FileStream>(new FileStream());

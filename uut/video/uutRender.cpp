@@ -42,7 +42,7 @@ namespace uut
 
 		// create a device class using this information and information from the d3dpp stuct
 		_d3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL,
-			(HWND)_window->GetHWND(), D3DCREATE_SOFTWARE_VERTEXPROCESSING,
+			(HWND)_window->GetHandle(), D3DCREATE_SOFTWARE_VERTEXPROCESSING,
 			&d3dpp, &_d3dDevice);
 
 		_d3dDevice->SetRenderState(D3DRS_LIGHTING, FALSE);

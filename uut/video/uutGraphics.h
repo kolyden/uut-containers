@@ -1,6 +1,6 @@
 #pragma once
 #include "containers/uutList.h"
-#include "core/uutModule.h"
+#include "core/uutObject.h"
 #include "uutVertex.h"
 #include "uutVideoDefs.h"
 
@@ -12,9 +12,8 @@ namespace uut
 	class IndexBuffer;
 	class VertexLayout;
 
-	class Graphics : public Module
+	class Graphics : public Object
 	{
-		OBJECT(Graphics, Module)
 	public:
 		Graphics(Render* render);
 

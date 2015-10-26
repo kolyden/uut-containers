@@ -20,7 +20,6 @@ namespace uut
 
 	class Texture : public Object
 	{
-		OBJECT(Texture, Object)
 	public:
 		Texture();
 		virtual ~Texture();

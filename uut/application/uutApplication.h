@@ -10,18 +10,18 @@ namespace uut
 
 	class Application : public Object
 	{
-		OBJECT(Application, Object)
 	public:
 		Application();
+		virtual ~Application();
 
 		void Run();
 		void Quit();
 
 	protected:
-		WeakPtr<Window> _window;
-		WeakPtr<Render> _render;
-		WeakPtr<Input> _input;
-		WeakPtr<FileSystem> _filesys;
+		SharedPtr<FileSystem> _filesys;
+		SharedPtr<Window> _window;
+		SharedPtr<Render> _render;
+		SharedPtr<Input> _input;
 
 		virtual void OnInit() {}
 		virtual void OnUpdate() {}

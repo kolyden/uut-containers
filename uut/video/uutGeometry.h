@@ -16,7 +16,6 @@ namespace uut
 
 	class Geometry : public Object
 	{
-		OBJECT(Geometry, Object)
 	public:
 		Geometry(Render* render, int vertexCount = 2048, int indexCount = 4096);
 

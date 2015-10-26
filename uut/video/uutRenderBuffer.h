@@ -6,7 +6,6 @@ namespace uut
 {
 	class RenderBuffer : public Object
 	{
-		OBJECT(RenderBuffer, Object)
 	public:
 		RenderBuffer();
 

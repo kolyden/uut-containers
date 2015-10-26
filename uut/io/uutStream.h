@@ -12,7 +12,6 @@ namespace uut
 
 	class Stream : public Object
 	{
-		OBJECT(Stream, Object)
 	public:
 		virtual bool CanRead() const = 0;
 		virtual bool CanWrite() const = 0;

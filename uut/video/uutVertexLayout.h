@@ -7,7 +7,6 @@ namespace uut
 {
 	class VertexLayout : public Object
 	{
-		OBJECT(VertexLayout, Object)
 	public:
 		VertexLayout();
 		virtual ~VertexLayout();

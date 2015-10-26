@@ -1,7 +1,7 @@
 #pragma once
-#include "core/uutModule.h"
-#include "core/uutPtr.h"
+#include "core/uutObject.h"
 #include "containers/uutList.h"
+#include "containers/uutString.h"
 #include "math/uutVector2.h"
 #include <bitset>
 
@@ -9,9 +9,8 @@ namespace uut
 {
 	class EventListener;
 
-	class Window : public Module
+	class Window : public Object
 	{
-		OBJECT(Window, Module)
 	public:
 		Window();
 
@@ -25,7 +24,7 @@ namespace uut
 		void RemoveEventListener(EventListener* listener);
 		const List<EventListener*>& GetListeners() const { return _listeners; }
 
-		void* GetHWND() const { return _handle; }
+		void* GetHandle() const { return _handle; }
 
 	protected:
 		void* _handle;

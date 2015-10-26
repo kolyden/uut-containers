@@ -1,14 +1,16 @@
 #pragma once
-#include "core/uutModule.h"
+#include "core/uutObject.h"
+#include "containers/uutString.h"
 
 namespace uut
 {
 	class FileStream;
 
-	class FileSystem : public Module
+	class FileSystem : public Object
 	{
-		OBJECT(FileSystem, Module);
 	public:
+		FileSystem();
+
 		SharedPtr<FileStream> OpenRead(const String& path);
 	};
 }

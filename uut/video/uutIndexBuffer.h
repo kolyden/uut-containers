@@ -5,7 +5,6 @@ namespace uut
 {
 	class IndexBuffer : public RenderBuffer
 	{
-		OBJECT(IndexBuffer, RenderBuffer)
 	public:
 		IndexBuffer();
 		virtual ~IndexBuffer();

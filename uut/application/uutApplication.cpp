@@ -1,5 +1,4 @@
 #include "uutApplication.h"
-#include "core/uutContext.h"
 #include "application/uutWindow.h"
 #include "video/uutRender.h"
 #include "input/uutInput.h"
@@ -10,30 +9,20 @@ namespace uut
 	Application::Application()
 		: _quit(false)
 	{
-		auto window = new Window();
-		auto render = new Render();
-		auto input = new Input();
-		auto fsys = new FileSystem();
+		_filesys = new FileSystem();
+		_window = new Window();
+		_render = new Render();
+		_input = new Input();
 
-		auto core = Context::GetMain();
-		core->AddModule(window);
-		core->AddModule(render);
-		core->AddModule(input);
-		core->AddModule(fsys);
-
-		window->Create(Vector2i(1024, 768));
-		render->Init(window);
+		_window->AddEventListener(_input);
+		_window->Create(Vector2i(1024, 768));
+		_render->Init(_window);
 	}
+
+	Application::~Application() = default;
 
 	void Application::Run()
 	{
-		auto core = Context::GetMain();
-		core->Init();
-
-		_window = core->GetModule<Window>();
-		_render = core->GetModule<Render>();
-		_input = core->GetModule<Input>();
-		_filesys = core->GetModule<FileSystem>();
 
 		OnInit();
 
