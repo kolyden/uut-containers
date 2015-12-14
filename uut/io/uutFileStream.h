@@ -1,5 +1,6 @@
 #pragma once
 #include "uutStream.h"
+#include "containers/uutString.h"
 #include <windows.h>
 
 namespace uut
